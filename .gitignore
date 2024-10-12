@@ -28,7 +28,7 @@ docker-compose.override.yml
 /backend/swagger.json
 /backend/swagger.yaml
 /backend/coverage
-!/backend/Dockerfile
+/backend/Dockerfile
 /frontend/build
 /frontend/node_modules
 /frontend/coverage
@@ -41,6 +41,6 @@ docker-compose.override.yml
 /frontend/dist
 /frontend/.cache
 /frontend/*.map
-!/frontend/Dockerfile
+/frontend/Dockerfile
 /frontend/package-lock.json
 node_modules/
