@@ -10,24 +10,11 @@ export class SpeechService {
   private ttsClient: TextToSpeechClient;
 
   constructor() {
-    const credentialsJson = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON;
-    if (credentialsJson) {
-      const credentials = JSON.parse(credentialsJson);
 
-      this.speechClient = new SpeechClient({
-        credentials: credentials,
-      });
+    const keyFilename = 'credentials.json';
 
-      this.ttsClient = new TextToSpeechClient({
-        credentials: credentials,
-      });
-    } else {
-      console.error(
-        'Google application credentials are not set. Using default credentials.',
-      );
-      this.speechClient = new SpeechClient(); // Uses default credentials if no custom credentials are provided
-      this.ttsClient = new TextToSpeechClient(); // Uses default credentials if no custom credentials are provided
-    }
+    this.speechClient = new SpeechClient({ keyFilename });
+    this.ttsClient = new TextToSpeechClient({ keyFilename });
   }
 
   async transcribeAudio(audioBuffer: Buffer): Promise<string> {
