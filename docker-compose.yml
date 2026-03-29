@@ -24,19 +24,10 @@ services:
       dockerfile: Dockerfile
     environment:
       - REACT_APP_API_URL=${REACT_APP_API_URL:-}
-    depends_on:
-      - backend
-    restart: unless-stopped
-
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
     expose:
       - "80"
     depends_on:
       - backend
-      - frontend
     restart: unless-stopped
 
 volumes:
