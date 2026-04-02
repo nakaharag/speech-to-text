@@ -1,9 +1,14 @@
+networks:
+  coolify:
+    external: true
+  internal:
+    driver: bridge
+
 services:
   postgres:
     image: postgres:16-alpine
-    # Only expose port locally, not needed for production with Traefik
-    # ports:
-    #   - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - internal
     environment:
       - POSTGRES_USER=${POSTGRES_USER:-speechtotext}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-speechtotext123}
@@ -21,6 +26,8 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    networks:
+      - internal
     expose:
       - "3000"
     environment:
@@ -50,6 +57,9 @@ services:
     build:
       context: ./frontend
       dockerfile: ${FRONTEND_DOCKERFILE:-Dockerfile}
+    networks:
+      - internal
+      - coolify
     expose:
       - "80"
     environment:
@@ -61,7 +71,7 @@ services:
       - backend
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "wget -q --spider http://localhost:80 || exit 1"]
+      test: ["CMD-SHELL", "curl -sf http://localhost:80 || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 3
