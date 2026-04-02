@@ -1,45 +1,14 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
-import * as fs from 'fs';
-import * as path from 'path';
-
-interface RateLimitData {
-  [ip: string]: {
-    count: number;
-    resetAt: string;
-  };
-}
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from './prisma.service';
 
 @Injectable()
-export class RateLimitService implements OnModuleInit {
-  private readonly dataDir = path.join(process.cwd(), 'data', 'rate-limits');
-  private readonly dataFile: string;
+export class RateLimitService {
   private readonly maxRequests = 5; // 5 requests per day
-  private data: RateLimitData = {};
 
-  constructor() {
-    this.dataFile = path.join(this.dataDir, 'limits.json');
-  }
+  constructor(private prisma: PrismaService) {}
 
-  onModuleInit() {
-    if (!fs.existsSync(this.dataDir)) {
-      fs.mkdirSync(this.dataDir, { recursive: true });
-    }
-    this.loadData();
-    this.cleanupExpired();
-  }
-
-  private loadData(): void {
-    try {
-      if (fs.existsSync(this.dataFile)) {
-        this.data = JSON.parse(fs.readFileSync(this.dataFile, 'utf-8'));
-      }
-    } catch {
-      this.data = {};
-    }
-  }
-
-  private saveData(): void {
-    fs.writeFileSync(this.dataFile, JSON.stringify(this.data, null, 2));
+  private getTodayDate(): string {
+    return new Date().toISOString().split('T')[0]; // YYYY-MM-DD
   }
 
   private getResetTime(): Date {
@@ -49,51 +18,81 @@ export class RateLimitService implements OnModuleInit {
     return resetTime;
   }
 
-  private cleanupExpired(): void {
-    const now = new Date();
-    let changed = false;
+  async checkLimit(ip: string): Promise<{ allowed: boolean; remaining: number; resetAt: string }> {
+    const today = this.getTodayDate();
 
-    for (const ip of Object.keys(this.data)) {
-      if (new Date(this.data[ip].resetAt) < now) {
-        delete this.data[ip];
-        changed = true;
-      }
+    // Find or create rate limit entry for today
+    let rateLimit = await this.prisma.rateLimit.findUnique({
+      where: {
+        ipAddress_date: {
+          ipAddress: ip,
+          date: today,
+        },
+      },
+    });
+
+    if (!rateLimit) {
+      // Create new entry for today
+      rateLimit = await this.prisma.rateLimit.create({
+        data: {
+          ipAddress: ip,
+          date: today,
+          count: 0,
+        },
+      });
     }
 
-    if (changed) {
-      this.saveData();
-    }
-  }
-
-  checkLimit(ip: string): { allowed: boolean; remaining: number; resetAt: string } {
-    const now = new Date();
-    const entry = this.data[ip];
-
-    // If no entry or entry has expired, reset
-    if (!entry || new Date(entry.resetAt) < now) {
-      const resetAt = this.getResetTime().toISOString();
-      this.data[ip] = { count: 0, resetAt };
-      this.saveData();
-    }
-
-    const remaining = this.maxRequests - this.data[ip].count;
+    const remaining = this.maxRequests - rateLimit.count;
+    const resetAt = this.getResetTime().toISOString();
 
     return {
       allowed: remaining > 0,
       remaining: Math.max(0, remaining),
-      resetAt: this.data[ip].resetAt,
+      resetAt,
     };
   }
 
-  incrementCount(ip: string): void {
-    if (this.data[ip]) {
-      this.data[ip].count++;
-      this.saveData();
-    }
+  async incrementCount(ip: string): Promise<void> {
+    const today = this.getTodayDate();
+
+    await this.prisma.rateLimit.upsert({
+      where: {
+        ipAddress_date: {
+          ipAddress: ip,
+          date: today,
+        },
+      },
+      update: {
+        count: { increment: 1 },
+      },
+      create: {
+        ipAddress: ip,
+        date: today,
+        count: 1,
+      },
+    });
   }
 
-  getRemainingRequests(ip: string): number {
-    const result = this.checkLimit(ip);
+  async getRemainingRequests(ip: string): Promise<number> {
+    const result = await this.checkLimit(ip);
     return result.remaining;
+  }
+
+  async cleanupOldEntries(): Promise<number> {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const cutoffDate = yesterday.toISOString().split('T')[0];
+
+    const result = await this.prisma.rateLimit.deleteMany({
+      where: {
+        date: { lt: cutoffDate },
+      },
+    });
+
+    if (result.count > 0) {
+      console.log(`Cleaned up ${result.count} old rate limit entries`);
+    }
+
+    return result.count;
   }
 }

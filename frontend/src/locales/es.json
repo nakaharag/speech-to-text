@@ -1,0 +1,112 @@
+{
+  "app": {
+    "title": "speech-to-text.me",
+    "footer": "Maximo 15 segundos por grabacion o sube archivos de audio hasta 25MB. 5 transcripciones gratuitas por dia."
+  },
+  "header": {
+    "lightMode": "Modo claro",
+    "darkMode": "Modo oscuro"
+  },
+  "input": {
+    "recordInstead": "Grabar",
+    "uploadFile": "Subir Archivo"
+  },
+  "recorder": {
+    "processing": "Procesando audio...",
+    "recording": "Grabando... Toca para detener",
+    "idle": "Toca el microfono para comenzar a grabar",
+    "startRecording": "Iniciar grabacion",
+    "stopRecording": "Detener grabacion",
+    "microphoneError": "No se pudo acceder al microfono. Verifica los permisos."
+  },
+  "fileUpload": {
+    "title": "Subir archivo de audio",
+    "dragDrop": "o arrastra y suelta",
+    "dropHere": "Suelta tu archivo aqui",
+    "maxSize": "Max 25MB",
+    "unsupportedFormat": "Formato de audio no soportado. Usa MP3, WAV, M4A, WEBM, OGG o FLAC.",
+    "fileTooLarge": "Archivo demasiado grande. Tamano maximo es 25MB."
+  },
+  "results": {
+    "title": "Resultados de Transcripcion",
+    "newRecording": "Nueva Grabacion"
+  },
+  "transcript": {
+    "title": "Transcripcion",
+    "copy": "Copiar transcripcion",
+    "transcribing": "Transcribiendo audio..."
+  },
+  "summary": {
+    "title": "Resumen IA",
+    "generating": "Generando resumen...",
+    "viewCorrected": "Ver transcripcion corregida"
+  },
+  "share": {
+    "title": "Compartir",
+    "createLink": "Crear Enlace",
+    "creating": "Creando...",
+    "copied": "Copiado!",
+    "copy": "Copiar",
+    "expires": "El enlace expira en 24 horas",
+    "shareOnX": "Compartir en X",
+    "shareOnFacebook": "Compartir en Facebook",
+    "shareOnWhatsApp": "Compartir en WhatsApp"
+  },
+  "rateLimit": {
+    "remaining_one": "{{count}} transcripcion restante hoy",
+    "remaining_other": "{{count}} transcripciones restantes hoy"
+  },
+  "sharedView": {
+    "notice": "Estas viendo contenido compartido",
+    "startNew": "Iniciar nueva grabacion"
+  },
+  "languageSelector": {
+    "search": "Buscar idiomas...",
+    "noResults": "No se encontraron idiomas",
+    "autoDetect": "Detectar automaticamente"
+  },
+  "languages": {
+    "en": "Ingles (EE.UU.)",
+    "en-GB": "Ingles (Reino Unido)",
+    "en-AU": "Ingles (Australia)",
+    "pt": "Portugues (Brasil)",
+    "pt-PT": "Portugues (Portugal)",
+    "es": "Espanol (Espana)",
+    "es-MX": "Espanol (Mexico)",
+    "es-AR": "Espanol (Argentina)",
+    "fr": "Frances (Francia)",
+    "fr-CA": "Frances (Canada)",
+    "de": "Aleman",
+    "de-AT": "Aleman (Austria)",
+    "de-CH": "Aleman (Suiza)",
+    "it": "Italiano",
+    "zh": "Chino (Simplificado)",
+    "zh-TW": "Chino (Tradicional)",
+    "ja": "Japones",
+    "ko": "Coreano",
+    "ru": "Ruso",
+    "ar": "Arabe",
+    "hi": "Hindi",
+    "nl": "Holandes",
+    "pl": "Polaco",
+    "tr": "Turco",
+    "vi": "Vietnamita",
+    "th": "Tailandes",
+    "id": "Indonesio",
+    "sv": "Sueco",
+    "no": "Noruego",
+    "da": "Danes",
+    "fi": "Finlandes",
+    "el": "Griego",
+    "he": "Hebreo",
+    "cs": "Checo",
+    "ro": "Rumano",
+    "hu": "Hungaro",
+    "uk": "Ucraniano"
+  },
+  "siteLang": {
+    "en": "Ingles",
+    "pt": "Portugues",
+    "es": "Espanol"
+  }
+}

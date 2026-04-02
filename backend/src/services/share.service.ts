@@ -1,89 +1,94 @@
-import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
-import * as fs from 'fs';
-import * as path from 'path';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { nanoid } from 'nanoid';
+import { PrismaService } from './prisma.service';
 
 export interface ShareData {
   id: string;
+  shortId: string;
   transcript: string;
-  summary: string;
-  createdAt: string;
-  expiresAt: string;
+  corrected: string | null;
+  summary: string | null;
+  language: string | null;
+  createdAt: Date;
+  expiresAt: Date;
+}
+
+export interface CreateShareInput {
+  transcript: string;
+  corrected?: string;
+  summary?: string;
+  language?: string;
+  userId?: string;
 }
 
 @Injectable()
-export class ShareService implements OnModuleInit {
-  private readonly dataDir = path.join(process.cwd(), 'data', 'shares');
+export class ShareService {
+  constructor(private prisma: PrismaService) {}
 
-  onModuleInit() {
-    if (!fs.existsSync(this.dataDir)) {
-      fs.mkdirSync(this.dataDir, { recursive: true });
-    }
-    this.cleanupExpired();
-  }
-
-  async createShare(transcript: string, summary: string): Promise<{ id: string; url: string }> {
-    const id = nanoid(6);
+  async createShare(input: CreateShareInput): Promise<{ id: string; shortId: string; url: string }> {
+    const shortId = nanoid(6);
     const now = new Date();
     const expiresAt = new Date(now.getTime() + 24 * 60 * 60 * 1000); // 24 hours
 
-    const shareData: ShareData = {
-      id,
-      transcript,
-      summary,
-      createdAt: now.toISOString(),
-      expiresAt: expiresAt.toISOString(),
-    };
-
-    const filePath = path.join(this.dataDir, `${id}.json`);
-    fs.writeFileSync(filePath, JSON.stringify(shareData, null, 2));
+    const share = await this.prisma.share.create({
+      data: {
+        shortId,
+        transcript: input.transcript,
+        corrected: input.corrected || null,
+        summary: input.summary || null,
+        language: input.language || null,
+        expiresAt,
+        userId: input.userId || null,
+      },
+    });
 
     const baseUrl = process.env.BASE_URL || 'https://speech-to-text.me';
     return {
-      id,
-      url: `${baseUrl}/s/${id}`,
+      id: share.id,
+      shortId: share.shortId,
+      url: `${baseUrl}/s/${share.shortId}`,
     };
   }
 
-  async getShare(id: string): Promise<ShareData> {
-    const filePath = path.join(this.dataDir, `${id}.json`);
+  async getShare(shortId: string): Promise<ShareData> {
+    const share = await this.prisma.share.findUnique({
+      where: { shortId },
+    });
 
-    if (!fs.existsSync(filePath)) {
+    if (!share) {
       throw new NotFoundException('Share not found or has expired');
     }
 
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as ShareData;
-
     // Check if expired
-    if (new Date(data.expiresAt) < new Date()) {
-      fs.unlinkSync(filePath);
+    if (share.expiresAt < new Date()) {
+      // Delete expired share
+      await this.prisma.share.delete({ where: { id: share.id } });
       throw new NotFoundException('Share has expired');
     }
 
-    return data;
+    return {
+      id: share.id,
+      shortId: share.shortId,
+      transcript: share.transcript,
+      corrected: share.corrected,
+      summary: share.summary,
+      language: share.language,
+      createdAt: share.createdAt,
+      expiresAt: share.expiresAt,
+    };
   }
 
-  private cleanupExpired(): void {
-    try {
-      const files = fs.readdirSync(this.dataDir);
-      const now = new Date();
+  async cleanupExpired(): Promise<number> {
+    const result = await this.prisma.share.deleteMany({
+      where: {
+        expiresAt: { lt: new Date() },
+      },
+    });
 
-      for (const file of files) {
-        if (!file.endsWith('.json')) continue;
-
-        const filePath = path.join(this.dataDir, file);
-        try {
-          const data = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as ShareData;
-          if (new Date(data.expiresAt) < now) {
-            fs.unlinkSync(filePath);
-            console.log(`Cleaned up expired share: ${file}`);
-          }
-        } catch {
-          // Skip invalid files
-        }
-      }
-    } catch (err) {
-      console.error('Error cleaning up expired shares:', err);
+    if (result.count > 0) {
+      console.log(`Cleaned up ${result.count} expired shares`);
     }
+
+    return result.count;
   }
 }

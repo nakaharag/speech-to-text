@@ -5,6 +5,16 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
 
+export interface TranscriptionOptions {
+  language?: string; // ISO 639-1 language code (e.g., 'en', 'pt', 'es')
+}
+
+export interface TranscriptionResult {
+  text: string;
+  language: string | null;
+  duration?: number;
+}
+
 @Injectable()
 export class SpeechService {
   private openaiApiKey: string;
@@ -13,7 +23,7 @@ export class SpeechService {
     this.openaiApiKey = process.env.OPENAI_API_KEY || '';
   }
 
-  async transcribeAudio(audioBuffer: Buffer): Promise<string> {
+  async transcribeAudio(audioBuffer: Buffer, options?: TranscriptionOptions): Promise<TranscriptionResult> {
     const audioStream = new Readable();
     audioStream.push(audioBuffer);
     audioStream.push(null);
@@ -37,6 +47,12 @@ export class SpeechService {
       const fileBlob = new Blob([new Uint8Array(convertedAudioBuffer)], { type: 'audio/mpeg' });
       formData.append('file', fileBlob, 'audio.mp3');
       formData.append('model', 'whisper-1');
+
+      // Add language if specified (improves accuracy)
+      if (options?.language) {
+        formData.append('language', options.language);
+        console.log(`Using specified language: ${options.language}`);
+      }
 
       const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
         method: 'POST',
@@ -66,7 +82,10 @@ export class SpeechService {
       }
 
       console.log('Transcription successful:', transcription.substring(0, 100) + '...');
-      return transcription.trim();
+      return {
+        text: transcription.trim(),
+        language: options?.language || null,
+      };
 
     } catch (err) {
       console.error('Transcription error:', err);
@@ -80,6 +99,11 @@ export class SpeechService {
         fs.unlinkSync(tempFile);
       }
     }
+  }
+
+  async transcribeFromFile(filePath: string, options?: TranscriptionOptions): Promise<TranscriptionResult> {
+    const audioBuffer = fs.readFileSync(filePath);
+    return this.transcribeAudio(audioBuffer, options);
   }
 
   private convertAudioToMp3(audioStream: Readable): Promise<Buffer> {

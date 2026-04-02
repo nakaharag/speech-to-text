@@ -1,0 +1,112 @@
+{
+  "app": {
+    "title": "speech-to-text.me",
+    "footer": "Max 15 seconds per recording or upload audio files up to 25MB. 5 free transcriptions per day."
+  },
+  "header": {
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode"
+  },
+  "input": {
+    "recordInstead": "Record Instead",
+    "uploadFile": "Upload File"
+  },
+  "recorder": {
+    "processing": "Processing audio...",
+    "recording": "Recording... Tap to stop",
+    "idle": "Tap the microphone to start recording",
+    "startRecording": "Start recording",
+    "stopRecording": "Stop recording",
+    "microphoneError": "Could not access microphone. Please check permissions."
+  },
+  "fileUpload": {
+    "title": "Upload audio file",
+    "dragDrop": "or drag and drop",
+    "dropHere": "Drop your file here",
+    "maxSize": "Max 25MB",
+    "unsupportedFormat": "Unsupported audio format. Please use MP3, WAV, M4A, WEBM, OGG, or FLAC.",
+    "fileTooLarge": "File is too large. Maximum size is 25MB."
+  },
+  "results": {
+    "title": "Transcription Results",
+    "newRecording": "New Recording"
+  },
+  "transcript": {
+    "title": "Transcript",
+    "copy": "Copy transcript",
+    "transcribing": "Transcribing audio..."
+  },
+  "summary": {
+    "title": "AI Summary",
+    "generating": "Generating summary...",
+    "viewCorrected": "View corrected transcript"
+  },
+  "share": {
+    "title": "Share",
+    "createLink": "Create Share Link",
+    "creating": "Creating...",
+    "copied": "Copied!",
+    "copy": "Copy",
+    "expires": "Link expires in 24 hours",
+    "shareOnX": "Share on X",
+    "shareOnFacebook": "Share on Facebook",
+    "shareOnWhatsApp": "Share on WhatsApp"
+  },
+  "rateLimit": {
+    "remaining_one": "{{count}} transcription remaining today",
+    "remaining_other": "{{count}} transcriptions remaining today"
+  },
+  "sharedView": {
+    "notice": "You're viewing shared content",
+    "startNew": "Start a new recording"
+  },
+  "languageSelector": {
+    "search": "Search languages...",
+    "noResults": "No languages found",
+    "autoDetect": "Auto-detect"
+  },
+  "languages": {
+    "en": "English (US)",
+    "en-GB": "English (UK)",
+    "en-AU": "English (Australia)",
+    "pt": "Portuguese (Brazil)",
+    "pt-PT": "Portuguese (Portugal)",
+    "es": "Spanish (Spain)",
+    "es-MX": "Spanish (Mexico)",
+    "es-AR": "Spanish (Argentina)",
+    "fr": "French (France)",
+    "fr-CA": "French (Canada)",
+    "de": "German",
+    "de-AT": "German (Austria)",
+    "de-CH": "German (Switzerland)",
+    "it": "Italian",
+    "zh": "Chinese (Simplified)",
+    "zh-TW": "Chinese (Traditional)",
+    "ja": "Japanese",
+    "ko": "Korean",
+    "ru": "Russian",
+    "ar": "Arabic",
+    "hi": "Hindi",
+    "nl": "Dutch",
+    "pl": "Polish",
+    "tr": "Turkish",
+    "vi": "Vietnamese",
+    "th": "Thai",
+    "id": "Indonesian",
+    "sv": "Swedish",
+    "no": "Norwegian",
+    "da": "Danish",
+    "fi": "Finnish",
+    "el": "Greek",
+    "he": "Hebrew",
+    "cs": "Czech",
+    "ro": "Romanian",
+    "hu": "Hungarian",
+    "uk": "Ukrainian"
+  },
+  "siteLang": {
+    "en": "English",
+    "pt": "Portuguese",
+    "es": "Spanish"
+  }
+}

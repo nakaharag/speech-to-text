@@ -7,5 +7,13 @@ export class CreateShareDto {
 
   @IsString()
   @IsOptional()
+  corrected?: string;
+
+  @IsString()
+  @IsOptional()
   summary?: string;
+
+  @IsString()
+  @IsOptional()
+  language?: string;
 }

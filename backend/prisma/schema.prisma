@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model for future Google OAuth
+model User {
+  id            String          @id @default(cuid())
+  email         String?         @unique
+  name          String?
+  googleId      String?         @unique
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  shares        Share[]
+  transcriptions Transcription[]
+
+  @@map("users")
+}
+
+// Share model - replaces JSON file storage
+model Share {
+  id            String          @id @default(cuid())
+  shortId       String          @unique @db.VarChar(10)
+  transcript    String          @db.Text
+  corrected     String?         @db.Text
+  summary       String?         @db.Text
+  language      String?         @db.VarChar(10)
+  expiresAt     DateTime
+  createdAt     DateTime        @default(now())
+  userId        String?
+  user          User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
+  analytics     ShareAnalytics[]
+
+  @@index([shortId])
+  @@index([expiresAt])
+  @@map("shares")
+}
+
+// Rate limit tracking - replaces JSON file storage
+model RateLimit {
+  id            String    @id @default(cuid())
+  ipAddress     String
+  date          String    @db.VarChar(10) // YYYY-MM-DD format
+  count         Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([ipAddress, date])
+  @@index([ipAddress])
+  @@index([date])
+  @@map("rate_limits")
+}
+
+// Share analytics - track views and interactions
+model ShareAnalytics {
+  id            String    @id @default(cuid())
+  shareId       String
+  share         Share     @relation(fields: [shareId], references: [id], onDelete: Cascade)
+  eventType     String    @db.VarChar(50) // view, copy_transcript, copy_link, share_twitter, share_facebook, share_whatsapp
+  ipAddress     String?
+  userAgent     String?   @db.Text
+  referer       String?   @db.Text
+  createdAt     DateTime  @default(now())
+
+  @@index([shareId])
+  @@index([eventType])
+  @@index([createdAt])
+  @@map("share_analytics")
+}
+
+// Transcription history (optional feature for logged-in users)
+model Transcription {
+  id            String    @id @default(cuid())
+  userId        String?
+  user          User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transcript    String    @db.Text
+  corrected     String?   @db.Text
+  summary       String?   @db.Text
+  language      String?   @db.VarChar(10)
+  audioDuration Float?    // Duration in seconds
+  fileName      String?   @db.VarChar(255)
+  fileSize      Int?      // Size in bytes
+  createdAt     DateTime  @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("transcriptions")
+}
+
+// Supported languages for transcription
+model Language {
+  id            String    @id @default(cuid())
+  code          String    @unique @db.VarChar(10) // e.g., "en", "pt", "es"
+  name          String    @db.VarChar(100)
+  nativeName    String    @db.VarChar(100)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+
+  @@map("languages")
+}

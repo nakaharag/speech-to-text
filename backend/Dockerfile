@@ -1,7 +1,7 @@
 FROM node:22-alpine
 
-# Install FFmpeg for audio conversion
-RUN apk add --no-cache ffmpeg
+# Install FFmpeg for audio conversion and OpenSSL for Prisma
+RUN apk add --no-cache ffmpeg openssl
 
 # Enable pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
@@ -11,18 +11,22 @@ WORKDIR /app
 # Copy package files
 COPY package.json pnpm-lock.yaml* ./
 
+# Copy prisma schema for generation
+COPY prisma ./prisma/
+
 # Install dependencies
-RUN pnpm install --frozen-lockfile || pnpm install
+RUN pnpm install
+
+# Generate Prisma client
+RUN pnpm prisma generate
 
 # Copy source code
 COPY . .
 
-# Build the application
-RUN pnpm run build
-
-# Create data directories
+# Create data directories (legacy)
 RUN mkdir -p data/shares data/rate-limits
 
 EXPOSE 3000
 
-CMD ["pnpm", "run", "start:prod"]
+# Build for production if NODE_ENV=production, otherwise just run dev
+CMD ["sh", "-c", "pnpm prisma migrate deploy && if [ \"$NODE_ENV\" = 'production' ]; then pnpm run build && pnpm run start:prod; else pnpm run start:dev; fi"]
