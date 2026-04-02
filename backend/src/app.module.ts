@@ -4,6 +4,7 @@ import { ContentController } from './controllers/content.controller';
 import { ShareController } from './controllers/share.controller';
 import { LanguageController } from './controllers/language.controller';
 import { AnalyticsController } from './controllers/analytics.controller';
+import { HealthController } from './controllers/health.controller';
 import { SpeechService } from './services/speech.service';
 import { ClaudeService } from './services/claude.service';
 import { ShareService } from './services/share.service';
@@ -15,6 +16,7 @@ import { AnalyticsService } from './services/analytics.service';
 @Module({
   imports: [],
   controllers: [
+    HealthController,
     SpeechController,
     ContentController,
     ShareController,

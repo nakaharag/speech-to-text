@@ -1,7 +1,7 @@
 FROM node:22-alpine
 
-# Install FFmpeg for audio conversion and OpenSSL for Prisma
-RUN apk add --no-cache ffmpeg openssl
+# Install FFmpeg for audio conversion, OpenSSL for Prisma, wget for healthcheck
+RUN apk add --no-cache ffmpeg openssl wget
 
 # Enable pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
