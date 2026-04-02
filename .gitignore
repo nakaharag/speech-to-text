@@ -37,3 +37,6 @@ prisma/*.db-journal
 # Misc
 *.tgz
 .cache/
+
+# Docker local overrides
+docker-compose.override.yml

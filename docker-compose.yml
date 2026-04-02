@@ -1,8 +1,9 @@
 services:
   postgres:
     image: postgres:16-alpine
-    ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+    # Only expose port locally, not needed for production with Traefik
+    # ports:
+    #   - "${POSTGRES_PORT:-5432}:5432"
     environment:
       - POSTGRES_USER=${POSTGRES_USER:-speechtotext}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-speechtotext123}
@@ -20,19 +21,17 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    ports:
-      - "${BACKEND_PORT:-3002}:3000"
+    # Only expose port locally, not needed for production with Traefik
+    # ports:
+    #   - "${BACKEND_PORT:-3002}:3000"
     environment:
-      - NODE_ENV=${NODE_ENV:-development}
+      - NODE_ENV=${NODE_ENV:-production}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
-      - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost:3001}
-      - BASE_URL=${BASE_URL:-http://localhost:3001}
+      - CORS_ORIGIN=${CORS_ORIGIN:-https://speech-to-text.me}
+      - BASE_URL=${BASE_URL:-https://speech-to-text.me}
       - DATABASE_URL=postgresql://${POSTGRES_USER:-speechtotext}:${POSTGRES_PASSWORD:-speechtotext123}@postgres:5432/${POSTGRES_DB:-speechtotext}
     volumes:
-      # Dev mode: mount source for hot reload
-      - ./backend/src:/app/src
-      - ./backend/prisma:/app/prisma
       - backend-data:/app/data
     depends_on:
       postgres:
@@ -45,20 +44,15 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: ${FRONTEND_DOCKERFILE:-Dockerfile.dev}
-    ports:
-      - "${FRONTEND_PORT:-3001}:${FRONTEND_INTERNAL_PORT:-3000}"
+      dockerfile: ${FRONTEND_DOCKERFILE:-Dockerfile}
+    # Only expose port locally, not needed for production with Traefik
+    # ports:
+    #   - "${FRONTEND_PORT:-3001}:${FRONTEND_INTERNAL_PORT:-3000}"
     environment:
-      - NODE_ENV=${NODE_ENV:-development}
-      - REACT_APP_API_URL=${REACT_APP_API_URL:-http://localhost:3002}
+      - NODE_ENV=${NODE_ENV:-production}
+      - REACT_APP_API_URL=${REACT_APP_API_URL:-}
       - REACT_APP_ADSENSE_ENABLED=${REACT_APP_ADSENSE_ENABLED:-false}
       - REACT_APP_ADSENSE_CLIENT=${REACT_APP_ADSENSE_CLIENT:-}
-      - WATCHPACK_POLLING=true
-      - CHOKIDAR_USEPOLLING=true
-    volumes:
-      # Dev mode: mount source for hot reload
-      - ./frontend/src:/app/src
-      - ./frontend/public:/app/public
     depends_on:
       - backend
     restart: unless-stopped
