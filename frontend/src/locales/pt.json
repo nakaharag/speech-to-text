@@ -1,45 +1,108 @@
 {
   "app": {
     "title": "speech-to-text.me",
-    "footer": "Maximo 15 segundos por gravacao ou envie arquivos de audio ate 25MB. 5 transcricoes gratuitas por dia."
+    "footer": "Máximo 15 segundos por gravação ou envie arquivos de áudio até 25MB. 5 transcrições gratuitas por dia."
+  },
+  "nav": {
+    "home": "Início",
+    "transcribe": "Transcrever",
+    "tryFree": "Testar Grátis"
+  },
+  "footer": {
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço"
   },
   "header": {
     "lightMode": "Modo claro",
     "darkMode": "Modo escuro"
+  },
+  "landing": {
+    "heroTitle": "Converta Fala em Texto Instantaneamente com IA",
+    "heroSubtitle": "Transcrição gratuita e precisa com IA avançada. Grave sua voz ou envie arquivos de áudio e obtenha texto em segundos.",
+    "startTranscribing": "Começar a Transcrever",
+    "heroNote": "Sem cadastro. 5 transcrições gratuitas por dia.",
+    "demoText": "Olá, esta é uma transcrição de exemplo. Nossa IA converte sua fala em texto com alta precisão...",
+    "languagesSupported": "Idiomas Suportados",
+    "accuracy": "Precisão",
+    "free": "Gratuito",
+    "featuresTitle": "Recursos Poderosos para Todos",
+    "featuresSubtitle": "Tudo o que você precisa para converter fala em texto de forma rápida e precisa",
+    "feature1Title": "Grave Diretamente",
+    "feature1Desc": "Use seu microfone para gravar áudio diretamente no navegador. Sem downloads necessários.",
+    "feature2Title": "Envie Arquivos de Áudio",
+    "feature2Desc": "Suporte para MP3, WAV, M4A, WEBM, OGG, FLAC e mais. Até 25MB de tamanho.",
+    "feature3Title": "30+ Idiomas",
+    "feature3Desc": "Transcreva em Inglês, Espanhol, Português, Francês, Alemão, Chinês, Japonês e muito mais.",
+    "feature4Title": "Aprimoramento com IA",
+    "feature4Desc": "IA corrige gramática automaticamente, adiciona pontuação e gera resumos.",
+    "feature5Title": "Compartilhamento Fácil",
+    "feature5Desc": "Crie links compartilháveis ou exporte diretamente para X, Facebook e WhatsApp.",
+    "feature6Title": "Privacidade em Primeiro Lugar",
+    "feature6Desc": "Arquivos de áudio não são armazenados. Links compartilhados expiram em 24 horas.",
+    "howItWorksTitle": "Como Funciona",
+    "howItWorksSubtitle": "Obtenha transcrições precisas em poucos passos simples",
+    "step1Title": "Grave ou Envie",
+    "step1Desc": "Clique no microfone ou arraste e solte um arquivo de áudio",
+    "step2Title": "IA Processa",
+    "step2Desc": "IA avançada transcreve seu áudio com alta precisão",
+    "step3Title": "Revise e Edite",
+    "step3Desc": "IA aprimora o texto e gera um resumo",
+    "step4Title": "Compartilhe ou Exporte",
+    "step4Desc": "Copie, crie um link ou compartilhe nas redes sociais",
+    "tryItNow": "Experimente Agora",
+    "useCasesTitle": "Perfeito para Qualquer Uso",
+    "useCasesSubtitle": "De reuniões a palestras, nossa ferramenta se adapta às suas necessidades",
+    "useCase1Title": "Reuniões e Entrevistas",
+    "useCase1Desc": "Nunca perca uma palavra. Obtenha notas precisas das suas reuniões de negócios e entrevistas.",
+    "useCase2Title": "Estudantes e Pesquisadores",
+    "useCase2Desc": "Transcreva palestras, grupos focais e entrevistas de pesquisa sem esforço.",
+    "useCase3Title": "Criadores de Conteúdo",
+    "useCase3Desc": "Converta podcasts e conteúdo de vídeo em posts de blog e notas de programa.",
+    "useCase4Title": "Jornalistas e Escritores",
+    "useCase4Desc": "Acelere seu fluxo de trabalho transcrevendo notas de voz e entrevistas.",
+    "faqTitle": "Perguntas Frequentes",
+    "faqSubtitle": "Tudo o que você precisa saber sobre nosso serviço de transcrição",
+    "finalCtaTitle": "Pronto para Começar?",
+    "finalCtaSubtitle": "Converta seu primeiro áudio em texto em segundos. Sem cadastro.",
+    "startFree": "Começar a Transcrever Grátis"
+  },
+  "transcribe": {
+    "pageTitle": "Fala para Texto",
+    "pageSubtitle": "Grave sua voz ou envie um arquivo de áudio para começar"
   },
   "input": {
     "recordInstead": "Gravar",
     "uploadFile": "Enviar Arquivo"
   },
   "recorder": {
-    "processing": "Processando audio...",
+    "processing": "Processando áudio...",
     "recording": "Gravando... Toque para parar",
-    "idle": "Toque no microfone para comecar a gravar",
-    "startRecording": "Iniciar gravacao",
-    "stopRecording": "Parar gravacao",
-    "microphoneError": "Nao foi possivel acessar o microfone. Verifique as permissoes."
+    "idle": "Toque no microfone para começar a gravar",
+    "startRecording": "Iniciar gravação",
+    "stopRecording": "Parar gravação",
+    "microphoneError": "Não foi possível acessar o microfone. Verifique as permissões."
   },
   "fileUpload": {
-    "title": "Enviar arquivo de audio",
+    "title": "Enviar arquivo de áudio",
     "dragDrop": "ou arraste e solte",
     "dropHere": "Solte seu arquivo aqui",
-    "maxSize": "Max 25MB",
-    "unsupportedFormat": "Formato de audio nao suportado. Use MP3, WAV, M4A, WEBM, OGG ou FLAC.",
-    "fileTooLarge": "Arquivo muito grande. Tamanho maximo e 25MB."
+    "maxSize": "Máx 25MB",
+    "unsupportedFormat": "Formato de áudio não suportado. Use MP3, WAV, M4A, WEBM, OGG ou FLAC.",
+    "fileTooLarge": "Arquivo muito grande. Tamanho máximo é 25MB."
   },
   "results": {
-    "title": "Resultados da Transcricao",
-    "newRecording": "Nova Gravacao"
+    "title": "Resultados da Transcrição",
+    "newRecording": "Nova Gravação"
   },
   "transcript": {
-    "title": "Transcricao",
-    "copy": "Copiar transcricao",
-    "transcribing": "Transcrevendo audio..."
+    "title": "Transcrição",
+    "copy": "Copiar transcrição",
+    "transcribing": "Transcrevendo áudio..."
   },
   "summary": {
     "title": "Resumo IA",
     "generating": "Gerando resumo...",
-    "viewCorrected": "Ver transcricao corrigida"
+    "viewCorrected": "Ver transcrição corrigida"
   },
   "share": {
     "title": "Compartilhar",
@@ -53,12 +116,12 @@
     "shareOnWhatsApp": "Compartilhar no WhatsApp"
   },
   "rateLimit": {
-    "remaining_one": "{{count}} transcricao restante hoje",
-    "remaining_other": "{{count}} transcricoes restantes hoje"
+    "remaining_one": "{{count}} transcrição restante hoje",
+    "remaining_other": "{{count}} transcrições restantes hoje"
   },
   "sharedView": {
-    "notice": "Voce esta visualizando conteudo compartilhado",
-    "startNew": "Iniciar nova gravacao"
+    "notice": "Você está visualizando conteúdo compartilhado",
+    "startNew": "Iniciar nova gravação"
   },
   "languageSelector": {
     "search": "Buscar idiomas...",
@@ -66,47 +129,144 @@
     "autoDetect": "Detectar automaticamente"
   },
   "languages": {
-    "en": "Ingles (EUA)",
-    "en-GB": "Ingles (Reino Unido)",
-    "en-AU": "Ingles (Australia)",
-    "pt": "Portugues (Brasil)",
-    "pt-PT": "Portugues (Portugal)",
+    "en": "Inglês (EUA)",
+    "en-GB": "Inglês (Reino Unido)",
+    "en-AU": "Inglês (Austrália)",
+    "pt": "Português (Brasil)",
+    "pt-PT": "Português (Portugal)",
     "es": "Espanhol (Espanha)",
-    "es-MX": "Espanhol (Mexico)",
+    "es-MX": "Espanhol (México)",
     "es-AR": "Espanhol (Argentina)",
-    "fr": "Frances (Franca)",
-    "fr-CA": "Frances (Canada)",
-    "de": "Alemao",
-    "de-AT": "Alemao (Austria)",
-    "de-CH": "Alemao (Suica)",
+    "fr": "Francês (França)",
+    "fr-CA": "Francês (Canadá)",
+    "de": "Alemão",
+    "de-AT": "Alemão (Áustria)",
+    "de-CH": "Alemão (Suíça)",
     "it": "Italiano",
-    "zh": "Chines (Simplificado)",
-    "zh-TW": "Chines (Tradicional)",
-    "ja": "Japones",
+    "zh": "Chinês (Simplificado)",
+    "zh-TW": "Chinês (Tradicional)",
+    "ja": "Japonês",
     "ko": "Coreano",
     "ru": "Russo",
-    "ar": "Arabe",
+    "ar": "Árabe",
     "hi": "Hindi",
-    "nl": "Holandes",
-    "pl": "Polones",
+    "nl": "Holandês",
+    "pl": "Polonês",
     "tr": "Turco",
     "vi": "Vietnamita",
-    "th": "Tailandes",
-    "id": "Indonesio",
+    "th": "Tailandês",
+    "id": "Indonésio",
     "sv": "Sueco",
-    "no": "Noruegues",
-    "da": "Dinamarques",
-    "fi": "Finlandes",
+    "no": "Norueguês",
+    "da": "Dinamarquês",
+    "fi": "Finlandês",
     "el": "Grego",
     "he": "Hebraico",
     "cs": "Tcheco",
     "ro": "Romeno",
-    "hu": "Hungaro",
+    "hu": "Húngaro",
     "uk": "Ucraniano"
   },
   "siteLang": {
-    "en": "Ingles",
-    "pt": "Portugues",
+    "en": "Inglês",
+    "pt": "Português",
     "es": "Espanhol"
+  },
+  "about": {
+    "title": "Sobre o speech-to-text.me",
+    "description": "speech-to-text.me é uma ferramenta online gratuita que converte suas gravações de voz em transcrições de texto precisas. Alimentado por tecnologia avançada de IA, nosso serviço oferece reconhecimento de fala de alta qualidade e resumo inteligente.",
+    "feature1Title": "Transcrição Precisa",
+    "feature1Desc": "Reconhecimento de fala de última geração suporta mais de 30 idiomas com alta precisão para diversos sotaques e dialetos.",
+    "feature2Title": "Resumo com IA",
+    "feature2Desc": "Obtenha resumos concisos de suas transcrições, além de correções automáticas de gramática e pontuação.",
+    "feature3Title": "Compartilhamento Fácil",
+    "feature3Desc": "Compartilhe suas transcrições instantaneamente com um link seguro. Compartilhe diretamente nas redes sociais ou copie para a área de transferência."
+  },
+  "howItWorks": {
+    "title": "Como Funciona",
+    "step1Title": "Grave ou Envie",
+    "step1Desc": "Clique no botão do microfone para gravar sua voz diretamente no navegador, ou envie um arquivo de áudio existente (MP3, WAV, M4A e mais formatos suportados).",
+    "step2Title": "Transcrição com IA",
+    "step2Desc": "Nosso motor de IA avançado processa seu áudio e converte fala em texto com alta precisão em mais de 30 idiomas.",
+    "step3Title": "Aprimoramento Inteligente",
+    "step3Desc": "A IA analisa sua transcrição para corrigir gramática, adicionar pontuação adequada e gera um resumo conciso do conteúdo.",
+    "step4Title": "Compartilhe e Exporte",
+    "step4Desc": "Copie sua transcrição para a área de transferência, crie um link compartilhável ou compartilhe diretamente nas redes sociais como X, Facebook e WhatsApp."
+  },
+  "useCases": {
+    "title": "Casos de Uso",
+    "intro": "speech-to-text.me é perfeito para uma ampla variedade de aplicações:",
+    "case1Title": "Notas de Reunião",
+    "case1Desc": "Grave reuniões e obtenha transcrições precisas com resumos. Nunca perca detalhes importantes das suas discussões de negócios.",
+    "case2Title": "Estudantes e Pesquisadores",
+    "case2Desc": "Transcreva palestras, entrevistas e gravações de pesquisa. Concentre-se em aprender enquanto a IA captura cada palavra.",
+    "case3Title": "Criadores de Conteúdo",
+    "case3Desc": "Converta episódios de podcast, roteiros de vídeo e notas de voz em texto. Perfeito para criar posts de blog e notas de programa.",
+    "case4Title": "Jornalistas e Escritores",
+    "case4Desc": "Transcreva entrevistas e notas de voz rapidamente. Gaste menos tempo digitando e mais tempo criando sua história."
+  },
+  "faq": {
+    "title": "Perguntas Frequentes",
+    "q1": "O speech-to-text.me é gratuito?",
+    "a1": "Sim! Você pode fazer até 5 transcrições gratuitas por dia sem criar uma conta. Cada gravação pode ter até 15 segundos, ou você pode enviar arquivos de áudio até 25MB.",
+    "q2": "Quais idiomas são suportados?",
+    "a2": "Suportamos mais de 30 idiomas incluindo Inglês, Espanhol, Português, Francês, Alemão, Chinês, Japonês, Coreano, Árabe, Hindi e muitos outros. Você pode selecionar seu idioma ou usar a detecção automática.",
+    "q3": "Qual a precisão das transcrições?",
+    "a3": "Nossas transcrições usam tecnologia de reconhecimento de fala de última geração. A precisão depende da qualidade do áudio, mas tipicamente excede 95% para gravações claras.",
+    "q4": "Meus dados de áudio são seguros?",
+    "a4": "Sim. Não armazenamos seus arquivos de áudio após o processamento. Transcrições são processadas com segurança e links compartilhados expiram automaticamente após 24 horas.",
+    "q5": "Quais formatos de áudio são suportados?",
+    "a5": "Suportamos MP3, WAV, M4A, WEBM, OGG, FLAC e a maioria dos formatos de áudio comuns. Arquivos podem ter até 25MB de tamanho.",
+    "q6": "Como funciona o resumo com IA?",
+    "a6": "Após a transcrição, a IA analisa seu texto para corrigir gramática, adicionar pontuação e gerar um resumo conciso destacando os pontos principais da sua gravação."
+  },
+  "legal": {
+    "backToHome": "Voltar ao Início"
+  },
+  "privacy": {
+    "title": "Política de Privacidade",
+    "lastUpdated": "Última Atualização",
+    "section1Title": "Introdução",
+    "section1Content": "No speech-to-text.me, estamos comprometidos em proteger sua privacidade. Esta Política de Privacidade explica como coletamos, usamos e protegemos suas informações quando você usa nosso serviço de transcrição de fala para texto.",
+    "section2Title": "Informações que Coletamos",
+    "section2Content": "Coletamos informações mínimas necessárias para fornecer nosso serviço:",
+    "section2Item1": "Gravações de áudio que você envia para transcrição (processadas temporariamente, não armazenadas)",
+    "section2Item2": "Endereço IP para fins de limitação de taxa (para garantir uso justo)",
+    "section2Item3": "Análises de uso para melhorar nosso serviço (dados anonimizados)",
+    "section3Title": "Como Usamos Suas Informações",
+    "section3Content": "Suas informações são usadas exclusivamente para:",
+    "section3Item1": "Processar seu áudio e gerar transcrições",
+    "section3Item2": "Fornecer resumos e correções de texto alimentados por IA",
+    "section3Item3": "Aplicar limites de uso (5 transcrições por dia por IP)",
+    "section4Title": "Retenção de Dados",
+    "section4Content": "Não armazenamos seus arquivos de áudio. Após o processamento, os dados de áudio são imediatamente excluídos. Links de transcrição compartilhados expiram automaticamente após 24 horas e são permanentemente excluídos de nossos servidores.",
+    "section5Title": "Serviços de Terceiros",
+    "section5Content": "Usamos serviços de IA de terceiros para reconhecimento de fala e resumo. Seus dados de áudio e texto são processados com segurança. Também usamos Google AdSense para publicidade, que pode usar cookies para exibir anúncios relevantes.",
+    "section6Title": "Cookies",
+    "section6Content": "Usamos cookies essenciais para lembrar suas preferências (tema, idioma). Serviços de publicidade de terceiros também podem definir cookies. Você pode controlar as configurações de cookies no seu navegador.",
+    "section7Title": "Contate-nos",
+    "section7Content": "Se você tiver dúvidas sobre esta Política de Privacidade, entre em contato conosco através do nosso site."
+  },
+  "terms": {
+    "title": "Termos de Serviço",
+    "lastUpdated": "Última Atualização",
+    "section1Title": "Aceitação dos Termos",
+    "section1Content": "Ao usar o speech-to-text.me, você concorda com estes Termos de Serviço. Se você não concordar, por favor não use nosso serviço.",
+    "section2Title": "Descrição do Serviço",
+    "section2Content": "speech-to-text.me fornece serviços gratuitos de transcrição de fala para texto online com as seguintes limitações:",
+    "section2Item1": "Máximo de 15 segundos por gravação",
+    "section2Item2": "Máximo de 25MB por arquivo de áudio enviado",
+    "section2Item3": "5 transcrições gratuitas por dia por usuário",
+    "section2Item4": "Links compartilhados expiram após 24 horas",
+    "section3Title": "Uso Aceitável",
+    "section3Content": "Você concorda em não usar nosso serviço para qualquer propósito ilegal, transcrever conteúdo que viole os direitos de outros, ou tentar contornar os limites de uso. Reservamos o direito de bloquear usuários que abusem do nosso serviço.",
+    "section4Title": "Propriedade Intelectual",
+    "section4Content": "Você retém todos os direitos sobre seu conteúdo de áudio original e transcrições resultantes. Não reivindicamos propriedade do seu conteúdo. Nosso serviço, incluindo seu design, código e modelos de IA, é protegido por leis de propriedade intelectual.",
+    "section5Title": "Isenção de Garantias",
+    "section5Content": "Nosso serviço é fornecido 'como está' sem garantias de qualquer tipo. Embora nos esforcemos pela precisão, não podemos garantir que as transcrições serão livres de erros. Sempre revise transcrições importantes para verificar a precisão.",
+    "section6Title": "Limitação de Responsabilidade",
+    "section6Content": "Não somos responsáveis por quaisquer danos decorrentes do uso de nosso serviço, incluindo, mas não se limitando a, erros de transcrição, perda de dados ou interrupções de serviço.",
+    "section7Title": "Alterações nos Termos",
+    "section7Content": "Podemos atualizar estes termos a qualquer momento. O uso continuado do serviço após as alterações constitui aceitação dos novos termos."
   }
 }
