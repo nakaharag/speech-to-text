@@ -61,9 +61,9 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://localhost:3000/health || exit 1"]
       interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
 
   frontend:
     build:
@@ -80,14 +80,15 @@ services:
       - REACT_APP_ADSENSE_ENABLED=${REACT_APP_ADSENSE_ENABLED:-false}
       - REACT_APP_ADSENSE_CLIENT=${REACT_APP_ADSENSE_CLIENT:-}
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "curl -sf http://localhost:80 || exit 1"]
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:80 || exit 1"]
       interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
     labels:
       # Traefik labels for production
       - "traefik.enable=${TRAEFIK_ENABLE:-true}"
