@@ -5,6 +5,18 @@ networks:
     driver: bridge
 
 services:
+  autoheal:
+    image: willfarrell/autoheal
+    restart: always
+    networks:
+      - internal
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=all
+      - AUTOHEAL_INTERVAL=30
+      - AUTOHEAL_START_PERIOD=60
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
   postgres:
     image: postgres:16-alpine
     networks:
@@ -15,7 +27,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB:-speechtotext}
     volumes:
       - postgres-data:/var/lib/postgresql/data
-    restart: unless-stopped
+    restart: always
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-speechtotext}"]
       interval: 5s
@@ -42,7 +54,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    restart: unless-stopped
+    restart: always
     dns:
       - 8.8.8.8
       - 8.8.4.4
@@ -69,7 +81,7 @@ services:
       - REACT_APP_ADSENSE_CLIENT=${REACT_APP_ADSENSE_CLIENT:-}
     depends_on:
       - backend
-    restart: unless-stopped
+    restart: always
     healthcheck:
       test: ["CMD-SHELL", "curl -sf http://localhost:80 || exit 1"]
       interval: 10s
