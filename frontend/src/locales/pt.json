@@ -13,7 +13,9 @@
   },
   "footer": {
     "privacy": "Política de Privacidade",
-    "terms": "Termos de Serviço"
+    "terms": "Termos de Serviço",
+    "about": "Sobre",
+    "contact": "Contato"
   },
   "header": {
     "lightMode": "Modo claro",
@@ -306,5 +308,42 @@
     "play": "Reproduzir",
     "pause": "Pausar",
     "download": "Baixar"
+  },
+  "aboutPage": {
+    "title": "Sobre o speech-to-text.me",
+    "missionTitle": "Nossa Missão",
+    "missionContent": "Acreditamos que todos devem ter acesso a ferramentas precisas de transcrição de fala para texto. Nossa missão é fornecer um serviço gratuito e fácil de usar que ajude as pessoas a converter suas gravações de áudio em texto de forma rápida e precisa.",
+    "whatWeDoTitle": "O Que Oferecemos",
+    "whatWeDoContent": "O speech-to-text.me fornece ferramentas poderosas de processamento de áudio:",
+    "feature1": "Transcrição de Fala para Texto - Converta gravações de voz e arquivos de áudio em transcrições de texto precisas",
+    "feature2": "Aprimoramento com IA - Correção automática de gramática, pontuação e resumo de conteúdo",
+    "feature3": "PDF para Áudio - Transforme documentos PDF em arquivos de áudio com som natural",
+    "feature4": "Suporte Multi-idioma - Transcrição disponível em mais de 30 idiomas",
+    "technologyTitle": "Nossa Tecnologia",
+    "technologyContent": "Utilizamos modelos de inteligência artificial e aprendizado de máquina de última geração para fornecer transcrições altamente precisas. Nosso reconhecimento de fala suporta vários sotaques, dialetos e estilos de fala para garantir os melhores resultados possíveis.",
+    "privacyTitle": "Sua Privacidade Importa",
+    "privacyContent": "Levamos sua privacidade a sério. Os arquivos de áudio são processados com segurança e não são armazenados após a transcrição. Links compartilhados expiram automaticamente após 24 horas. Não vendemos nem compartilhamos seus dados com terceiros.",
+    "contactTitle": "Entre em Contato",
+    "contactContent": "Tem perguntas, feedback ou sugestões? Adoraríamos ouvir você.",
+    "contactLink": "Fale conosco"
+  },
+  "contact": {
+    "title": "Fale Conosco",
+    "intro": "Tem alguma dúvida, feedback ou precisa de ajuda? Preencha o formulário abaixo e responderemos o mais rápido possível.",
+    "nameLabel": "Seu Nome",
+    "namePlaceholder": "João Silva",
+    "emailLabel": "Endereço de Email",
+    "emailPlaceholder": "joao@exemplo.com",
+    "subjectLabel": "Assunto",
+    "subjectPlaceholder": "Como podemos ajudar?",
+    "messageLabel": "Mensagem",
+    "messagePlaceholder": "Conte-nos mais sobre sua dúvida...",
+    "submit": "Enviar Mensagem",
+    "sending": "Enviando...",
+    "successTitle": "Mensagem Enviada!",
+    "successMessage": "Obrigado por entrar em contato. Responderemos o mais rápido possível.",
+    "sendAnother": "Enviar Outra Mensagem",
+    "errorGeneric": "Algo deu errado. Por favor, tente novamente.",
+    "directEmail": "Você também pode nos contatar diretamente em:"
   }
 }

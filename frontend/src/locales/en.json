@@ -13,7 +13,9 @@
   },
   "footer": {
     "privacy": "Privacy Policy",
-    "terms": "Terms of Service"
+    "terms": "Terms of Service",
+    "about": "About",
+    "contact": "Contact"
   },
   "header": {
     "lightMode": "Light mode",
@@ -306,5 +308,42 @@
     "play": "Play",
     "pause": "Pause",
     "download": "Download"
+  },
+  "aboutPage": {
+    "title": "About speech-to-text.me",
+    "missionTitle": "Our Mission",
+    "missionContent": "We believe everyone should have access to accurate speech-to-text transcription tools. Our mission is to provide a free, easy-to-use service that helps people convert their audio recordings into text quickly and accurately.",
+    "whatWeDoTitle": "What We Offer",
+    "whatWeDoContent": "speech-to-text.me provides powerful audio processing tools:",
+    "feature1": "Speech-to-Text Transcription - Convert voice recordings and audio files into accurate text transcripts",
+    "feature2": "AI-Powered Enhancement - Automatic grammar correction, punctuation, and content summarization",
+    "feature3": "PDF to Audio - Transform PDF documents into natural-sounding audio files",
+    "feature4": "Multi-Language Support - Transcription available in 30+ languages",
+    "technologyTitle": "Our Technology",
+    "technologyContent": "We use state-of-the-art artificial intelligence and machine learning models to provide highly accurate transcriptions. Our speech recognition supports various accents, dialects, and speaking styles to ensure the best possible results.",
+    "privacyTitle": "Your Privacy Matters",
+    "privacyContent": "We take your privacy seriously. Audio files are processed securely and are not stored after transcription. Shared links expire automatically after 24 hours. We do not sell or share your data with third parties.",
+    "contactTitle": "Get In Touch",
+    "contactContent": "Have questions, feedback, or suggestions? We'd love to hear from you.",
+    "contactLink": "Contact us"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "intro": "Have a question, feedback, or need help? Fill out the form below and we'll get back to you as soon as possible.",
+    "nameLabel": "Your Name",
+    "namePlaceholder": "John Doe",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "john@example.com",
+    "subjectLabel": "Subject",
+    "subjectPlaceholder": "How can we help?",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Tell us more about your inquiry...",
+    "submit": "Send Message",
+    "sending": "Sending...",
+    "successTitle": "Message Sent!",
+    "successMessage": "Thank you for reaching out. We'll get back to you as soon as possible.",
+    "sendAnother": "Send Another Message",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "directEmail": "You can also reach us directly at:"
   }
 }

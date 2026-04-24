@@ -13,7 +13,9 @@
   },
   "footer": {
     "privacy": "Politica de Privacidad",
-    "terms": "Terminos de Servicio"
+    "terms": "Terminos de Servicio",
+    "about": "Acerca de",
+    "contact": "Contacto"
   },
   "header": {
     "lightMode": "Modo claro",
@@ -306,5 +308,42 @@
     "play": "Reproducir",
     "pause": "Pausar",
     "download": "Descargar"
+  },
+  "aboutPage": {
+    "title": "Acerca de speech-to-text.me",
+    "missionTitle": "Nuestra Mision",
+    "missionContent": "Creemos que todos deben tener acceso a herramientas precisas de transcripcion de voz a texto. Nuestra mision es proporcionar un servicio gratuito y facil de usar que ayude a las personas a convertir sus grabaciones de audio en texto de forma rapida y precisa.",
+    "whatWeDoTitle": "Lo Que Ofrecemos",
+    "whatWeDoContent": "speech-to-text.me proporciona potentes herramientas de procesamiento de audio:",
+    "feature1": "Transcripcion de Voz a Texto - Convierte grabaciones de voz y archivos de audio en transcripciones de texto precisas",
+    "feature2": "Mejora con IA - Correccion automatica de gramatica, puntuacion y resumen de contenido",
+    "feature3": "PDF a Audio - Transforma documentos PDF en archivos de audio con sonido natural",
+    "feature4": "Soporte Multi-idioma - Transcripcion disponible en mas de 30 idiomas",
+    "technologyTitle": "Nuestra Tecnologia",
+    "technologyContent": "Utilizamos modelos de inteligencia artificial y aprendizaje automatico de ultima generacion para proporcionar transcripciones altamente precisas. Nuestro reconocimiento de voz soporta varios acentos, dialectos y estilos de habla para garantizar los mejores resultados posibles.",
+    "privacyTitle": "Tu Privacidad Importa",
+    "privacyContent": "Tomamos tu privacidad en serio. Los archivos de audio se procesan de forma segura y no se almacenan despues de la transcripcion. Los enlaces compartidos expiran automaticamente despues de 24 horas. No vendemos ni compartimos tus datos con terceros.",
+    "contactTitle": "Contactanos",
+    "contactContent": "Tienes preguntas, comentarios o sugerencias? Nos encantaria escucharte.",
+    "contactLink": "Contactanos"
+  },
+  "contact": {
+    "title": "Contactanos",
+    "intro": "Tienes alguna pregunta, comentario o necesitas ayuda? Completa el formulario a continuacion y te responderemos lo antes posible.",
+    "nameLabel": "Tu Nombre",
+    "namePlaceholder": "Juan Garcia",
+    "emailLabel": "Correo Electronico",
+    "emailPlaceholder": "juan@ejemplo.com",
+    "subjectLabel": "Asunto",
+    "subjectPlaceholder": "Como podemos ayudarte?",
+    "messageLabel": "Mensaje",
+    "messagePlaceholder": "Cuentanos mas sobre tu consulta...",
+    "submit": "Enviar Mensaje",
+    "sending": "Enviando...",
+    "successTitle": "Mensaje Enviado!",
+    "successMessage": "Gracias por contactarnos. Te responderemos lo antes posible.",
+    "sendAnother": "Enviar Otro Mensaje",
+    "errorGeneric": "Algo salio mal. Por favor, intentalo de nuevo.",
+    "directEmail": "Tambien puedes contactarnos directamente en:"
   }
 }

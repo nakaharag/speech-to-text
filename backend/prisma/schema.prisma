@@ -129,3 +129,20 @@ model PdfConversion {
   @@index([expiresAt])
   @@map("pdf_conversions")
 }
+
+// Contact form submissions
+model ContactSubmission {
+  id          String    @id @default(cuid())
+  name        String    @db.VarChar(100)
+  email       String    @db.VarChar(255)
+  subject     String    @db.VarChar(255)
+  message     String    @db.Text
+  ipAddress   String?
+  userAgent   String?   @db.Text
+  isRead      Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  @@index([isRead])
+  @@index([createdAt])
+  @@map("contact_submissions")
+}

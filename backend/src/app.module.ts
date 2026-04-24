@@ -6,6 +6,7 @@ import { LanguageController } from './controllers/language.controller';
 import { AnalyticsController } from './controllers/analytics.controller';
 import { HealthController } from './controllers/health.controller';
 import { PdfController } from './controllers/pdf.controller';
+import { ContactController } from './controllers/contact.controller';
 import { SpeechService } from './services/speech.service';
 import { ClaudeService } from './services/claude.service';
 import { ShareService } from './services/share.service';
@@ -26,6 +27,7 @@ import { TtsService } from './services/tts.service';
     LanguageController,
     AnalyticsController,
     PdfController,
+    ContactController,
   ],
   providers: [
     PrismaService,

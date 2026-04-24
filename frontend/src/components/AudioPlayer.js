@@ -64,14 +64,26 @@ export function AudioPlayer({ audioBase64, fileName, downloadUrl }) {
   };
 
   const handleDownload = () => {
-    if (downloadUrl) {
-      window.open(downloadUrl, '_blank');
-    } else if (audioBase64) {
+    if (audioBase64) {
       const link = document.createElement('a');
       link.href = audioUrl;
       link.download = fileName || 'audio.mp3';
       link.click();
+    } else if (downloadUrl) {
+      window.open(downloadUrl, '_blank');
     }
+  };
+
+  const skipBackward = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.currentTime = Math.max(0, audio.currentTime - 10);
+  };
+
+  const skipForward = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.currentTime = Math.min(duration, audio.currentTime + 10);
   };
 
   const formatTime = (seconds) => {
@@ -92,6 +104,18 @@ export function AudioPlayer({ audioBase64, fileName, downloadUrl }) {
       <div className="audio-player-controls">
         <button
           type="button"
+          className="audio-skip-button"
+          onClick={skipBackward}
+          aria-label={t('audioPlayer.skipBackward', 'Skip back 10 seconds')}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+            <text x="12" y="15" textAnchor="middle" fontSize="7" fontWeight="bold">10</text>
+          </svg>
+        </button>
+
+        <button
+          type="button"
           className="audio-play-button"
           onClick={togglePlayPause}
           aria-label={isPlaying ? t('audioPlayer.pause', 'Pause') : t('audioPlayer.play', 'Play')}
@@ -106,6 +130,18 @@ export function AudioPlayer({ audioBase64, fileName, downloadUrl }) {
               <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
           )}
+        </button>
+
+        <button
+          type="button"
+          className="audio-skip-button"
+          onClick={skipForward}
+          aria-label={t('audioPlayer.skipForward', 'Skip forward 10 seconds')}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/>
+            <text x="12" y="15" textAnchor="middle" fontSize="7" fontWeight="bold">10</text>
+          </svg>
         </button>
 
         <div className="audio-time">

@@ -5,6 +5,8 @@ import { LandingPage } from './components/LandingPage';
 import { TranscribePage } from './components/TranscribePage';
 import { PdfToAudioPage } from './components/PdfToAudioPage';
 import { PrivacyPolicy, TermsOfService } from './components/LegalPages';
+import { AboutPage } from './components/AboutPage';
+import { ContactPage } from './components/ContactPage';
 import { AdBanner } from './components/AdBanner';
 
 function App() {
@@ -37,6 +39,10 @@ function App() {
       setCurrentPage('privacy');
     } else if (path === '/terms' || path === '/terms-of-service') {
       setCurrentPage('terms');
+    } else if (path === '/about') {
+      setCurrentPage('about');
+    } else if (path === '/contact') {
+      setCurrentPage('contact');
     } else {
       const shareMatch = path.match(/^\/s\/([a-zA-Z0-9_-]+)$/);
       if (shareMatch) {
@@ -58,6 +64,10 @@ function App() {
         setCurrentPage('privacy');
       } else if (newPath === '/terms' || newPath === '/terms-of-service') {
         setCurrentPage('terms');
+      } else if (newPath === '/about') {
+        setCurrentPage('about');
+      } else if (newPath === '/contact') {
+        setCurrentPage('contact');
       } else {
         setCurrentPage('home');
       }
@@ -77,6 +87,8 @@ function App() {
       'pdf-to-audio': '/pdf-to-audio',
       privacy: '/privacy',
       terms: '/terms',
+      about: '/about',
+      contact: '/contact',
     };
 
     window.history.pushState({}, '', paths[page] || '/');
@@ -97,6 +109,10 @@ function App() {
         return <PrivacyPolicy onBack={() => navigateTo('home')} />;
       case 'terms':
         return <TermsOfService onBack={() => navigateTo('home')} />;
+      case 'about':
+        return <AboutPage onNavigate={navigateTo} />;
+      case 'contact':
+        return <ContactPage onNavigate={navigateTo} />;
       default:
         return <LandingPage onNavigate={navigateTo} />;
     }
@@ -138,6 +154,10 @@ function App() {
           <footer className="footer">
             <p>{t('app.footer')}</p>
             <div className="footer-links">
+              <button onClick={() => navigateTo('about')}>{t('footer.about')}</button>
+              <span className="footer-divider">|</span>
+              <button onClick={() => navigateTo('contact')}>{t('footer.contact')}</button>
+              <span className="footer-divider">|</span>
               <button onClick={() => navigateTo('privacy')}>{t('footer.privacy')}</button>
               <span className="footer-divider">|</span>
               <button onClick={() => navigateTo('terms')}>{t('footer.terms')}</button>
