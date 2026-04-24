@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Header } from './components/Header';
 import { LandingPage } from './components/LandingPage';
 import { TranscribePage } from './components/TranscribePage';
+import { PdfToAudioPage } from './components/PdfToAudioPage';
 import { PrivacyPolicy, TermsOfService } from './components/LegalPages';
 import { AdBanner } from './components/AdBanner';
 
@@ -30,6 +31,8 @@ function App() {
 
     if (path === '/app' || path === '/transcribe') {
       setCurrentPage('app');
+    } else if (path === '/pdf-to-audio' || path === '/pdf') {
+      setCurrentPage('pdf-to-audio');
     } else if (path === '/privacy' || path === '/privacy-policy') {
       setCurrentPage('privacy');
     } else if (path === '/terms' || path === '/terms-of-service') {
@@ -49,6 +52,8 @@ function App() {
       const newPath = window.location.pathname;
       if (newPath === '/app' || newPath === '/transcribe') {
         setCurrentPage('app');
+      } else if (newPath === '/pdf-to-audio' || newPath === '/pdf') {
+        setCurrentPage('pdf-to-audio');
       } else if (newPath === '/privacy' || newPath === '/privacy-policy') {
         setCurrentPage('privacy');
       } else if (newPath === '/terms' || newPath === '/terms-of-service') {
@@ -69,6 +74,7 @@ function App() {
     const paths = {
       home: '/',
       app: '/app',
+      'pdf-to-audio': '/pdf-to-audio',
       privacy: '/privacy',
       terms: '/terms',
     };
@@ -85,6 +91,8 @@ function App() {
     switch (currentPage) {
       case 'app':
         return <TranscribePage sharedId={sharedId} />;
+      case 'pdf-to-audio':
+        return <PdfToAudioPage />;
       case 'privacy':
         return <PrivacyPolicy onBack={() => navigateTo('home')} />;
       case 'terms':

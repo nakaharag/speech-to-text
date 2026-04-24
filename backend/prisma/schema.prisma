@@ -102,3 +102,30 @@ model Language {
 
   @@map("languages")
 }
+
+// PDF to Audio conversions
+model PdfConversion {
+  id            String    @id @default(cuid())
+  shortId       String    @unique @db.VarChar(10)
+  status        String    @db.VarChar(20) // pending, extracting, converting, completed, failed
+  fileName      String?   @db.VarChar(255)
+  fileSize      Int?      // Size in bytes
+  extractedText String?   @db.Text
+  textLength    Int?
+  pageCount     Int?
+  language      String?   @db.VarChar(10)
+  voice         String?   @db.VarChar(20) // OpenAI voice selection
+  audioFormat   String?   @db.VarChar(10) // mp3, wav, ogg
+  audioSize     Int?      // Size in bytes
+  audioDuration Float?    // Duration in seconds
+  errorMessage  String?   @db.Text
+  createdAt     DateTime  @default(now())
+  completedAt   DateTime?
+  expiresAt     DateTime  // Auto-cleanup after 24 hours
+  ipAddress     String?
+
+  @@index([shortId])
+  @@index([status])
+  @@index([expiresAt])
+  @@map("pdf_conversions")
+}

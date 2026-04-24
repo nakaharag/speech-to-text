@@ -4,7 +4,7 @@ FROM node:22-alpine
 RUN apk add --no-cache ffmpeg openssl wget
 
 # Enable pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@9 --activate
 
 WORKDIR /app
 

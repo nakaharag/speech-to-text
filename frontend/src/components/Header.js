@@ -5,6 +5,8 @@ import { LanguageSwitcher } from './LanguageSwitcher';
 export function Header({ currentPage, onNavigate, theme, onThemeToggle }) {
   const { t } = useTranslation();
 
+  const isToolPage = currentPage === 'app' || currentPage === 'pdf-to-audio';
+
   return (
     <header className="header">
       <div className="header-left">
@@ -32,12 +34,18 @@ export function Header({ currentPage, onNavigate, theme, onThemeToggle }) {
           >
             {t('nav.transcribe')}
           </button>
+          <button
+            className={`nav-link ${currentPage === 'pdf-to-audio' ? 'active' : ''}`}
+            onClick={() => onNavigate('pdf-to-audio')}
+          >
+            {t('nav.pdfToAudioShort', 'PDF')}
+          </button>
         </nav>
       </div>
       <div className="header-controls">
-        {currentPage !== 'app' && (
+        {!isToolPage && (
           <button className="btn btn-primary btn-sm" onClick={() => onNavigate('app')}>
-            {t('nav.tryFree')}
+            {t('nav.getStarted', 'Get Started')}
           </button>
         )}
         <LanguageSwitcher />

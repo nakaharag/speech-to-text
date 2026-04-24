@@ -6,7 +6,10 @@
   "nav": {
     "home": "Início",
     "transcribe": "Transcrever",
-    "tryFree": "Testar Grátis"
+    "pdfToAudio": "PDF para Áudio",
+    "pdfToAudioShort": "PDF",
+    "tryFree": "Testar Grátis",
+    "getStarted": "Começar"
   },
   "footer": {
     "privacy": "Política de Privacidade",
@@ -268,5 +271,40 @@
     "section6Content": "Não somos responsáveis por quaisquer danos decorrentes do uso de nosso serviço, incluindo, mas não se limitando a, erros de transcrição, perda de dados ou interrupções de serviço.",
     "section7Title": "Alterações nos Termos",
     "section7Content": "Podemos atualizar estes termos a qualquer momento. O uso continuado do serviço após as alterações constitui aceitação dos novos termos."
+  },
+  "pdfToAudio": {
+    "title": "PDF para Áudio",
+    "subtitle": "Converta seus documentos PDF em arquivos de áudio",
+    "converting": "Convertendo PDF para áudio...",
+    "pleaseWait": "Isso pode demorar um momento para documentos mais longos",
+    "success": "Conversão Concluída",
+    "convertAnother": "Converter Outro",
+    "pages": "Páginas",
+    "characters": "Caracteres",
+    "duration": "Duração",
+    "size": "Tamanho",
+    "remaining": "{{count}} conversões restantes hoje",
+    "features": "Recursos",
+    "feature1": "Suporta documentos PDF baseados em texto",
+    "feature2": "6 opções de voz diferentes",
+    "feature3": "Download instantâneo em MP3",
+    "feature4": "Até 20 páginas por documento"
+  },
+  "pdfUpload": {
+    "title": "Enviar Documento PDF",
+    "dropHere": "Solte o PDF aqui",
+    "dragDrop": "Arraste e solte ou clique para navegar",
+    "maxSize": "Máx 10MB, 20 páginas",
+    "unsupportedFormat": "Por favor, selecione um arquivo PDF",
+    "fileTooLarge": "O arquivo excede o limite de 10MB"
+  },
+  "voiceSelector": {
+    "label": "Voz",
+    "preview": "Ouvir voz"
+  },
+  "audioPlayer": {
+    "play": "Reproduzir",
+    "pause": "Pausar",
+    "download": "Baixar"
   }
 }

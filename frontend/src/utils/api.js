@@ -116,3 +116,69 @@ export async function trackAnalyticsEvent(shareId, eventType) {
     console.error('Failed to track event:', error);
   }
 }
+
+// PDF to Audio API functions
+export async function convertPdfToAudio(file, voice = 'alloy', speed = 1.0) {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('voice', voice);
+  formData.append('speed', speed.toString());
+
+  const response = await fetch(`${API_URL}/pdf/convert`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.message || `Conversion failed: ${response.status}`);
+  }
+
+  return response.json();
+}
+
+export async function getPdfConversionStatus(jobId) {
+  const response = await fetch(`${API_URL}/pdf/status/${jobId}`);
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.message || `Status check failed: ${response.status}`);
+  }
+
+  return response.json();
+}
+
+export async function getTtsVoices(language = 'en') {
+  const response = await fetch(`${API_URL}/pdf/voices?lang=${language}`);
+
+  if (!response.ok) {
+    // Return default voices if API fails
+    return {
+      voices: [
+        { id: 'alloy', name: 'Alloy', description: 'Neutral and balanced' },
+        { id: 'echo', name: 'Echo', description: 'Warm male voice' },
+        { id: 'fable', name: 'Fable', description: 'Expressive storyteller' },
+        { id: 'onyx', name: 'Onyx', description: 'Deep and authoritative' },
+        { id: 'nova', name: 'Nova', description: 'Friendly female voice' },
+        { id: 'shimmer', name: 'Shimmer', description: 'Soft and gentle' },
+      ],
+    };
+  }
+
+  return response.json();
+}
+
+export function getPdfDownloadUrl(jobId) {
+  return `${API_URL}/pdf/download/${jobId}`;
+}
+
+export async function previewVoice(voiceId, language = 'en') {
+  const response = await fetch(`${API_URL}/pdf/preview-voice/${voiceId}?lang=${language}`);
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.message || `Preview failed: ${response.status}`);
+  }
+
+  return response.json();
+}

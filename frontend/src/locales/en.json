@@ -6,7 +6,10 @@
   "nav": {
     "home": "Home",
     "transcribe": "Transcribe",
-    "tryFree": "Try Free"
+    "pdfToAudio": "PDF to Audio",
+    "pdfToAudioShort": "PDF",
+    "tryFree": "Try Free",
+    "getStarted": "Get Started"
   },
   "footer": {
     "privacy": "Privacy Policy",
@@ -268,5 +271,40 @@
     "section6Content": "We are not liable for any damages arising from the use of our service, including but not limited to transcription errors, data loss, or service interruptions.",
     "section7Title": "Changes to Terms",
     "section7Content": "We may update these terms at any time. Continued use of the service after changes constitutes acceptance of the new terms."
+  },
+  "pdfToAudio": {
+    "title": "PDF to Audio",
+    "subtitle": "Convert your PDF documents to audio files",
+    "converting": "Converting PDF to audio...",
+    "pleaseWait": "This may take a moment for longer documents",
+    "success": "Conversion Complete",
+    "convertAnother": "Convert Another",
+    "pages": "Pages",
+    "characters": "Characters",
+    "duration": "Duration",
+    "size": "Size",
+    "remaining": "{{count}} conversions remaining today",
+    "features": "Features",
+    "feature1": "Supports text-based PDF documents",
+    "feature2": "6 different voice options",
+    "feature3": "Instant MP3 download",
+    "feature4": "Up to 20 pages per document"
+  },
+  "pdfUpload": {
+    "title": "Upload PDF Document",
+    "dropHere": "Drop PDF here",
+    "dragDrop": "Drag and drop or click to browse",
+    "maxSize": "Max 10MB, 20 pages",
+    "unsupportedFormat": "Please select a PDF file",
+    "fileTooLarge": "File exceeds 10MB limit"
+  },
+  "voiceSelector": {
+    "label": "Voice",
+    "preview": "Preview voice"
+  },
+  "audioPlayer": {
+    "play": "Play",
+    "pause": "Pause",
+    "download": "Download"
   }
 }
