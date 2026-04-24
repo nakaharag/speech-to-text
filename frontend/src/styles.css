@@ -275,6 +275,11 @@ body {
   color: var(--color-primary);
 }
 
+.site-lang-current-flag {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
 .site-lang-dropdown {
   position: absolute;
   top: calc(100% + var(--spacing-sm));
