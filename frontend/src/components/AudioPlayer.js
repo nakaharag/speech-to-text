@@ -67,7 +67,11 @@ export function AudioPlayer({ audioBase64, fileName, downloadUrl }) {
     if (audioBase64) {
       const link = document.createElement('a');
       link.href = audioUrl;
-      link.download = fileName || 'audio.mp3';
+      // Replace .pdf extension with .mp3 for the download filename
+      const downloadName = fileName
+        ? fileName.replace(/\.pdf$/i, '.mp3')
+        : 'audio.mp3';
+      link.download = downloadName;
       link.click();
     } else if (downloadUrl) {
       window.open(downloadUrl, '_blank');
