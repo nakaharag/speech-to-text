@@ -118,6 +118,7 @@ model PdfConversion {
   audioFormat   String?   @db.VarChar(10) // mp3, wav, ogg
   audioSize     Int?      // Size in bytes
   audioDuration Float?    // Duration in seconds
+  audioData     String?   @db.Text // Base64-encoded audio, stored after conversion
   errorMessage  String?   @db.Text
   createdAt     DateTime  @default(now())
   completedAt   DateTime?

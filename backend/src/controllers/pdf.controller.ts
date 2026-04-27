@@ -148,7 +148,10 @@ export class PdfController {
         { voice, speed },
       );
 
-      // Update completion
+      // Store audio as base64 to avoid regenerating on status/download
+      const audioBase64 = ttsResult.audio.toString('base64');
+
+      // Update completion with stored audio
       await this.prisma.pdfConversion.update({
         where: { shortId },
         data: {
@@ -156,6 +159,7 @@ export class PdfController {
           audioSize: ttsResult.audio.length,
           audioDuration: ttsResult.duration,
           audioFormat: 'mp3',
+          audioData: audioBase64,
           completedAt: new Date(),
         },
       });
@@ -199,17 +203,12 @@ export class PdfController {
       throw new HttpException('Conversion expired', HttpStatus.GONE);
     }
 
-    if (!conversion.extractedText) {
+    if (!conversion.audioData) {
       throw new HttpException('Audio not available', HttpStatus.NOT_FOUND);
     }
 
-    // Regenerate audio (for MVP, we don't store audio files)
-    const ttsResult = await this.ttsService.convertTextToSpeech(
-      conversion.extractedText,
-      {
-        voice: (conversion.voice as TtsVoice) || 'alloy',
-      },
-    );
+    // Use stored audio (no regeneration needed)
+    const audioBuffer = Buffer.from(conversion.audioData, 'base64');
 
     const filename = conversion.fileName
       ? conversion.fileName.replace('.pdf', '.mp3')
@@ -217,8 +216,8 @@ export class PdfController {
 
     res.setHeader('Content-Type', 'audio/mpeg');
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-    res.setHeader('Content-Length', ttsResult.audio.length);
-    res.send(ttsResult.audio);
+    res.setHeader('Content-Length', audioBuffer.length);
+    res.send(audioBuffer);
   }
 
   @Get('status/:jobId')
@@ -250,23 +249,14 @@ export class PdfController {
       downloadUrl: `/pdf/download/${conversion.shortId}`,
     };
 
-    // If completed and audio requested, regenerate and include audio
+    // If completed and audio requested, return stored audio (no regeneration needed)
     const includeAudio = req.query.includeAudio === 'true';
-    if (conversion.status === 'completed' && includeAudio && conversion.extractedText) {
-      try {
-        const ttsResult = await this.ttsService.convertTextToSpeech(
-          conversion.extractedText,
-          { voice: (conversion.voice as TtsVoice) || 'alloy' },
-        );
-        return {
-          ...baseResponse,
-          audio: ttsResult.audio.toString('base64'),
-          estimatedDuration: ttsResult.duration,
-        };
-      } catch (error) {
-        // If audio generation fails, still return status
-        return baseResponse;
-      }
+    if (conversion.status === 'completed' && includeAudio && conversion.audioData) {
+      return {
+        ...baseResponse,
+        audio: conversion.audioData,
+        estimatedDuration: conversion.audioDuration,
+      };
     }
 
     return baseResponse;
