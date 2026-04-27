@@ -12,8 +12,9 @@ services:
       - internal
     environment:
       - AUTOHEAL_CONTAINER_LABEL=all
-      - AUTOHEAL_INTERVAL=30
-      - AUTOHEAL_START_PERIOD=60
+      - AUTOHEAL_INTERVAL=10
+      - AUTOHEAL_START_PERIOD=30
+      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=10
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -62,10 +63,10 @@ services:
       - 8.8.4.4
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://localhost:3000/health || exit 1"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
 
   pdf-service:
     build:
@@ -122,11 +123,15 @@ services:
       - "traefik.http.routers.speech-frontend.entrypoints=http,https"
       - "traefik.http.routers.speech-frontend.tls=true"
       - "traefik.http.routers.speech-frontend.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.speech-frontend.middlewares=speech-retry@docker"
       - "traefik.http.services.speech-frontend.loadbalancer.server.port=80"
       # Health check - wait for container to be healthy before routing
       - "traefik.http.services.speech-frontend.loadbalancer.healthcheck.path=/"
-      - "traefik.http.services.speech-frontend.loadbalancer.healthcheck.interval=10s"
-      - "traefik.http.services.speech-frontend.loadbalancer.healthcheck.timeout=5s"
+      - "traefik.http.services.speech-frontend.loadbalancer.healthcheck.interval=5s"
+      - "traefik.http.services.speech-frontend.loadbalancer.healthcheck.timeout=3s"
+      # Retry middleware - retry on 502/503/504 errors
+      - "traefik.http.middlewares.speech-retry.retry.attempts=3"
+      - "traefik.http.middlewares.speech-retry.retry.initialinterval=100ms"
 
 volumes:
   postgres-data:
