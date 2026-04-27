@@ -77,24 +77,61 @@ export class PdfController {
     const validVoice = this.validateVoice(voice);
     const validSpeed = this.validateSpeed(speed);
 
+    // Create conversion record
+    await this.prisma.pdfConversion.create({
+      data: {
+        shortId,
+        status: 'pending',
+        fileName: file.originalname,
+        fileSize: file.size,
+        voice: validVoice,
+        ipAddress: ip,
+        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
+      },
+    });
+
+    // Start background processing (don't await)
+    this.processConversionInBackground(
+      shortId,
+      file.buffer,
+      validVoice,
+      validSpeed,
+      ip,
+    );
+
+    // Return immediately with job ID
+    const remaining = await this.rateLimitService.getRemainingRequests(ip);
+    return {
+      success: true,
+      jobId: shortId,
+      status: 'pending',
+      fileName: file.originalname,
+      remaining,
+      message: 'Conversion started. Poll /pdf/status/:jobId for progress.',
+    };
+  }
+
+  /**
+   * Background processing for PDF conversion
+   */
+  private async processConversionInBackground(
+    shortId: string,
+    fileBuffer: Buffer,
+    voice: TtsVoice,
+    speed: number,
+    ip: string,
+  ) {
     try {
-      // Create conversion record
-      await this.prisma.pdfConversion.create({
-        data: {
-          shortId,
-          status: 'extracting',
-          fileName: file.originalname,
-          fileSize: file.size,
-          voice: validVoice,
-          ipAddress: ip,
-          expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
-        },
+      // Update status to extracting
+      await this.prisma.pdfConversion.update({
+        where: { shortId },
+        data: { status: 'extracting' },
       });
 
-      // Extract text from PDF
-      const extraction = await this.pdfService.extractText(file.buffer);
+      // Extract text from PDF (may use OCR for scanned PDFs)
+      const extraction = await this.pdfService.extractText(fileBuffer);
 
-      // Update status
+      // Update status with extracted text
       await this.prisma.pdfConversion.update({
         where: { shortId },
         data: {
@@ -108,10 +145,7 @@ export class PdfController {
       // Convert to audio
       const ttsResult = await this.ttsService.convertTextToSpeech(
         extraction.text,
-        {
-          voice: validVoice as TtsVoice,
-          speed: validSpeed,
-        },
+        { voice, speed },
       );
 
       // Update completion
@@ -126,27 +160,11 @@ export class PdfController {
         },
       });
 
-      // Increment rate limit
+      // Increment rate limit only on success
       await this.rateLimitService.incrementCount(ip);
-      const remaining = await this.rateLimitService.getRemainingRequests(ip);
 
-      return {
-        success: true,
-        jobId: shortId,
-        fileName: file.originalname,
-        pageCount: extraction.pageCount,
-        textLength: extraction.text.length,
-        estimatedDuration: ttsResult.duration,
-        audioSize: ttsResult.audio.length,
-        chunks: ttsResult.chunks,
-        remaining,
-        downloadUrl: `/pdf/download/${shortId}`,
-        // Include base64 audio for immediate playback
-        audio: ttsResult.audio.toString('base64'),
-      };
     } catch (error) {
       const err = error as Error;
-
       // Update failure status
       await this.prisma.pdfConversion
         .update({
@@ -157,21 +175,6 @@ export class PdfController {
           },
         })
         .catch(() => {});
-
-      // Return appropriate error status
-      if (
-        err.message.includes('limit') ||
-        err.message.includes('exceeds') ||
-        err.message.includes('scanned') ||
-        err.message.includes('No readable')
-      ) {
-        throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
-      }
-
-      throw new HttpException(
-        err.message || 'Conversion failed',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
     }
   }
 
@@ -219,7 +222,10 @@ export class PdfController {
   }
 
   @Get('status/:jobId')
-  async getStatus(@Param('jobId') jobId: string) {
+  async getStatus(
+    @Param('jobId') jobId: string,
+    @Req() req: Request,
+  ) {
     const conversion = await this.prisma.pdfConversion.findUnique({
       where: { shortId: jobId },
     });
@@ -228,7 +234,7 @@ export class PdfController {
       throw new HttpException('Conversion not found', HttpStatus.NOT_FOUND);
     }
 
-    return {
+    const baseResponse = {
       jobId: conversion.shortId,
       status: conversion.status,
       fileName: conversion.fileName,
@@ -241,7 +247,29 @@ export class PdfController {
       createdAt: conversion.createdAt,
       completedAt: conversion.completedAt,
       expiresAt: conversion.expiresAt,
+      downloadUrl: `/pdf/download/${conversion.shortId}`,
     };
+
+    // If completed and audio requested, regenerate and include audio
+    const includeAudio = req.query.includeAudio === 'true';
+    if (conversion.status === 'completed' && includeAudio && conversion.extractedText) {
+      try {
+        const ttsResult = await this.ttsService.convertTextToSpeech(
+          conversion.extractedText,
+          { voice: (conversion.voice as TtsVoice) || 'alloy' },
+        );
+        return {
+          ...baseResponse,
+          audio: ttsResult.audio.toString('base64'),
+          estimatedDuration: ttsResult.duration,
+        };
+      } catch (error) {
+        // If audio generation fails, still return status
+        return baseResponse;
+      }
+    }
+
+    return baseResponse;
   }
 
   @Get('voices')

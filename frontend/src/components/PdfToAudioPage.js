@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { PdfUpload } from './PdfUpload';
 import { VoiceSelector } from './VoiceSelector';
 import { AudioPlayer } from './AudioPlayer';
-import { convertPdfToAudio, getPdfDownloadUrl } from '../utils/api';
+import { convertPdfToAudio, pollPdfConversion, getPdfDownloadUrl } from '../utils/api';
 
 export function PdfToAudioPage() {
   const { t } = useTranslation();
@@ -13,21 +13,34 @@ export function PdfToAudioPage() {
   const [result, setResult] = useState(null);
   const [remaining, setRemaining] = useState(null);
   const [fileName, setFileName] = useState(null);
+  const [conversionStatus, setConversionStatus] = useState(null);
 
   const handleFileSelect = async (file) => {
     setError(null);
     setResult(null);
     setIsConverting(true);
     setFileName(file.name);
+    setConversionStatus('pending');
 
     try {
-      const response = await convertPdfToAudio(file, voice);
-      setResult(response);
-      setRemaining(response.remaining);
+      // Start conversion (returns immediately with job ID)
+      const startResponse = await convertPdfToAudio(file, voice);
+      setRemaining(startResponse.remaining);
+
+      // Poll for completion
+      const finalResult = await pollPdfConversion(
+        startResponse.jobId,
+        (status) => {
+          setConversionStatus(status.status);
+        }
+      );
+
+      setResult(finalResult);
     } catch (err) {
       setError(err.message);
     } finally {
       setIsConverting(false);
+      setConversionStatus(null);
     }
   };
 
@@ -80,10 +93,14 @@ export function PdfToAudioPage() {
             <div className="conversion-progress">
               <div className="progress-spinner" />
               <span className="progress-text">
-                {t('pdfToAudio.converting', 'Converting PDF to audio...')}
+                {conversionStatus === 'extracting' && t('pdfToAudio.extracting', 'Extracting text from PDF...')}
+                {conversionStatus === 'converting' && t('pdfToAudio.convertingAudio', 'Converting text to audio...')}
+                {(conversionStatus === 'pending' || !conversionStatus) && t('pdfToAudio.starting', 'Starting conversion...')}
               </span>
               <span className="progress-subtext">
-                {t('pdfToAudio.pleaseWait', 'This may take a moment for longer documents')}
+                {conversionStatus === 'extracting'
+                  ? t('pdfToAudio.ocrNote', 'Scanned PDFs may take longer to process')
+                  : t('pdfToAudio.pleaseWait', 'This may take a moment for longer documents')}
               </span>
             </div>
           )}
@@ -153,8 +170,8 @@ export function PdfToAudioPage() {
       <div className="pdf-features">
         <h3>{t('pdfToAudio.features', 'Features')}</h3>
         <ul>
-          <li>{t('pdfToAudio.feature1', 'Supports text-based PDF documents')}</li>
-          <li>{t('pdfToAudio.feature2', '6 different voice options')}</li>
+          <li>{t('pdfToAudio.feature1', 'Supports text-based and scanned PDFs (OCR)')}</li>
+          <li>{t('pdfToAudio.feature2', 'Multiple voice options')}</li>
           <li>{t('pdfToAudio.feature3', 'Instant MP3 download')}</li>
           <li>{t('pdfToAudio.feature4', 'Up to 20 pages per document')}</li>
         </ul>

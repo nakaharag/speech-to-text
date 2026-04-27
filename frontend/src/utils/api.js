@@ -137,8 +137,12 @@ export async function convertPdfToAudio(file, voice = 'alloy', speed = 1.0) {
   return response.json();
 }
 
-export async function getPdfConversionStatus(jobId) {
-  const response = await fetch(`${API_URL}/pdf/status/${jobId}`);
+export async function getPdfConversionStatus(jobId, includeAudio = false) {
+  const url = includeAudio
+    ? `${API_URL}/pdf/status/${jobId}?includeAudio=true`
+    : `${API_URL}/pdf/status/${jobId}`;
+
+  const response = await fetch(url);
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({}));
@@ -146,6 +150,38 @@ export async function getPdfConversionStatus(jobId) {
   }
 
   return response.json();
+}
+
+/**
+ * Poll for PDF conversion completion
+ * @param {string} jobId - Job ID to poll
+ * @param {function} onProgress - Callback for status updates
+ * @param {number} maxWait - Max wait time in ms (default 5 minutes)
+ * @returns {Promise<object>} - Final result with audio
+ */
+export async function pollPdfConversion(jobId, onProgress = () => {}, maxWait = 300000) {
+  const startTime = Date.now();
+  const pollInterval = 2000; // 2 seconds
+
+  while (Date.now() - startTime < maxWait) {
+    const status = await getPdfConversionStatus(jobId);
+    onProgress(status);
+
+    if (status.status === 'completed') {
+      // Fetch with audio included
+      const result = await getPdfConversionStatus(jobId, true);
+      return result;
+    }
+
+    if (status.status === 'failed') {
+      throw new Error(status.errorMessage || 'Conversion failed');
+    }
+
+    // Wait before next poll
+    await new Promise(resolve => setTimeout(resolve, pollInterval));
+  }
+
+  throw new Error('Conversion timed out. Please try again.');
 }
 
 export async function getTtsVoices(language = 'en') {
