@@ -54,6 +54,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      pdf-service:
+        condition: service_healthy
     restart: always
     dns:
       - 8.8.8.8
@@ -64,6 +66,30 @@ services:
       timeout: 10s
       retries: 5
       start_period: 60s
+
+  pdf-service:
+    build:
+      context: ./pdf-service
+      dockerfile: Dockerfile
+    networks:
+      - internal
+    expose:
+      - "8000"
+    environment:
+      - OCR_CLOUD_PROVIDER=${OCR_CLOUD_PROVIDER:-none}
+      - OCR_CONFIDENCE_THRESHOLD=${OCR_CONFIDENCE_THRESHOLD:-0.85}
+      - OCR_MAX_FILE_SIZE=${OCR_MAX_FILE_SIZE:-52428800}
+      - OCR_MAX_PAGES=${OCR_MAX_PAGES:-50}
+      - DATABASE_PATH=/app/data/jobs.db
+    volumes:
+      - pdf-service-data:/app/data
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8000/health || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
   frontend:
     build:
@@ -105,3 +131,4 @@ services:
 volumes:
   postgres-data:
   backend-data:
+  pdf-service-data:

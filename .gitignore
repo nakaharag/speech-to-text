@@ -40,3 +40,5 @@ prisma/*.db-journal
 
 # Docker local overrides
 docker-compose.override.yml
+pdf-service/venv/
+pdf-service/data/

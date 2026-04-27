@@ -2,6 +2,7 @@ import {
   Controller,
   Post,
   Get,
+  Delete,
   Param,
   UseInterceptors,
   UploadedFile,
@@ -15,7 +16,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Request, Response } from 'express';
 import { PdfService } from '../services/pdf.service';
 import { TtsService, TtsVoice } from '../services/tts.service';
-import { getPreviewText, getVoiceDescription, TtsVoice as VoiceType } from '../constants/voice-previews';
+import { getPreviewText, getVoiceDescription, getRecommendedVoices, TtsVoice as VoiceType } from '../constants/voice-previews';
 import { RateLimitService } from '../services/rate-limit.service';
 import { PrismaService } from '../services/prisma.service';
 import { nanoid } from 'nanoid';
@@ -247,15 +248,18 @@ export class PdfController {
   getVoices(@Req() req: Request) {
     const lang = (req.query.lang as string) || 'en';
     const voices = this.ttsService.getAvailableVoices();
+    const recommendedVoiceIds = getRecommendedVoices(lang);
 
-    // Translate descriptions based on language
-    const translatedVoices = voices.map((voice) => ({
-      ...voice,
-      description: getVoiceDescription(voice.id as VoiceType, lang),
-    }));
+    // Filter and translate voices based on language
+    const filteredVoices = voices
+      .filter((voice) => recommendedVoiceIds.includes(voice.id as VoiceType))
+      .map((voice) => ({
+        ...voice,
+        description: getVoiceDescription(voice.id as VoiceType, lang),
+      }));
 
     return {
-      voices: translatedVoices,
+      voices: filteredVoices,
     };
   }
 
@@ -283,6 +287,89 @@ export class PdfController {
       throw new HttpException(
         err.message || 'Preview failed',
         HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  // OCR Endpoints - Forward to Python PDF service
+  @Post('ocr')
+  @UseInterceptors(FileInterceptor('file'))
+  async submitOcrJob(
+    @UploadedFile() file: Express.Multer.File,
+    @Req() req: Request,
+  ) {
+    if (!file) {
+      throw new HttpException('No file uploaded', HttpStatus.BAD_REQUEST);
+    }
+
+    // Forward to Python PDF service
+    const formData = new FormData();
+    const uint8Array = new Uint8Array(file.buffer);
+    formData.append('file', new Blob([uint8Array]), file.originalname);
+
+    try {
+      const response = await fetch('http://pdf-service:8000/jobs', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new HttpException(
+          error.detail || 'OCR service error',
+          response.status,
+        );
+      }
+
+      return response.json();
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(
+        'OCR service unavailable',
+        HttpStatus.SERVICE_UNAVAILABLE,
+      );
+    }
+  }
+
+  @Get('ocr/:jobId')
+  async getOcrJobStatus(@Param('jobId') jobId: string) {
+    try {
+      const response = await fetch(`http://pdf-service:8000/jobs/${jobId}`);
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new HttpException('Job not found', HttpStatus.NOT_FOUND);
+        }
+        throw new HttpException('OCR service error', response.status);
+      }
+
+      return response.json();
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(
+        'OCR service unavailable',
+        HttpStatus.SERVICE_UNAVAILABLE,
+      );
+    }
+  }
+
+  @Delete('ocr/:jobId')
+  async deleteOcrJob(@Param('jobId') jobId: string) {
+    try {
+      const response = await fetch(`http://pdf-service:8000/jobs/${jobId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok && response.status !== 204) {
+        throw new HttpException('Failed to delete job', response.status);
+      }
+
+      return { success: true };
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(
+        'OCR service unavailable',
+        HttpStatus.SERVICE_UNAVAILABLE,
       );
     }
   }

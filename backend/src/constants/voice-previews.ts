@@ -1,5 +1,28 @@
 export type TtsVoice = 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer';
 
+// Voices recommended for each language (less English accent)
+// Voices not in this list will be filtered out for that language
+export const RECOMMENDED_VOICES_BY_LANGUAGE: Record<string, TtsVoice[]> = {
+  // Portuguese - exclude fable (British accent) and echo (English accent)
+  pt: ['alloy', 'nova', 'shimmer', 'onyx'],
+  // Spanish - similar to Portuguese
+  es: ['alloy', 'nova', 'shimmer', 'onyx'],
+  // French
+  fr: ['alloy', 'nova', 'shimmer', 'onyx'],
+  // German
+  de: ['alloy', 'nova', 'shimmer', 'onyx', 'echo'],
+  // Italian
+  it: ['alloy', 'nova', 'shimmer', 'onyx'],
+  // English - all voices work well
+  en: ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer'],
+  // Default - all voices
+  default: ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer'],
+};
+
+export function getRecommendedVoices(lang: string): TtsVoice[] {
+  return RECOMMENDED_VOICES_BY_LANGUAGE[lang] || RECOMMENDED_VOICES_BY_LANGUAGE.default;
+}
+
 export const VOICE_DESCRIPTIONS: Record<string, Record<TtsVoice, string>> = {
   en: {
     alloy: 'Neutral and balanced',
