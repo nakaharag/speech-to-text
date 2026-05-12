@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { sendPasswordResetEmail, generateToken } from '@/lib/email';
+import { sendPasswordResetEmail, generateToken, PASSWORD_RESET_TOKEN_PREFIX } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
     // Delete any existing reset tokens for this user
     await prisma.verificationToken.deleteMany({
-      where: { identifier: `reset:${normalizedEmail}` },
+      where: { identifier: `${PASSWORD_RESET_TOKEN_PREFIX}${normalizedEmail}` },
     });
 
     const token = generateToken();
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
 
     await prisma.verificationToken.create({
       data: {
-        identifier: `reset:${normalizedEmail}`,
+        identifier: `${PASSWORD_RESET_TOKEN_PREFIX}${normalizedEmail}`,
         token,
         expires,
       },

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { hashPassword, validatePassword } from '@/lib/password';
+import { PASSWORD_RESET_TOKEN_PREFIX } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,7 +26,7 @@ export async function POST(request: NextRequest) {
       where: { token },
     });
 
-    if (!verificationToken || !verificationToken.identifier.startsWith('reset:')) {
+    if (!verificationToken || !verificationToken.identifier.startsWith(PASSWORD_RESET_TOKEN_PREFIX)) {
       return NextResponse.json(
         { error: 'Invalid or expired reset link' },
         { status: 400 }
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const email = verificationToken.identifier.replace('reset:', '');
+    const email = verificationToken.identifier.replace(PASSWORD_RESET_TOKEN_PREFIX, '');
 
     const passwordHash = await hashPassword(password);
 

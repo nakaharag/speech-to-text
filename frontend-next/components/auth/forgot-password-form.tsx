@@ -21,7 +21,7 @@ export function ForgotPasswordForm() {
       });
       setSubmitted(true);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Forgot password request error:', error);
     } finally {
       setIsLoading(false);
     }
