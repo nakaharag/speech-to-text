@@ -1,8 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { sendPasswordResetEmail, generateToken, PASSWORD_RESET_TOKEN_PREFIX } from '@/lib/email';
+import { checkRateLimit, cleanupRateLimitStore } from '@/lib/rate-limit';
 
 export async function POST(request: NextRequest) {
+  // Cleanup old rate limit entries
+  cleanupRateLimitStore();
+
+  // Check rate limit - still return success message to prevent enumeration
+  const rateLimit = await checkRateLimit('password-reset');
+  if (!rateLimit.allowed) {
+    return NextResponse.json({
+      success: true,
+      message: 'If an account exists with this email, a reset link has been sent.'
+    });
+  }
+
   try {
     const { email } = await request.json();
 

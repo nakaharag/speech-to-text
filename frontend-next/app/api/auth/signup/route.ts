@@ -2,8 +2,29 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { hashPassword, validatePassword } from '@/lib/password';
 import { sendVerificationEmail, generateToken } from '@/lib/email';
+import { checkRateLimit, cleanupRateLimitStore } from '@/lib/rate-limit';
 
 export async function POST(request: NextRequest) {
+  // Cleanup old rate limit entries
+  cleanupRateLimitStore();
+
+  // Check rate limit
+  const rateLimit = await checkRateLimit('signup');
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      {
+        error: 'Too many signup attempts. Please try again later.',
+        retryAfter: rateLimit.resetAt.toISOString(),
+      },
+      {
+        status: 429,
+        headers: {
+          'Retry-After': Math.ceil((rateLimit.resetAt.getTime() - Date.now()) / 1000).toString(),
+        },
+      }
+    );
+  }
+
   try {
     const { name, email, password } = await request.json();
 
