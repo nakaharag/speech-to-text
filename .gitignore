@@ -38,6 +38,9 @@ prisma/*.db-journal
 *.tgz
 .cache/
 
+# Git worktrees
+.worktrees/
+
 # Docker local overrides
 docker-compose.override.yml
 pdf-service/venv/
