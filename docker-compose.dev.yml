@@ -1,0 +1,113 @@
+# Development Docker Compose - Hot Reload Enabled
+# Usage: docker compose -f docker-compose.dev.yml up
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-speechtotext}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-speechtotext123}
+      - POSTGRES_DB=${POSTGRES_DB:-speechtotext}
+    volumes:
+      - postgres-dev-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-speechtotext}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: node:20-alpine
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost:3001}
+      - BASE_URL=${BASE_URL:-http://localhost:3000}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-speechtotext}:${POSTGRES_PASSWORD:-speechtotext123}@postgres:5432/${POSTGRES_DB:-speechtotext}
+    volumes:
+      - ./backend:/app
+      - backend-node-modules:/app/node_modules
+    command: >
+      sh -c "
+        corepack enable &&
+        corepack prepare pnpm@latest --activate &&
+        pnpm install &&
+        pnpm prisma generate &&
+        pnpm prisma migrate dev --skip-seed &&
+        pnpm run start:dev
+      "
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:3000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - NEXTAUTH_URL=${NEXTAUTH_URL:-http://localhost:3001}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-dev-secret-change-in-production}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-speechtotext}:${POSTGRES_PASSWORD:-speechtotext123}@postgres:5432/${POSTGRES_DB:-speechtotext}
+      - BACKEND_URL=http://backend:3000
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
+      - APPLE_ID=${APPLE_ID:-}
+      - APPLE_TEAM_ID=${APPLE_TEAM_ID:-}
+      - APPLE_KEY_ID=${APPLE_KEY_ID:-}
+      - APPLE_PRIVATE_KEY=${APPLE_PRIVATE_KEY:-}
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
+      - SMTP_FROM=${SMTP_FROM:-noreply@localhost}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET:-}
+      - STRIPE_BASIC_MONTHLY_PRICE_ID=${STRIPE_BASIC_MONTHLY_PRICE_ID:-}
+      - STRIPE_BASIC_YEARLY_PRICE_ID=${STRIPE_BASIC_YEARLY_PRICE_ID:-}
+      - STRIPE_PRO_MONTHLY_PRICE_ID=${STRIPE_PRO_MONTHLY_PRICE_ID:-}
+      - STRIPE_PRO_YEARLY_PRICE_ID=${STRIPE_PRO_YEARLY_PRICE_ID:-}
+      # Enable Next.js hot reload with polling (for Docker)
+      - WATCHPACK_POLLING=true
+    volumes:
+      - ./frontend-next:/app
+      - frontend-node-modules:/app/node_modules
+      - frontend-next-cache:/app/.next
+    command: >
+      sh -c "
+        corepack enable &&
+        corepack prepare pnpm@latest --activate &&
+        pnpm install &&
+        pnpm prisma generate &&
+        pnpm run dev
+      "
+    depends_on:
+      postgres:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:3001 || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+
+volumes:
+  postgres-dev-data:
+  backend-node-modules:
+  frontend-node-modules:
+  frontend-next-cache:
