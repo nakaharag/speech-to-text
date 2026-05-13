@@ -5,18 +5,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 type Props = {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ email?: string }>;
 };
 
-export default async function VerifyPage({ params, searchParams }: Props) {
+export default async function VerifyPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const { email } = await searchParams;
 
-  return <VerifyPageContent email={email} />;
+  return <VerifyPageContent />;
 }
 
-function VerifyPageContent({ email }: { email?: string }) {
+function VerifyPageContent() {
   const t = useTranslations('auth.verify');
 
   return (
@@ -24,8 +22,7 @@ function VerifyPageContent({ email }: { email?: string }) {
       <CardHeader className="text-center">
         <CardTitle>{t('title')}</CardTitle>
         <CardDescription>
-          {t('description')}{' '}
-          {email && <strong>{email}</strong>}
+          {t('description')}
         </CardDescription>
       </CardHeader>
       <CardContent>

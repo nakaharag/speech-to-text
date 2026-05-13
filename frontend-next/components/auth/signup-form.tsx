@@ -45,7 +45,8 @@ export function SignupForm() {
         return;
       }
 
-      router.push('/verify?email=' + encodeURIComponent(formData.email));
+      // Don't expose email in URL - just redirect to verify page
+      router.push('/verify');
     } catch (err) {
       setError('An unexpected error occurred');
     } finally {
