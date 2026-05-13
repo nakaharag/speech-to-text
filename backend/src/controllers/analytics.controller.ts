@@ -8,12 +8,16 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { AnalyticsService } from '../services/analytics.service';
+import { IpUtilsService } from '../services/ip-utils.service';
 import { TrackEventDto } from '../dto/track-event.dto';
 import { Request } from 'express';
 
 @Controller('analytics')
 export class AnalyticsController {
-  constructor(private readonly analyticsService: AnalyticsService) {}
+  constructor(
+    private readonly analyticsService: AnalyticsService,
+    private readonly ipUtilsService: IpUtilsService,
+  ) {}
 
   @Post('track')
   async trackEvent(@Body() dto: TrackEventDto, @Req() req: Request) {
@@ -21,7 +25,7 @@ export class AnalyticsController {
       await this.analyticsService.trackEvent({
         shareId: dto.shareId,
         eventType: dto.eventType,
-        ipAddress: this.getClientIp(req),
+        ipAddress: this.ipUtilsService.getClientIp(req),
         userAgent: req.headers['user-agent'],
         referer: req.headers['referer'] as string,
       });
@@ -47,16 +51,5 @@ export class AnalyticsController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-  }
-
-  private getClientIp(req: Request): string {
-    const forwarded = req.headers['x-forwarded-for'];
-    if (typeof forwarded === 'string') {
-      return forwarded.split(',')[0].trim();
-    }
-    if (Array.isArray(forwarded)) {
-      return forwarded[0];
-    }
-    return req.ip || req.socket.remoteAddress || 'unknown';
   }
 }

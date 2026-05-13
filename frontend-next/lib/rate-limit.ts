@@ -19,17 +19,74 @@ const RATE_LIMITS: Record<string, RateLimitConfig> = {
   'password-reset': { windowMs: 60 * 60 * 1000, maxAttempts: 3 }, // 3 per hour
 };
 
+// SECURITY: Trusted proxy IP ranges that are allowed to set X-Forwarded-For.
+// Only trust forwarded headers when the direct connection comes from these IPs.
+// This prevents IP spoofing attacks where attackers set fake X-Forwarded-For headers.
+const TRUSTED_PROXIES = [
+  '127.0.0.1',
+  '::1',
+  'localhost',
+  // Docker internal networks
+  '172.16.0.0/12',
+  '10.0.0.0/8',
+  '192.168.0.0/16',
+];
+
+function isFromTrustedProxy(directIp: string | null): boolean {
+  if (!directIp) return false;
+
+  // Normalize IPv6-mapped IPv4 addresses (e.g., ::ffff:127.0.0.1 -> 127.0.0.1)
+  const normalizedIp = directIp.replace(/^::ffff:/, '');
+
+  for (const trusted of TRUSTED_PROXIES) {
+    if (trusted.includes('/')) {
+      // CIDR notation - check if IP is in range
+      if (isIpInCidr(normalizedIp, trusted)) return true;
+    } else {
+      if (normalizedIp === trusted) return true;
+    }
+  }
+  return false;
+}
+
+function isIpInCidr(ip: string, cidr: string): boolean {
+  const [range, bits] = cidr.split('/');
+  const mask = parseInt(bits, 10);
+
+  // Only handle IPv4 for simplicity
+  const ipParts = ip.split('.').map(Number);
+  const rangeParts = range.split('.').map(Number);
+
+  if (ipParts.length !== 4 || rangeParts.length !== 4) return false;
+
+  const ipNum = (ipParts[0] << 24) | (ipParts[1] << 16) | (ipParts[2] << 8) | ipParts[3];
+  const rangeNum = (rangeParts[0] << 24) | (rangeParts[1] << 16) | (rangeParts[2] << 8) | rangeParts[3];
+  const maskNum = ~((1 << (32 - mask)) - 1);
+
+  return (ipNum & maskNum) === (rangeNum & maskNum);
+}
+
 export async function getClientIp(): Promise<string> {
   const headersList = await headers();
   const forwarded = headersList.get('x-forwarded-for');
   const realIp = headersList.get('x-real-ip');
 
-  if (forwarded) {
+  // Get the direct connection IP (set by the server/framework)
+  // In Next.js, this is typically available via x-real-ip when behind a proxy
+  // or we fall back to 'unknown' if not available
+  const directIp = realIp || 'unknown';
+
+  // SECURITY: Only trust X-Forwarded-For if the request comes from a trusted proxy.
+  // This prevents attackers from spoofing their IP by setting a fake X-Forwarded-For header.
+  if (forwarded && isFromTrustedProxy(directIp)) {
     return forwarded.split(',')[0].trim();
   }
+
+  // If not from a trusted proxy or no forwarded header, use the direct connection IP
   if (realIp) {
     return realIp;
   }
+
   return 'unknown';
 }
 

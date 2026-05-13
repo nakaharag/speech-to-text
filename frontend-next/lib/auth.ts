@@ -24,7 +24,9 @@ export const authConfig: NextAuthConfig = {
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      allowDangerousEmailAccountLinking: true,
+      // SECURITY: Must be false to prevent account takeover attacks.
+      // When true, attackers can link OAuth accounts to existing emails without verification.
+      allowDangerousEmailAccountLinking: false,
     }),
     Apple({
       clientId: process.env.APPLE_ID!,
