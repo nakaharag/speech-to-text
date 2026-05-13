@@ -19,7 +19,7 @@ export function UsageStatsCards({ stats, isLoading, error }: UsageStatsCardsProp
         {[1, 2, 3].map((i) => (
           <Card key={i}>
             <CardContent className="p-6">
-              <p className="text-sm text-gray-500">{t('stats.error')}</p>
+              <p className="text-sm text-muted">{t('stats.error')}</p>
             </CardContent>
           </Card>
         ))}
@@ -33,12 +33,12 @@ export function UsageStatsCards({ stats, isLoading, error }: UsageStatsCardsProp
         {[1, 2, 3].map((i) => (
           <Card key={i}>
             <CardHeader>
-              <CardTitle className="text-sm font-medium text-gray-500">
-                <div className="h-4 w-24 bg-gray-200 rounded animate-pulse" />
+              <CardTitle className="text-sm font-medium text-muted">
+                <div className="h-4 w-24 bg-border rounded animate-pulse" />
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="h-8 w-16 bg-gray-200 rounded animate-pulse" />
+              <div className="h-8 w-16 bg-border rounded animate-pulse" />
             </CardContent>
           </Card>
         ))}
@@ -81,7 +81,7 @@ export function UsageStatsCards({ stats, isLoading, error }: UsageStatsCardsProp
       {statCards.map((stat, index) => (
         <Card key={index}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">
+            <CardTitle className="text-sm font-medium text-muted">
               {stat.title}
             </CardTitle>
             {stat.icon}

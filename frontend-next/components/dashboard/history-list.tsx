@@ -117,11 +117,11 @@ export function HistoryList({
         <CardContent>
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="flex items-start gap-3 p-4 border rounded-lg">
-                <div className="h-10 w-10 bg-gray-200 rounded-lg animate-pulse" />
+              <div key={i} className="flex items-start gap-3 p-4 border border-border rounded-lg">
+                <div className="h-10 w-10 bg-border rounded-lg animate-pulse" />
                 <div className="flex-1 space-y-2">
-                  <div className="h-4 w-1/3 bg-gray-200 rounded animate-pulse" />
-                  <div className="h-3 w-full bg-gray-200 rounded animate-pulse" />
+                  <div className="h-4 w-1/3 bg-border rounded animate-pulse" />
+                  <div className="h-3 w-full bg-border rounded animate-pulse" />
                 </div>
               </div>
             ))}
@@ -139,7 +139,7 @@ export function HistoryList({
         </CardHeader>
         <CardContent>
           <div className="text-center py-8">
-            <p className="text-gray-500 mb-4">{error}</p>
+            <p className="text-muted mb-4">{error}</p>
             <Button onClick={fetchHistory} variant="outline">
               {tCommon('retry')}
             </Button>
@@ -174,10 +174,10 @@ export function HistoryList({
 
           {items.length === 0 ? (
             <div className="text-center py-8">
-              <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="mx-auto h-12 w-12 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              <p className="mt-4 text-gray-500">{t('history.empty')}</p>
+              <p className="mt-4 text-muted">{t('history.empty')}</p>
               <div className="mt-4 flex justify-center gap-4">
                 <Link href="/transcribe">
                   <Button size="sm">{t('quickActions.transcribe')}</Button>
@@ -210,7 +210,7 @@ export function HistoryList({
               >
                 {t('history.pagination.previous')}
               </Button>
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-foreground-secondary">
                 {t('history.pagination.page', { current: currentPage, total: totalPages })}
               </span>
               <Button

@@ -49,17 +49,17 @@ export function HistoryItemCard({ item, onDelete, isDeleting }: HistoryItemProps
     <Card className="transition-all duration-200 hover:shadow-md">
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
-          <div className="flex-shrink-0 p-2 bg-gray-100 rounded-lg">
+          <div className="flex-shrink-0 p-2 bg-surface-elevated rounded-lg">
             {TypeIcon}
           </div>
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between gap-2">
-              <h4 className="font-medium text-gray-900 truncate">{item.title}</h4>
-              <span className="flex-shrink-0 text-xs text-gray-500">{formattedDate}</span>
+              <h4 className="font-medium text-foreground truncate">{item.title}</h4>
+              <span className="flex-shrink-0 text-xs text-muted">{formattedDate}</span>
             </div>
 
-            <p className={`mt-1 text-sm text-gray-600 ${expanded ? '' : 'line-clamp-2'}`}>
+            <p className={`mt-1 text-sm text-foreground-secondary ${expanded ? '' : 'line-clamp-2'}`}>
               {item.preview}
             </p>
 
@@ -72,7 +72,7 @@ export function HistoryItemCard({ item, onDelete, isDeleting }: HistoryItemProps
               </button>
             )}
 
-            <div className="mt-2 flex items-center gap-4 text-xs text-gray-500">
+            <div className="mt-2 flex items-center gap-4 text-xs text-muted">
               <span className="capitalize">
                 {item.type === 'transcription' ? t('history.types.transcription') : t('history.types.pdf')}
               </span>
@@ -105,7 +105,7 @@ export function HistoryItemCard({ item, onDelete, isDeleting }: HistoryItemProps
             ) : (
               <button
                 onClick={handleDelete}
-                className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                className="p-2 text-muted hover:text-red-500 transition-colors"
                 title={t('history.delete')}
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -34,8 +34,8 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body className={`${plusJakarta.variable} font-sans antialiased bg-[#F8FAFC]`}>
+    <html lang={locale} suppressHydrationWarning>
+      <body className={`${plusJakarta.variable} font-sans antialiased bg-background text-foreground`}>
         <NextIntlClientProvider messages={messages}>
           <Providers>{children}</Providers>
         </NextIntlClientProvider>
