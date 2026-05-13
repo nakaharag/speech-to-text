@@ -6,6 +6,7 @@
   "nav": {
     "home": "Inicio",
     "transcribe": "Transcribir",
+    "pdfToAudio": "PDF a Audio",
     "dashboard": "Panel",
     "settings": "Configuración",
     "signOut": "Cerrar sesión",
@@ -358,6 +359,112 @@
   },
   "legal": {
     "backToHome": "Volver al Inicio"
+  },
+  "transcribe": {
+    "pageTitle": "Transcribir Audio",
+    "pageSubtitle": "Graba o sube audio para obtener transcripciones instantáneas con resumen de IA",
+    "recorder": {
+      "startRecording": "Iniciar grabación",
+      "stopRecording": "Detener grabación",
+      "recording": "Grabando...",
+      "processing": "Procesando...",
+      "idle": "Haz clic para iniciar la grabación",
+      "microphoneError": "No se pudo acceder al micrófono. Verifica los permisos del navegador."
+    },
+    "fileUpload": {
+      "title": "Subir Archivo de Audio",
+      "dropHere": "Suelta el archivo aquí",
+      "dragDrop": "Arrastra y suelta o haz clic para explorar",
+      "maxSize": "Máx 25MB",
+      "unsupportedFormat": "Formato de archivo no soportado. Por favor, sube un archivo de audio.",
+      "fileTooLarge": "El archivo excede el límite de 25MB"
+    },
+    "languageSelector": {
+      "autoDetect": "Detectar idioma automáticamente",
+      "search": "Buscar idiomas...",
+      "noResults": "No se encontraron idiomas"
+    },
+    "transcript": {
+      "title": "Transcripción",
+      "copy": "Copiar al portapapeles",
+      "transcribing": "Transcribiendo..."
+    },
+    "summary": {
+      "title": "Resumen con IA",
+      "generating": "Generando resumen...",
+      "viewCorrected": "Ver transcripción corregida"
+    },
+    "share": {
+      "title": "Compartir",
+      "createLink": "Crear Enlace para Compartir",
+      "creating": "Creando...",
+      "copy": "Copiar",
+      "copied": "¡Copiado!",
+      "shareOnX": "Compartir en X",
+      "shareOnFacebook": "Compartir en Facebook",
+      "shareOnWhatsApp": "Compartir en WhatsApp",
+      "expires": "El enlace expira en 7 días"
+    },
+    "results": {
+      "title": "Resultados",
+      "newRecording": "Nueva Grabación"
+    },
+    "input": {
+      "uploadFile": "Subir Archivo",
+      "recordInstead": "Grabar en su lugar"
+    },
+    "rateLimit": {
+      "remaining": "{count} transcripciones restantes hoy"
+    },
+    "sharedView": {
+      "notice": "Estás viendo una transcripción compartida"
+    }
+  },
+  "pdfToAudio": {
+    "title": "PDF a Audio",
+    "subtitle": "Convierte tus documentos PDF en archivos de audio",
+    "upload": {
+      "title": "Subir Documento PDF",
+      "dropHere": "Suelta el PDF aquí",
+      "dragDrop": "Arrastra y suelta o haz clic para explorar",
+      "maxSize": "Máx 10MB, 20 páginas",
+      "unsupportedFormat": "Por favor, selecciona un archivo PDF",
+      "fileTooLarge": "El archivo excede el límite de 10MB"
+    },
+    "voiceSelector": {
+      "label": "Voz",
+      "preview": "Previsualizar voz"
+    },
+    "player": {
+      "play": "Reproducir",
+      "pause": "Pausar",
+      "skipBackward": "Retroceder 10 segundos",
+      "skipForward": "Avanzar 10 segundos",
+      "download": "Descargar MP3"
+    },
+    "status": {
+      "starting": "Iniciando conversión...",
+      "extracting": "Extrayendo texto del PDF...",
+      "converting": "Convirtiendo texto a audio...",
+      "ocrNote": "Los PDFs escaneados pueden tardar más en procesar",
+      "pleaseWait": "Esto puede tardar un momento para documentos más largos"
+    },
+    "success": "Conversión Completada",
+    "convertAnother": "Convertir Otro",
+    "stats": {
+      "pages": "Páginas",
+      "characters": "Caracteres",
+      "duration": "Duración",
+      "size": "Tamaño"
+    },
+    "remaining": "{count} conversiones restantes hoy",
+    "features": {
+      "title": "Características",
+      "feature1": "Soporta PDFs basados en texto y escaneados (OCR)",
+      "feature2": "Múltiples opciones de voz",
+      "feature3": "Descarga instantánea de MP3",
+      "feature4": "Hasta 20 páginas por documento"
+    }
   },
   "metadata": {
     "home": {

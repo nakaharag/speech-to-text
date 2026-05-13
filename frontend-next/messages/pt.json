@@ -6,6 +6,7 @@
   "nav": {
     "home": "Início",
     "transcribe": "Transcrever",
+    "pdfToAudio": "PDF para Áudio",
     "dashboard": "Painel",
     "settings": "Configurações",
     "signOut": "Sair",
@@ -358,6 +359,112 @@
   },
   "legal": {
     "backToHome": "Voltar ao Início"
+  },
+  "transcribe": {
+    "pageTitle": "Transcrever Áudio",
+    "pageSubtitle": "Grave ou envie áudio para obter transcrições instantâneas com resumo de IA",
+    "recorder": {
+      "startRecording": "Iniciar gravação",
+      "stopRecording": "Parar gravação",
+      "recording": "Gravando...",
+      "processing": "Processando...",
+      "idle": "Clique para iniciar a gravação",
+      "microphoneError": "Não foi possível acessar o microfone. Verifique as permissões do navegador."
+    },
+    "fileUpload": {
+      "title": "Enviar Arquivo de Áudio",
+      "dropHere": "Solte o arquivo aqui",
+      "dragDrop": "Arraste e solte ou clique para navegar",
+      "maxSize": "Máx 25MB",
+      "unsupportedFormat": "Formato de arquivo não suportado. Por favor, envie um arquivo de áudio.",
+      "fileTooLarge": "Arquivo excede o limite de 25MB"
+    },
+    "languageSelector": {
+      "autoDetect": "Detectar idioma automaticamente",
+      "search": "Pesquisar idiomas...",
+      "noResults": "Nenhum idioma encontrado"
+    },
+    "transcript": {
+      "title": "Transcrição",
+      "copy": "Copiar para área de transferência",
+      "transcribing": "Transcrevendo..."
+    },
+    "summary": {
+      "title": "Resumo com IA",
+      "generating": "Gerando resumo...",
+      "viewCorrected": "Ver transcrição corrigida"
+    },
+    "share": {
+      "title": "Compartilhar",
+      "createLink": "Criar Link de Compartilhamento",
+      "creating": "Criando...",
+      "copy": "Copiar",
+      "copied": "Copiado!",
+      "shareOnX": "Compartilhar no X",
+      "shareOnFacebook": "Compartilhar no Facebook",
+      "shareOnWhatsApp": "Compartilhar no WhatsApp",
+      "expires": "O link expira em 7 dias"
+    },
+    "results": {
+      "title": "Resultados",
+      "newRecording": "Nova Gravação"
+    },
+    "input": {
+      "uploadFile": "Enviar Arquivo",
+      "recordInstead": "Gravar em vez disso"
+    },
+    "rateLimit": {
+      "remaining": "{count} transcrições restantes hoje"
+    },
+    "sharedView": {
+      "notice": "Você está visualizando uma transcrição compartilhada"
+    }
+  },
+  "pdfToAudio": {
+    "title": "PDF para Áudio",
+    "subtitle": "Converta seus documentos PDF em arquivos de áudio",
+    "upload": {
+      "title": "Enviar Documento PDF",
+      "dropHere": "Solte o PDF aqui",
+      "dragDrop": "Arraste e solte ou clique para navegar",
+      "maxSize": "Máx 10MB, 20 páginas",
+      "unsupportedFormat": "Por favor, selecione um arquivo PDF",
+      "fileTooLarge": "Arquivo excede o limite de 10MB"
+    },
+    "voiceSelector": {
+      "label": "Voz",
+      "preview": "Pré-visualizar voz"
+    },
+    "player": {
+      "play": "Reproduzir",
+      "pause": "Pausar",
+      "skipBackward": "Voltar 10 segundos",
+      "skipForward": "Avançar 10 segundos",
+      "download": "Baixar MP3"
+    },
+    "status": {
+      "starting": "Iniciando conversão...",
+      "extracting": "Extraindo texto do PDF...",
+      "converting": "Convertendo texto em áudio...",
+      "ocrNote": "PDFs digitalizados podem levar mais tempo para processar",
+      "pleaseWait": "Isso pode levar um momento para documentos mais longos"
+    },
+    "success": "Conversão Concluída",
+    "convertAnother": "Converter Outro",
+    "stats": {
+      "pages": "Páginas",
+      "characters": "Caracteres",
+      "duration": "Duração",
+      "size": "Tamanho"
+    },
+    "remaining": "{count} conversões restantes hoje",
+    "features": {
+      "title": "Recursos",
+      "feature1": "Suporta PDFs baseados em texto e digitalizados (OCR)",
+      "feature2": "Múltiplas opções de voz",
+      "feature3": "Download instantâneo de MP3",
+      "feature4": "Até 20 páginas por documento"
+    }
   },
   "metadata": {
     "home": {

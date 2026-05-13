@@ -11,6 +11,8 @@ export function MarketingHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
+    { href: '/transcribe', label: t('transcribe') },
+    { href: '/pdf-to-audio', label: t('pdfToAudio') },
     { href: '/about', label: t('about') },
     { href: '/pricing', label: t('pricing') },
     { href: '/contact', label: t('contact') },

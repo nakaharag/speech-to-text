@@ -6,6 +6,7 @@
   "nav": {
     "home": "Home",
     "transcribe": "Transcribe",
+    "pdfToAudio": "PDF to Audio",
     "dashboard": "Dashboard",
     "settings": "Settings",
     "signOut": "Sign out",
@@ -358,6 +359,112 @@
   },
   "legal": {
     "backToHome": "Back to Home"
+  },
+  "transcribe": {
+    "pageTitle": "Transcribe Audio",
+    "pageSubtitle": "Record or upload audio to get instant transcriptions with AI summarization",
+    "recorder": {
+      "startRecording": "Start recording",
+      "stopRecording": "Stop recording",
+      "recording": "Recording...",
+      "processing": "Processing...",
+      "idle": "Click to start recording",
+      "microphoneError": "Unable to access microphone. Please check your browser permissions."
+    },
+    "fileUpload": {
+      "title": "Upload Audio File",
+      "dropHere": "Drop file here",
+      "dragDrop": "Drag and drop or click to browse",
+      "maxSize": "Max 25MB",
+      "unsupportedFormat": "Unsupported file format. Please upload an audio file.",
+      "fileTooLarge": "File exceeds 25MB limit"
+    },
+    "languageSelector": {
+      "autoDetect": "Auto-detect language",
+      "search": "Search languages...",
+      "noResults": "No languages found"
+    },
+    "transcript": {
+      "title": "Transcription",
+      "copy": "Copy to clipboard",
+      "transcribing": "Transcribing..."
+    },
+    "summary": {
+      "title": "AI Summary",
+      "generating": "Generating summary...",
+      "viewCorrected": "View corrected transcript"
+    },
+    "share": {
+      "title": "Share",
+      "createLink": "Create Share Link",
+      "creating": "Creating...",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "shareOnX": "Share on X",
+      "shareOnFacebook": "Share on Facebook",
+      "shareOnWhatsApp": "Share on WhatsApp",
+      "expires": "Link expires in 7 days"
+    },
+    "results": {
+      "title": "Results",
+      "newRecording": "New Recording"
+    },
+    "input": {
+      "uploadFile": "Upload File",
+      "recordInstead": "Record Instead"
+    },
+    "rateLimit": {
+      "remaining": "{count} transcriptions remaining today"
+    },
+    "sharedView": {
+      "notice": "You are viewing a shared transcription"
+    }
+  },
+  "pdfToAudio": {
+    "title": "PDF to Audio",
+    "subtitle": "Convert your PDF documents to audio files",
+    "upload": {
+      "title": "Upload PDF Document",
+      "dropHere": "Drop PDF here",
+      "dragDrop": "Drag and drop or click to browse",
+      "maxSize": "Max 10MB, 20 pages",
+      "unsupportedFormat": "Please select a PDF file",
+      "fileTooLarge": "File exceeds 10MB limit"
+    },
+    "voiceSelector": {
+      "label": "Voice",
+      "preview": "Preview voice"
+    },
+    "player": {
+      "play": "Play",
+      "pause": "Pause",
+      "skipBackward": "Skip back 10 seconds",
+      "skipForward": "Skip forward 10 seconds",
+      "download": "Download MP3"
+    },
+    "status": {
+      "starting": "Starting conversion...",
+      "extracting": "Extracting text from PDF...",
+      "converting": "Converting text to audio...",
+      "ocrNote": "Scanned PDFs may take longer to process",
+      "pleaseWait": "This may take a moment for longer documents"
+    },
+    "success": "Conversion Complete",
+    "convertAnother": "Convert Another",
+    "stats": {
+      "pages": "Pages",
+      "characters": "Characters",
+      "duration": "Duration",
+      "size": "Size"
+    },
+    "remaining": "{count} conversions remaining today",
+    "features": {
+      "title": "Features",
+      "feature1": "Supports text-based and scanned PDFs (OCR)",
+      "feature2": "Multiple voice options",
+      "feature3": "Instant MP3 download",
+      "feature4": "Up to 20 pages per document"
+    }
   },
   "metadata": {
     "home": {
