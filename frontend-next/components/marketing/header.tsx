@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { LanguageSwitcher } from '@/components/language-switcher';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export function MarketingHeader() {
   const t = useTranslations('nav');
@@ -57,6 +58,7 @@ export function MarketingHeader() {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
+            <ThemeToggle />
             <LanguageSwitcher showFlag />
             <Link href="/login">
               <Button variant="ghost" size="sm">
@@ -103,6 +105,7 @@ export function MarketingHeader() {
                 </Link>
               ))}
               <div className="pt-4 border-t border-slate-200 space-y-3">
+                <ThemeToggle />
                 <LanguageSwitcher showFlag className="w-full" />
                 <Link href="/login" className="block">
                   <Button variant="outline" size="sm" className="w-full">

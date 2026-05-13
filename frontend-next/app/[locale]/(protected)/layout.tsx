@@ -3,6 +3,7 @@ import { Link } from '@/i18n/navigation';
 import { auth } from '@/lib/auth';
 import { SignOutButton } from '@/components/auth/sign-out-button';
 import { LanguageSwitcher } from '@/components/language-switcher';
+import { ThemeToggle } from '@/components/theme-toggle';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { setRequestLocale } from 'next-intl/server';
 
@@ -39,6 +40,7 @@ export default async function ProtectedLayout({ children, params }: Props) {
             <Link href="/settings" className="text-sm text-slate-600 hover:text-slate-900">
               {t('settings')}
             </Link>
+            <ThemeToggle />
             <LanguageSwitcher />
             <span className="text-sm text-slate-600">{session?.user?.email}</span>
             <SignOutButton />
