@@ -1,0 +1,607 @@
+{
+  "app": {
+    "title": "speech-to-text.me",
+    "description": "Voice transcription & AI summarization"
+  },
+  "nav": {
+    "home": "Home",
+    "transcribe": "Transcribe",
+    "pdfToAudio": "PDF to Audio",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "signOut": "Sign out",
+    "about": "About",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "getStarted": "Get Started Free",
+    "login": "Sign In"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "description": "Sign in to your account",
+      "email": "Email",
+      "emailPlaceholder": "name@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Sign in",
+      "submitting": "Signing in...",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up"
+    },
+    "signup": {
+      "title": "Create an account",
+      "description": "Enter your details to get started",
+      "name": "Name",
+      "namePlaceholder": "John Doe",
+      "email": "Email",
+      "emailPlaceholder": "name@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "Create a password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "submit": "Create account",
+      "submitting": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "terms": "By creating an account, you agree to our",
+      "termsLink": "Terms of Service",
+      "and": "and",
+      "privacyLink": "Privacy Policy"
+    },
+    "verify": {
+      "title": "Verify your email",
+      "description": "We've sent a verification link to your email address",
+      "checkInbox": "Please check your inbox and click the link to verify your account.",
+      "resend": "Resend verification email",
+      "resending": "Resending...",
+      "resent": "Verification email sent!",
+      "backToLogin": "Back to login"
+    },
+    "forgotPassword": {
+      "title": "Forgot your password?",
+      "description": "Enter your email and we'll send you a reset link",
+      "email": "Email",
+      "emailPlaceholder": "name@example.com",
+      "submit": "Send reset link",
+      "submitting": "Sending...",
+      "sent": "Reset link sent!",
+      "sentDescription": "Check your email for a link to reset your password.",
+      "backToLogin": "Back to login"
+    },
+    "resetPassword": {
+      "title": "Reset your password",
+      "description": "Enter a new password for your account",
+      "password": "New Password",
+      "passwordPlaceholder": "Enter your new password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your new password",
+      "submit": "Reset password",
+      "submitting": "Resetting...",
+      "success": "Password reset successful!",
+      "successDescription": "You can now sign in with your new password.",
+      "signIn": "Sign in"
+    },
+    "social": {
+      "continueWith": "Or continue with",
+      "google": "Continue with Google",
+      "github": "Continue with GitHub",
+      "apple": "Continue with Apple"
+    },
+    "errors": {
+      "invalidCredentials": "Invalid email or password",
+      "emailExists": "An account with this email already exists",
+      "emailNotVerified": "Please verify your email before signing in",
+      "invalidEmail": "Please enter a valid email address",
+      "passwordTooShort": "Password must be at least 8 characters",
+      "passwordMismatch": "Passwords do not match",
+      "generic": "Something went wrong. Please try again.",
+      "networkError": "Network error. Please check your connection.",
+      "sessionExpired": "Your session has expired. Please sign in again.",
+      "unauthorized": "You are not authorized to access this resource."
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome, {name}!",
+    "currentPlan": "Your current plan",
+    "recentTranscriptions": "Recent Transcriptions",
+    "noTranscriptions": "No transcriptions yet",
+    "startTranscribing": "Start transcribing",
+    "stats": {
+      "title": "Usage Statistics",
+      "transcriptionsToday": "Transcriptions Today",
+      "pdfConversions": "PDF Conversions",
+      "totalHistory": "Total History",
+      "error": "Unable to load stats"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "transcribe": "Transcribe Audio",
+      "pdfToAudio": "PDF to Audio"
+    },
+    "history": {
+      "title": "History",
+      "pageTitle": "Your History",
+      "pageDescription": "View and manage all your transcriptions and PDF conversions",
+      "viewAll": "View all",
+      "empty": "No history items yet",
+      "error": "Unable to load history",
+      "delete": "Delete",
+      "showMore": "Show more",
+      "showLess": "Show less",
+      "searchPlaceholder": "Search history...",
+      "pages": "{count} pages",
+      "types": {
+        "transcription": "Transcription",
+        "pdf": "PDF Conversion"
+      },
+      "filter": {
+        "all": "All",
+        "transcriptions": "Transcriptions",
+        "pdf": "PDF"
+      },
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "page": "Page {current} of {total}"
+      }
+    },
+    "upgrade": {
+      "title": "Upgrade to Pro",
+      "description": "Get unlimited transcriptions, priority processing, and more features.",
+      "cta": "View Plans"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Manage your account settings",
+    "profile": "Profile",
+    "account": "Account",
+    "language": "Language",
+    "theme": "Theme",
+    "notifications": "Notifications",
+    "save": "Save changes",
+    "saving": "Saving...",
+    "emailLabel": "Email",
+    "nameLabel": "Name",
+    "notSet": "Not set",
+    "billing": "Billing & Subscription",
+    "billingDescription": "Manage your subscription plan and payment methods.",
+    "connectedAccounts": {
+      "title": "Connected Accounts",
+      "description": "These accounts are linked to your profile.",
+      "noAccounts": "No connected accounts",
+      "connected": "Connected",
+      "comingSoon": "Account linking and unlinking will be available in a future update."
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "learnMore": "Learn more"
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "about": "About",
+    "contact": "Contact",
+    "pricing": "Pricing",
+    "copyright": "All rights reserved.",
+    "tagline": "Voice transcription & AI summarization",
+    "product": "Product",
+    "legal": "Legal"
+  },
+  "siteLang": {
+    "en": "English",
+    "pt": "Portuguese",
+    "es": "Spanish"
+  },
+  "landing": {
+    "heroTitle": "Transform Speech to Text in Seconds",
+    "heroSubtitle": "Powerful AI-driven transcription that converts your voice recordings into accurate text with intelligent summarization.",
+    "startTranscribing": "Start Transcribing",
+    "heroNote": "No signup required. Free to use.",
+    "demoText": "Your speech appears here in real-time...",
+    "languagesSupported": "Languages Supported",
+    "accuracy": "Accuracy Rate",
+    "free": "Free to Use",
+    "featuresTitle": "Powerful Features",
+    "featuresSubtitle": "Everything you need to transcribe and understand your audio content",
+    "feature1Title": "Real-Time Transcription",
+    "feature1Desc": "Watch your words appear as you speak with our advanced real-time speech recognition.",
+    "feature2Title": "File Upload",
+    "feature2Desc": "Upload audio and video files in any format for accurate transcription.",
+    "feature3Title": "Multiple Languages",
+    "feature3Desc": "Support for 30+ languages with automatic language detection.",
+    "feature4Title": "AI Summarization",
+    "feature4Desc": "Get intelligent summaries of your transcriptions powered by advanced AI.",
+    "feature5Title": "Easy Sharing",
+    "feature5Desc": "Share transcriptions with others or export in multiple formats.",
+    "feature6Title": "Privacy First",
+    "feature6Desc": "Your audio is processed securely and never stored without permission.",
+    "howItWorksTitle": "How It Works",
+    "howItWorksSubtitle": "Get started in minutes with our simple process",
+    "step1Title": "Record or Upload",
+    "step1Desc": "Record directly in your browser or upload an existing audio file.",
+    "step2Title": "AI Processing",
+    "step2Desc": "Our AI transcribes your audio with high accuracy in seconds.",
+    "step3Title": "Review & Edit",
+    "step3Desc": "Review the transcription and make any necessary edits.",
+    "step4Title": "Export & Share",
+    "step4Desc": "Download in your preferred format or share directly.",
+    "tryItNow": "Try It Now",
+    "useCasesTitle": "Perfect For",
+    "useCasesSubtitle": "See how professionals use our transcription service",
+    "useCase1Title": "Meetings & Interviews",
+    "useCase1Desc": "Capture every detail from important conversations without taking notes.",
+    "useCase2Title": "Students & Researchers",
+    "useCase2Desc": "Transcribe lectures and interviews for easy review and citation.",
+    "useCase3Title": "Content Creators",
+    "useCase3Desc": "Generate subtitles and captions for videos automatically.",
+    "useCase4Title": "Journalists & Writers",
+    "useCase4Desc": "Convert interviews and field recordings into written content.",
+    "faqTitle": "Frequently Asked Questions",
+    "faqSubtitle": "Find answers to common questions about our service",
+    "finalCtaTitle": "Ready to Transform Your Audio?",
+    "finalCtaSubtitle": "Join thousands of users who trust us for accurate transcription.",
+    "startFree": "Start Free Now",
+    "trustBadge1": "Free to use",
+    "trustBadge2": "No signup required",
+    "trustBadge3": "AI powered"
+  },
+  "faq": {
+    "q1": "Is the service really free?",
+    "a1": "Yes! Our basic transcription service is completely free with no signup required. Premium features are available for power users.",
+    "q2": "What audio formats are supported?",
+    "a2": "We support all major audio and video formats including MP3, WAV, M4A, MP4, WebM, and more.",
+    "q3": "How accurate is the transcription?",
+    "a3": "Our AI achieves 95%+ accuracy for clear audio in supported languages. Accuracy may vary based on audio quality.",
+    "q4": "Is my audio data secure?",
+    "a4": "Absolutely. We process audio securely and don't store your files unless you explicitly save them to your account.",
+    "q5": "What languages are supported?",
+    "a5": "We support 30+ languages including English, Spanish, Portuguese, French, German, Chinese, Japanese, and many more.",
+    "q6": "Can I edit the transcription?",
+    "a6": "Yes! You can edit the transcription directly in the interface and export the corrected version."
+  },
+  "aboutPage": {
+    "title": "About speech-to-text.me",
+    "metaDescription": "Learn about our mission to make voice transcription accessible to everyone.",
+    "missionTitle": "Our Mission",
+    "missionContent": "We believe that converting speech to text should be simple, accurate, and accessible to everyone. Our mission is to break down barriers in communication by providing powerful transcription tools that anyone can use.",
+    "whatWeDoTitle": "What We Do",
+    "whatWeDoContent": "speech-to-text.me is a free, web-based voice transcription service powered by advanced AI technology. We help you:",
+    "feature1": "Transcribe audio and video files with high accuracy",
+    "feature2": "Record and transcribe in real-time directly in your browser",
+    "feature3": "Generate intelligent summaries of your content",
+    "feature4": "Support over 30 languages with automatic detection",
+    "technologyTitle": "Our Technology",
+    "technologyContent": "We leverage cutting-edge speech recognition and natural language processing technology to deliver fast, accurate transcriptions. Our AI models are continuously trained to improve accuracy across different accents, languages, and audio conditions.",
+    "privacyTitle": "Privacy & Security",
+    "privacyContent": "Your privacy is paramount. We process all audio securely and never store your files without your explicit permission. Read our Privacy Policy for complete details on how we protect your data.",
+    "contactTitle": "Get in Touch",
+    "contactContent": "Have questions or feedback? We'd love to hear from you.",
+    "contactLink": "Contact Us"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "metaDescription": "Get in touch with the speech-to-text.me team.",
+    "intro": "Have questions, feedback, or need support? We're here to help. Fill out the form below and we'll get back to you as soon as possible.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "your@email.com",
+    "subjectLabel": "Subject",
+    "subjectPlaceholder": "How can we help?",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Tell us more about your inquiry...",
+    "submit": "Send Message",
+    "sending": "Sending...",
+    "successTitle": "Message Sent!",
+    "successMessage": "Thank you for reaching out. We'll get back to you within 24-48 hours.",
+    "sendAnother": "Send Another Message",
+    "errorGeneric": "Something went wrong. Please try again or email us directly.",
+    "directEmail": "Or email us directly at:"
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "metaDescription": "Choose the plan that fits your transcription needs.",
+    "subtitle": "Start for free, upgrade when you need more",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "savePercent": "Save {percent}%",
+    "free": {
+      "name": "Free",
+      "price": "$0",
+      "period": "forever",
+      "description": "Perfect for occasional use",
+      "feature1": "5 hours of transcription/month",
+      "feature2": "Real-time recording",
+      "feature3": "File upload up to 25MB",
+      "feature4": "Basic export formats",
+      "feature5": "Community support",
+      "cta": "Get Started Free"
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "$12",
+      "period": "per month",
+      "description": "For professionals and teams",
+      "feature1": "Unlimited transcription",
+      "feature2": "Priority processing",
+      "feature3": "File upload up to 500MB",
+      "feature4": "All export formats",
+      "feature5": "AI summarization",
+      "feature6": "Priority email support",
+      "cta": "Start Pro Trial",
+      "popular": "Most Popular"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "price": "Custom",
+      "period": "per month",
+      "description": "For large organizations",
+      "feature1": "Everything in Pro",
+      "feature2": "Custom integrations",
+      "feature3": "API access",
+      "feature4": "Dedicated support",
+      "feature5": "SLA guarantee",
+      "feature6": "On-premise option",
+      "cta": "Contact Sales"
+    },
+    "faq": {
+      "title": "Pricing FAQ",
+      "q1": "Can I change plans anytime?",
+      "a1": "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.",
+      "q2": "What payment methods do you accept?",
+      "a2": "We accept all major credit cards, PayPal, and bank transfers for enterprise plans.",
+      "q3": "Is there a free trial for Pro?",
+      "a3": "Yes! Pro plans come with a 14-day free trial. No credit card required."
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "metaDescription": "Learn how we collect, use, and protect your data.",
+    "lastUpdated": "Last updated",
+    "section1Title": "Introduction",
+    "section1Content": "At speech-to-text.me, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our voice transcription service.",
+    "section2Title": "Information We Collect",
+    "section2Content": "We collect information that you provide directly to us:",
+    "section2Item1": "Account information (email, name) when you create an account",
+    "section2Item2": "Audio files you upload for transcription",
+    "section2Item3": "Usage data and analytics to improve our service",
+    "section3Title": "How We Use Your Information",
+    "section3Content": "We use the information we collect to:",
+    "section3Item1": "Provide and maintain our transcription service",
+    "section3Item2": "Process your audio files and deliver transcriptions",
+    "section3Item3": "Send you important updates about our service",
+    "section4Title": "Data Security",
+    "section4Content": "We implement appropriate security measures to protect your personal information. All audio processing is done securely, and we use encryption for data transmission and storage.",
+    "section5Title": "Data Retention",
+    "section5Content": "Audio files uploaded without an account are processed and immediately deleted. If you have an account, your transcriptions are stored until you choose to delete them.",
+    "section6Title": "Your Rights",
+    "section6Content": "You have the right to access, update, or delete your personal information at any time. Contact us to exercise these rights.",
+    "section7Title": "Contact Us",
+    "section7Content": "If you have questions about this Privacy Policy, please contact us at admin@speech-to-text.me."
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "metaDescription": "Read our terms of service for using speech-to-text.me.",
+    "lastUpdated": "Last updated",
+    "section1Title": "Acceptance of Terms",
+    "section1Content": "By accessing or using speech-to-text.me, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our service.",
+    "section2Title": "Use of Service",
+    "section2Content": "You agree to use our service only for lawful purposes. You must not:",
+    "section2Item1": "Upload content that violates any laws or regulations",
+    "section2Item2": "Attempt to gain unauthorized access to our systems",
+    "section2Item3": "Use the service to harm, threaten, or harass others",
+    "section2Item4": "Interfere with or disrupt the service or servers",
+    "section3Title": "Intellectual Property",
+    "section3Content": "You retain ownership of all audio content you upload. By using our service, you grant us a limited license to process your content for the purpose of providing transcription services.",
+    "section4Title": "Disclaimer of Warranties",
+    "section4Content": "Our service is provided \"as is\" without warranties of any kind. We do not guarantee the accuracy of transcriptions or uninterrupted access to the service.",
+    "section5Title": "Limitation of Liability",
+    "section5Content": "We shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of our service.",
+    "section6Title": "Changes to Terms",
+    "section6Content": "We may modify these terms at any time. Continued use of the service after changes constitutes acceptance of the new terms.",
+    "section7Title": "Contact",
+    "section7Content": "For questions about these Terms of Service, contact us at admin@speech-to-text.me."
+  },
+  "legal": {
+    "backToHome": "Back to Home"
+  },
+  "transcribe": {
+    "pageTitle": "Transcribe Audio",
+    "pageSubtitle": "Record or upload audio to get instant transcriptions with AI summarization",
+    "recorder": {
+      "startRecording": "Start recording",
+      "stopRecording": "Stop recording",
+      "recording": "Recording...",
+      "processing": "Processing...",
+      "idle": "Click to start recording",
+      "microphoneError": "Unable to access microphone. Please check your browser permissions."
+    },
+    "fileUpload": {
+      "title": "Upload Audio File",
+      "dropHere": "Drop file here",
+      "dragDrop": "Drag and drop or click to browse",
+      "maxSize": "Max 25MB",
+      "unsupportedFormat": "Unsupported file format. Please upload an audio file.",
+      "fileTooLarge": "File exceeds 25MB limit"
+    },
+    "languageSelector": {
+      "autoDetect": "Auto-detect language",
+      "search": "Search languages...",
+      "noResults": "No languages found"
+    },
+    "transcript": {
+      "title": "Transcription",
+      "copy": "Copy to clipboard",
+      "transcribing": "Transcribing..."
+    },
+    "summary": {
+      "title": "AI Summary",
+      "generating": "Generating summary...",
+      "viewCorrected": "View corrected transcript"
+    },
+    "share": {
+      "title": "Share",
+      "createLink": "Create Share Link",
+      "creating": "Creating...",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "shareOnX": "Share on X",
+      "shareOnFacebook": "Share on Facebook",
+      "shareOnWhatsApp": "Share on WhatsApp",
+      "expires": "Link expires in 7 days",
+      "advancedOptions": "Advanced options",
+      "expirationLabel": "Link expiration",
+      "expiration24h": "24 hours",
+      "expiration7d": "7 days",
+      "expiration30d": "30 days",
+      "expirationNever": "Never",
+      "proOnlyNeverExpires": "Upgrade to Pro for links that never expire",
+      "passwordLabel": "Password protection",
+      "passwordPlaceholder": "Optional password",
+      "passwordHint": "Leave empty for public access",
+      "passwordProtected": "Password protected"
+    },
+    "results": {
+      "title": "Results",
+      "newRecording": "New Recording"
+    },
+    "input": {
+      "uploadFile": "Upload File",
+      "recordInstead": "Record Instead"
+    },
+    "rateLimit": {
+      "remaining": "{count} transcriptions remaining today"
+    },
+    "sharedView": {
+      "notice": "You are viewing a shared transcription"
+    }
+  },
+  "pdfToAudio": {
+    "title": "PDF to Audio",
+    "subtitle": "Convert your PDF documents to audio files",
+    "upload": {
+      "title": "Upload PDF Document",
+      "dropHere": "Drop PDF here",
+      "dragDrop": "Drag and drop or click to browse",
+      "maxSize": "Max 10MB, 20 pages",
+      "unsupportedFormat": "Please select a PDF file",
+      "fileTooLarge": "File exceeds 10MB limit"
+    },
+    "voiceSelector": {
+      "label": "Voice",
+      "preview": "Preview voice"
+    },
+    "player": {
+      "play": "Play",
+      "pause": "Pause",
+      "skipBackward": "Skip back 10 seconds",
+      "skipForward": "Skip forward 10 seconds",
+      "download": "Download MP3"
+    },
+    "status": {
+      "starting": "Starting conversion...",
+      "extracting": "Extracting text from PDF...",
+      "converting": "Converting text to audio...",
+      "ocrNote": "Scanned PDFs may take longer to process",
+      "pleaseWait": "This may take a moment for longer documents"
+    },
+    "success": "Conversion Complete",
+    "convertAnother": "Convert Another",
+    "stats": {
+      "pages": "Pages",
+      "characters": "Characters",
+      "duration": "Duration",
+      "size": "Size"
+    },
+    "remaining": "{count} conversions remaining today",
+    "features": {
+      "title": "Features",
+      "feature1": "Supports text-based and scanned PDFs (OCR)",
+      "feature2": "Multiple voice options",
+      "feature3": "Instant MP3 download",
+      "feature4": "Up to 20 pages per document"
+    }
+  },
+  "metadata": {
+    "home": {
+      "title": "speech-to-text.me - Voice Transcription & AI Summarization",
+      "description": "Transform your speech to text in seconds with AI-powered transcription. Free, accurate, and supports 30+ languages."
+    },
+    "about": {
+      "title": "About - speech-to-text.me",
+      "description": "Learn about our mission to make voice transcription accessible to everyone."
+    },
+    "contact": {
+      "title": "Contact Us - speech-to-text.me",
+      "description": "Get in touch with the speech-to-text.me team for questions, feedback, or support."
+    },
+    "pricing": {
+      "title": "Pricing - speech-to-text.me",
+      "description": "Simple, transparent pricing for voice transcription. Start free, upgrade when you need more."
+    },
+    "privacy": {
+      "title": "Privacy Policy - speech-to-text.me",
+      "description": "Learn how we collect, use, and protect your data at speech-to-text.me."
+    },
+    "terms": {
+      "title": "Terms of Service - speech-to-text.me",
+      "description": "Read our terms of service for using speech-to-text.me voice transcription service."
+    }
+  },
+  "billing": {
+    "title": "Billing & Subscription",
+    "subtitle": "Manage your subscription and billing details",
+    "currentPlan": "Current Plan",
+    "currentPlanDescription": "Your active subscription plan",
+    "active": "Active",
+    "pastDue": "Past Due",
+    "endsAt": "Ends on {date}",
+    "renewsAt": "Renews on {date}",
+    "manageSubscription": "Manage Subscription",
+    "redirecting": "Redirecting...",
+    "upgradePlans": "Upgrade Your Plan",
+    "month": "month",
+    "year": "year",
+    "or": "or",
+    "save": "save",
+    "upgradeMonthly": "Subscribe Monthly",
+    "upgradeYearly": "Subscribe Yearly",
+    "recommended": "Recommended",
+    "viewAllFeatures": "View all features and compare plans",
+    "successMessage": "Your subscription has been updated successfully!",
+    "canceledMessage": "Checkout was canceled. No charges were made.",
+    "portalError": "Failed to open billing portal. Please try again.",
+    "checkoutError": "Failed to start checkout. Please try again.",
+    "basic": {
+      "name": "Basic",
+      "description": "For regular users who need more",
+      "feature1": "15 transcriptions per day",
+      "feature2": "Full history access",
+      "feature3": "Priority support"
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "For power users and professionals",
+      "feature1": "Unlimited transcriptions",
+      "feature2": "Priority processing",
+      "feature3": "No advertisements",
+      "feature4": "Full history access"
+    }
+  }
+}

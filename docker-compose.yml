@@ -98,7 +98,6 @@ services:
       dockerfile: ${FRONTEND_DOCKERFILE:-Dockerfile}
     networks:
       - internal
-      - coolify
     expose:
       - "80"
     environment:
@@ -116,6 +115,56 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+    profiles:
+      - legacy
+
+  frontend-next:
+    build:
+      context: ./frontend-next
+      dockerfile: Dockerfile
+    networks:
+      - internal
+      - coolify
+    expose:
+      - "3001"
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - NEXTAUTH_URL=${NEXTAUTH_URL:-https://speech-to-text.me}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-speechtotext}:${POSTGRES_PASSWORD:-speechtotext123}@postgres:5432/${POSTGRES_DB:-speechtotext}
+      - BACKEND_URL=http://backend:3000
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
+      - APPLE_ID=${APPLE_ID:-}
+      - APPLE_TEAM_ID=${APPLE_TEAM_ID:-}
+      - APPLE_KEY_ID=${APPLE_KEY_ID:-}
+      - APPLE_PRIVATE_KEY=${APPLE_PRIVATE_KEY:-}
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
+      - SMTP_FROM=${SMTP_FROM:-noreply@speech-to-text.me}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET:-}
+      - STRIPE_BASIC_MONTHLY_PRICE_ID=${STRIPE_BASIC_MONTHLY_PRICE_ID:-}
+      - STRIPE_BASIC_YEARLY_PRICE_ID=${STRIPE_BASIC_YEARLY_PRICE_ID:-}
+      - STRIPE_PRO_MONTHLY_PRICE_ID=${STRIPE_PRO_MONTHLY_PRICE_ID:-}
+      - STRIPE_PRO_YEARLY_PRICE_ID=${STRIPE_PRO_YEARLY_PRICE_ID:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    restart: always
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:3001 || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
     labels:
       # Traefik labels for production
       - "traefik.enable=${TRAEFIK_ENABLE:-true}"
@@ -124,7 +173,7 @@ services:
       - "traefik.http.routers.speech-frontend.tls=true"
       - "traefik.http.routers.speech-frontend.tls.certresolver=letsencrypt"
       - "traefik.http.routers.speech-frontend.middlewares=speech-retry@docker"
-      - "traefik.http.services.speech-frontend.loadbalancer.server.port=80"
+      - "traefik.http.services.speech-frontend.loadbalancer.server.port=3001"
       # Health check - wait for container to be healthy before routing
       - "traefik.http.services.speech-frontend.loadbalancer.healthcheck.path=/"
       - "traefik.http.services.speech-frontend.loadbalancer.healthcheck.interval=5s"

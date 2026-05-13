@@ -11,23 +11,32 @@ import {
   Req,
   Body,
   Res,
+  UseGuards,
+  Logger,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request, Response } from 'express';
 import { PdfService } from '../services/pdf.service';
 import { TtsService, TtsVoice } from '../services/tts.service';
+import { R2Service } from '../services/r2.service';
 import { getPreviewText, getVoiceDescription, getRecommendedVoices, TtsVoice as VoiceType } from '../constants/voice-previews';
 import { RateLimitService } from '../services/rate-limit.service';
 import { PrismaService } from '../services/prisma.service';
+import { OptionalNextAuthGuard, NextAuthUser } from '../guards/nextauth.guard';
+import { CurrentUser } from '../decorators/current-user.decorator';
 import { nanoid } from 'nanoid';
 
 @Controller('pdf')
+@UseGuards(OptionalNextAuthGuard)
 export class PdfController {
+  private readonly logger = new Logger(PdfController.name);
+
   constructor(
     private readonly pdfService: PdfService,
     private readonly ttsService: TtsService,
     private readonly rateLimitService: RateLimitService,
     private readonly prisma: PrismaService,
+    private readonly r2Service: R2Service,
   ) {}
 
   @Post('convert')
@@ -41,8 +50,10 @@ export class PdfController {
     @Req() req: Request,
     @Body('voice') voice?: string,
     @Body('speed') speed?: string,
+    @CurrentUser() user?: NextAuthUser,
   ) {
     const ip = this.getClientIp(req);
+    const userId = user?.id;
 
     // Check rate limit
     const limit = await this.rateLimitService.checkLimit(ip);
@@ -81,6 +92,7 @@ export class PdfController {
     await this.prisma.pdfConversion.create({
       data: {
         shortId,
+        userId,
         status: 'pending',
         fileName: file.originalname,
         fileSize: file.size,
@@ -97,6 +109,7 @@ export class PdfController {
       validVoice,
       validSpeed,
       ip,
+      userId,
     );
 
     // Return immediately with job ID
@@ -120,6 +133,7 @@ export class PdfController {
     voice: TtsVoice,
     speed: number,
     ip: string,
+    userId?: string,
   ) {
     try {
       // Update status to extracting
@@ -148,8 +162,36 @@ export class PdfController {
         { voice, speed },
       );
 
-      // Store audio as base64 to avoid regenerating on status/download
-      const audioBase64 = ttsResult.audio.toString('base64');
+      // Try to upload to R2 if available and user is authenticated
+      let audioKey: string | undefined;
+      let audioBase64: string | undefined;
+
+      if (userId && this.r2Service.isAvailable()) {
+        try {
+          // Get the conversion record to use its ID
+          const conversion = await this.prisma.pdfConversion.findUnique({
+            where: { shortId },
+          });
+
+          if (conversion) {
+            const uploadResult = await this.r2Service.uploadMp3(
+              userId,
+              conversion.id,
+              ttsResult.audio,
+            );
+            audioKey = uploadResult.key;
+            this.logger.log(`Uploaded audio to R2: ${audioKey}`);
+          }
+        } catch (r2Error) {
+          // Log but don't fail - fall back to base64 storage
+          this.logger.error('Failed to upload to R2, falling back to base64:', (r2Error as Error).message);
+        }
+      }
+
+      // Fall back to base64 storage if R2 upload failed or not available
+      if (!audioKey) {
+        audioBase64 = ttsResult.audio.toString('base64');
+      }
 
       // Update completion with stored audio
       await this.prisma.pdfConversion.update({
@@ -160,6 +202,7 @@ export class PdfController {
           audioDuration: ttsResult.duration,
           audioFormat: 'mp3',
           audioData: audioBase64,
+          audioKey,
           completedAt: new Date(),
         },
       });
@@ -183,7 +226,11 @@ export class PdfController {
   }
 
   @Get('download/:jobId')
-  async downloadAudio(@Param('jobId') jobId: string, @Res() res: Response) {
+  async downloadAudio(
+    @Param('jobId') jobId: string,
+    @Res() res: Response,
+    @CurrentUser() user?: NextAuthUser,
+  ) {
     const conversion = await this.prisma.pdfConversion.findUnique({
       where: { shortId: jobId },
     });
@@ -203,16 +250,40 @@ export class PdfController {
       throw new HttpException('Conversion expired', HttpStatus.GONE);
     }
 
+    const filename = conversion.fileName
+      ? conversion.fileName.replace('.pdf', '.mp3')
+      : 'audio.mp3';
+
+    // If audio is stored in R2, redirect to presigned URL
+    if (conversion.audioKey && this.r2Service.isAvailable()) {
+      try {
+        // Verify ownership if user is authenticated
+        if (conversion.userId && user && conversion.userId !== user.id) {
+          throw new HttpException('Access denied', HttpStatus.FORBIDDEN);
+        }
+
+        const presignedResult = await this.r2Service.getPresignedDownloadUrl(
+          conversion.audioKey,
+        );
+
+        // Set download headers and redirect
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+        res.redirect(presignedResult.url);
+        return;
+      } catch (error) {
+        if (error instanceof HttpException) throw error;
+        this.logger.error('Failed to get R2 presigned URL:', (error as Error).message);
+        // Fall through to base64 fallback
+      }
+    }
+
+    // Fall back to base64 stored audio
     if (!conversion.audioData) {
       throw new HttpException('Audio not available', HttpStatus.NOT_FOUND);
     }
 
     // Use stored audio (no regeneration needed)
     const audioBuffer = Buffer.from(conversion.audioData, 'base64');
-
-    const filename = conversion.fileName
-      ? conversion.fileName.replace('.pdf', '.mp3')
-      : 'audio.mp3';
 
     res.setHeader('Content-Type', 'audio/mpeg');
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
@@ -224,6 +295,7 @@ export class PdfController {
   async getStatus(
     @Param('jobId') jobId: string,
     @Req() req: Request,
+    @CurrentUser() user?: NextAuthUser,
   ) {
     const conversion = await this.prisma.pdfConversion.findUnique({
       where: { shortId: jobId },
@@ -247,16 +319,38 @@ export class PdfController {
       completedAt: conversion.completedAt,
       expiresAt: conversion.expiresAt,
       downloadUrl: `/pdf/download/${conversion.shortId}`,
+      storedInR2: !!conversion.audioKey,
     };
 
     // If completed and audio requested, return stored audio (no regeneration needed)
     const includeAudio = req.query.includeAudio === 'true';
-    if (conversion.status === 'completed' && includeAudio && conversion.audioData) {
-      return {
-        ...baseResponse,
-        audio: conversion.audioData,
-        estimatedDuration: conversion.audioDuration,
-      };
+    if (conversion.status === 'completed' && includeAudio) {
+      // If stored in R2, return presigned URL
+      if (conversion.audioKey && this.r2Service.isAvailable()) {
+        try {
+          const presignedResult = await this.r2Service.getPresignedDownloadUrl(
+            conversion.audioKey,
+          );
+          return {
+            ...baseResponse,
+            audioUrl: presignedResult.url,
+            audioUrlExpiresAt: presignedResult.expiresAt,
+            estimatedDuration: conversion.audioDuration,
+          };
+        } catch (error) {
+          this.logger.error('Failed to get R2 presigned URL:', (error as Error).message);
+          // Fall through to base64
+        }
+      }
+
+      // Return base64 audio if available
+      if (conversion.audioData) {
+        return {
+          ...baseResponse,
+          audio: conversion.audioData,
+          estimatedDuration: conversion.audioDuration,
+        };
+      }
     }
 
     return baseResponse;
