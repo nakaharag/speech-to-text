@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
 /* ============================================
+   TAILWIND V4 DARK MODE CONFIGURATION
+   Makes dark: utilities respond to data-theme attribute
+   ============================================ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ============================================
    DESIGN SYSTEM - CSS CUSTOM PROPERTIES
    ============================================ */
 
