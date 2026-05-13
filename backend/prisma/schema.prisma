@@ -9,56 +9,136 @@ datasource db {
 
 // User model for authentication and subscriptions
 model User {
-  id                   String          @id @default(cuid())
-  email                String?         @unique
-  name                 String?
-  googleId             String?         @unique
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  emailVerified DateTime?
+  passwordHash  String?
+  name          String?
+  image         String?
+
+  // Social provider IDs
+  googleId  String? @unique
+  appleId   String? @unique
+  twitterId String? @unique
+
+  // Flag for Apple private relay emails
+  isPrivateRelayEmail Boolean @default(false)
 
   // Subscription
-  tier                 String          @default("free")
-  stripeCustomerId     String?         @unique
+  tier                 String    @default("free")
+  stripeCustomerId     String?   @unique
   stripeSubscriptionId String?
   subscriptionStatus   String?
   subscriptionEndsAt   DateTime?
 
-  createdAt            DateTime        @default(now())
-  updatedAt            DateTime        @updatedAt
-  shares               Share[]
-  transcriptions       Transcription[]
+  // Relations
+  transcriptions Transcription[]
+  pdfConversions PdfConversion[]
+  shares         Share[]
+  usageCounter   UsageCounter?
+  accounts       Account[]
+  sessions       Session[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("users")
 }
 
+// NextAuth Account model
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+// NextAuth Session model
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+// NextAuth VerificationToken model
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// Usage tracking per user
+model UsageCounter {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transcriptionsToday Int    @default(0)
+  transcriptionsDate  String @db.VarChar(10)
+  ocrThisMonth        Int    @default(0)
+  ocrMonth            String @db.VarChar(7)
+
+  @@map("usage_counters")
+}
+
 // Share model - replaces JSON file storage
 model Share {
-  id            String          @id @default(cuid())
-  shortId       String          @unique @db.VarChar(20) // 16+ char nanoid
-  transcript    String          @db.Text
-  corrected     String?         @db.Text
-  summary       String?         @db.Text
-  language      String?         @db.VarChar(10)
-  passwordHash  String?         @db.VarChar(255) // bcrypt hash for password protection
-  ownerTier     String?         @db.VarChar(20) // Owner's tier at share creation (for ads logic)
-  audioKey      String?         @db.VarChar(512) // R2 storage key for audio file
-  expiresAt     DateTime?       // null = never expires (Pro only)
-  createdAt     DateTime        @default(now())
-  userId        String?
-  user          User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
-  analytics     ShareAnalytics[]
+  id      String @id @default(cuid())
+  shortId String @unique @db.VarChar(20) // 16+ char nanoid
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transcriptionId String?
+  pdfConversionId String?
+
+  transcript String? @db.Text
+  corrected  String? @db.Text
+  summary    String? @db.Text
+  language   String? @db.VarChar(10)
+
+  passwordHash String? @db.VarChar(255) // bcrypt hash for password protection
+  ownerTier    String? @db.VarChar(20) // Owner's tier at share creation (for ads logic)
+  audioKey     String? @db.VarChar(512) // R2 storage key for audio file
+
+  expiresAt DateTime // null = never expires (Pro only)
+  createdAt DateTime         @default(now())
+  analytics ShareAnalytics[]
 
   @@index([shortId])
+  @@index([userId])
   @@index([expiresAt])
   @@map("shares")
 }
 
 // Rate limit tracking - replaces JSON file storage
 model RateLimit {
-  id            String    @id @default(cuid())
-  ipAddress     String
-  date          String    @db.VarChar(10) // YYYY-MM-DD format
-  count         Int       @default(0)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id        String   @id @default(cuid())
+  ipAddress String
+  date      String   @db.VarChar(10) // YYYY-MM-DD format
+  count     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([ipAddress, date])
   @@index([ipAddress])
@@ -68,14 +148,14 @@ model RateLimit {
 
 // Share analytics - track views and interactions
 model ShareAnalytics {
-  id            String    @id @default(cuid())
-  shareId       String
-  share         Share     @relation(fields: [shareId], references: [id], onDelete: Cascade)
-  eventType     String    @db.VarChar(50) // view, copy_transcript, copy_link, share_twitter, share_facebook, share_whatsapp
-  ipAddress     String?
-  userAgent     String?   @db.Text
-  referer       String?   @db.Text
-  createdAt     DateTime  @default(now())
+  id        String   @id @default(cuid())
+  shareId   String
+  share     Share    @relation(fields: [shareId], references: [id], onDelete: Cascade)
+  eventType String   @db.VarChar(50) // view, copy_transcript, copy_link, share_twitter, share_facebook, share_whatsapp
+  ipAddress String?
+  userAgent String?  @db.Text
+  referer   String?  @db.Text
+  createdAt DateTime @default(now())
 
   @@index([shareId])
   @@index([eventType])
@@ -85,18 +165,22 @@ model ShareAnalytics {
 
 // Transcription history (optional feature for logged-in users)
 model Transcription {
-  id            String    @id @default(cuid())
-  userId        String?
-  user          User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  transcript    String    @db.Text
-  corrected     String?   @db.Text
-  summary       String?   @db.Text
-  language      String?   @db.VarChar(10)
-  audioDuration Float?    // Duration in seconds
-  fileName      String?   @db.VarChar(255)
-  fileSize      Int?      // Size in bytes
-  audioKey      String?   @db.VarChar(512) // R2 storage key for audio file
-  createdAt     DateTime  @default(now())
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transcript String  @db.Text
+  corrected  String? @db.Text
+  summary    String? @db.Text
+  language   String? @db.VarChar(10)
+
+  audioKey      String? @db.VarChar(512) // R2 storage key for audio file
+  audioSize     Int? // Size in bytes
+  audioDuration Float? // Duration in seconds
+  fileName      String? @db.VarChar(255)
+  fileSize      Int? // Size in bytes
+
+  createdAt DateTime @default(now())
 
   @@index([userId])
   @@index([createdAt])
@@ -105,58 +189,62 @@ model Transcription {
 
 // Supported languages for transcription
 model Language {
-  id            String    @id @default(cuid())
-  code          String    @unique @db.VarChar(10) // e.g., "en", "pt", "es"
-  name          String    @db.VarChar(100)
-  nativeName    String    @db.VarChar(100)
-  isActive      Boolean   @default(true)
-  createdAt     DateTime  @default(now())
+  id         String   @id @default(cuid())
+  code       String   @unique @db.VarChar(10) // e.g., "en", "pt", "es"
+  name       String   @db.VarChar(100)
+  nativeName String   @db.VarChar(100)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
 
   @@map("languages")
 }
 
 // PDF to Audio conversions
 model PdfConversion {
-  id            String    @id @default(cuid())
-  shortId       String    @unique @db.VarChar(10)
-  userId        String?   // Owner user ID for authenticated users
-  status        String    @db.VarChar(20) // pending, extracting, converting, completed, failed
-  fileName      String?   @db.VarChar(255)
-  fileSize      Int?      // Size in bytes
-  extractedText String?   @db.Text
+  id      String  @id @default(cuid())
+  shortId String  @unique @db.VarChar(10)
+  userId  String? // Owner user ID for authenticated users
+  user    User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  status        String  @db.VarChar(20) // pending, extracting, converting, completed, failed
+  fileName      String? @db.VarChar(255)
+  fileSize      Int? // Size in bytes
+  extractedText String? @db.Text
   textLength    Int?
   pageCount     Int?
-  language      String?   @db.VarChar(10)
-  voice         String?   @db.VarChar(20) // OpenAI voice selection
-  audioFormat   String?   @db.VarChar(10) // mp3, wav, ogg
-  audioSize     Int?      // Size in bytes
-  audioDuration Float?    // Duration in seconds
-  audioData     String?   @db.Text // Base64-encoded audio, stored after conversion (fallback when R2 not configured)
-  audioKey      String?   @db.VarChar(512) // R2 storage key for audio file
-  errorMessage  String?   @db.Text
-  createdAt     DateTime  @default(now())
-  completedAt   DateTime?
-  expiresAt     DateTime  // Auto-cleanup after 24 hours
-  ipAddress     String?
+  language      String? @db.VarChar(10)
+  voice         String? @db.VarChar(20) // OpenAI voice selection
+  audioFormat   String? @db.VarChar(10) // mp3, wav, ogg
+  audioSize     Int? // Size in bytes
+  audioDuration Float? // Duration in seconds
+  audioData     String? @db.Text // Base64-encoded audio, stored after conversion (fallback when R2 not configured)
+  audioKey      String? @db.VarChar(512) // R2 storage key for audio file
+  mp3Key        String? // Alternative R2 key field
+  errorMessage  String? @db.Text
+
+  createdAt   DateTime  @default(now())
+  completedAt DateTime?
+  expiresAt   DateTime // Auto-cleanup after 24 hours
+  ipAddress   String?
 
   @@index([shortId])
+  @@index([userId])
   @@index([status])
   @@index([expiresAt])
-  @@index([userId])
   @@map("pdf_conversions")
 }
 
 // Contact form submissions
 model ContactSubmission {
-  id          String    @id @default(cuid())
-  name        String    @db.VarChar(100)
-  email       String    @db.VarChar(255)
-  subject     String    @db.VarChar(255)
-  message     String    @db.Text
-  ipAddress   String?
-  userAgent   String?   @db.Text
-  isRead      Boolean   @default(false)
-  createdAt   DateTime  @default(now())
+  id        String   @id @default(cuid())
+  name      String   @db.VarChar(100)
+  email     String   @db.VarChar(255)
+  subject   String   @db.VarChar(255)
+  message   String   @db.Text
+  ipAddress String?
+  userAgent String?  @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
 
   @@index([isRead])
   @@index([createdAt])

@@ -45,3 +45,4 @@ prisma/*.db-journal
 docker-compose.override.yml
 pdf-service/venv/
 pdf-service/data/
+.pnpm-store/
