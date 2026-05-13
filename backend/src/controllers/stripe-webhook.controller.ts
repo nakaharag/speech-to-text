@@ -113,11 +113,9 @@ export class StripeWebhookController {
       this.logger.error(
         `Error handling webhook event ${event.type}: ${error instanceof Error ? error.message : 'Unknown error'}`,
       );
-      // Still return 200 to prevent Stripe from retrying
-      // Log the error for debugging but acknowledge receipt
-      res.status(HttpStatus.OK).json({
-        received: true,
-        warning: 'Event logged but processing error occurred',
+      // Return 500 to trigger Stripe retry for failed webhook processing
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        error: 'Webhook processing failed',
       });
     }
   }

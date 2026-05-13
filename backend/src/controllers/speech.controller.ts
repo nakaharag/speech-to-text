@@ -11,6 +11,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { SpeechService } from '../services/speech.service';
 import { RateLimitService } from '../services/rate-limit.service';
+import { IpUtilsService } from '../services/ip-utils.service';
 import { Request } from 'express';
 
 @Controller('speech')
@@ -18,6 +19,7 @@ export class SpeechController {
   constructor(
     private readonly speechService: SpeechService,
     private readonly rateLimitService: RateLimitService,
+    private readonly ipUtilsService: IpUtilsService,
   ) {}
 
   @Post('transcribe')
@@ -28,7 +30,7 @@ export class SpeechController {
     @Body('language') language?: string,
   ) {
     // Get client IP
-    const ip = this.getClientIp(req);
+    const ip = this.ipUtilsService.getClientIp(req);
 
     // Check rate limit (now async)
     const limit = await this.rateLimitService.checkLimit(ip);
@@ -83,7 +85,7 @@ export class SpeechController {
     @Body('language') language?: string,
   ) {
     // Get client IP
-    const ip = this.getClientIp(req);
+    const ip = this.ipUtilsService.getClientIp(req);
 
     // Check rate limit
     const limit = await this.rateLimitService.checkLimit(ip);
@@ -148,16 +150,5 @@ export class SpeechController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-  }
-
-  private getClientIp(req: Request): string {
-    const forwarded = req.headers['x-forwarded-for'];
-    if (typeof forwarded === 'string') {
-      return forwarded.split(',')[0].trim();
-    }
-    if (Array.isArray(forwarded)) {
-      return forwarded[0];
-    }
-    return req.ip || req.socket.remoteAddress || 'unknown';
   }
 }

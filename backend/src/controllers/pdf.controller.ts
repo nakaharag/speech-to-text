@@ -19,6 +19,7 @@ import { Request, Response } from 'express';
 import { PdfService } from '../services/pdf.service';
 import { TtsService, TtsVoice } from '../services/tts.service';
 import { R2Service } from '../services/r2.service';
+import { IpUtilsService } from '../services/ip-utils.service';
 import { getPreviewText, getVoiceDescription, getRecommendedVoices, TtsVoice as VoiceType } from '../constants/voice-previews';
 import { RateLimitService } from '../services/rate-limit.service';
 import { PrismaService } from '../services/prisma.service';
@@ -37,6 +38,7 @@ export class PdfController {
     private readonly rateLimitService: RateLimitService,
     private readonly prisma: PrismaService,
     private readonly r2Service: R2Service,
+    private readonly ipUtilsService: IpUtilsService,
   ) {}
 
   @Post('convert')
@@ -52,7 +54,7 @@ export class PdfController {
     @Body('speed') speed?: string,
     @CurrentUser() user?: NextAuthUser,
   ) {
-    const ip = this.getClientIp(req);
+    const ip = this.ipUtilsService.getClientIp(req);
     const userId = user?.id;
 
     // Check rate limit
@@ -484,17 +486,6 @@ export class PdfController {
         HttpStatus.SERVICE_UNAVAILABLE,
       );
     }
-  }
-
-  private getClientIp(req: Request): string {
-    const forwarded = req.headers['x-forwarded-for'];
-    if (typeof forwarded === 'string') {
-      return forwarded.split(',')[0].trim();
-    }
-    if (Array.isArray(forwarded)) {
-      return forwarded[0];
-    }
-    return req.ip || req.socket.remoteAddress || 'unknown';
   }
 
   private validateVoice(voice?: string): TtsVoice {

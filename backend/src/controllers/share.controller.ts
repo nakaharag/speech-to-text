@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { ShareService } from '../services/share.service';
 import { AnalyticsService } from '../services/analytics.service';
+import { IpUtilsService } from '../services/ip-utils.service';
 import { CreateShareDto, VerifySharePasswordDto } from '../dto/create-share.dto';
 import { Request } from 'express';
 
@@ -19,6 +20,7 @@ export class ShareController {
   constructor(
     private readonly shareService: ShareService,
     private readonly analyticsService: AnalyticsService,
+    private readonly ipUtilsService: IpUtilsService,
   ) {}
 
   @Post('create')
@@ -62,7 +64,7 @@ export class ShareController {
       await this.analyticsService.trackEvent({
         shareId: share.id,
         eventType: 'view',
-        ipAddress: this.getClientIp(req),
+        ipAddress: this.ipUtilsService.getClientIp(req),
         userAgent: req.headers['user-agent'],
         referer: req.headers['referer'] as string,
       });
@@ -132,7 +134,7 @@ export class ShareController {
       await this.analyticsService.trackEvent({
         shareId: share.id,
         eventType: 'view',
-        ipAddress: this.getClientIp(req),
+        ipAddress: this.ipUtilsService.getClientIp(req),
         userAgent: req.headers['user-agent'],
         referer: req.headers['referer'] as string,
       });
@@ -170,16 +172,5 @@ export class ShareController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-  }
-
-  private getClientIp(req: Request): string {
-    const forwarded = req.headers['x-forwarded-for'];
-    if (typeof forwarded === 'string') {
-      return forwarded.split(',')[0].trim();
-    }
-    if (Array.isArray(forwarded)) {
-      return forwarded[0];
-    }
-    return req.ip || req.socket.remoteAddress || 'unknown';
   }
 }
