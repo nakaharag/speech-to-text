@@ -1,11 +1,12 @@
 # Development Docker Compose - Hot Reload Enabled
 # Usage: docker compose -f docker-compose.dev.yml up
+# Ports: Backend=3003, Frontend=3004, Postgres=5433 (to avoid conflicts)
 
 services:
   postgres:
     image: postgres:16-alpine
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       - POSTGRES_USER=${POSTGRES_USER:-speechtotext}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-speechtotext123}
@@ -22,12 +23,12 @@ services:
     image: node:20-alpine
     working_dir: /app
     ports:
-      - "3000:3000"
+      - "3003:3000"
     environment:
       - NODE_ENV=development
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
-      - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost:3001}
+      - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost:3004}
       - BASE_URL=${BASE_URL:-http://localhost:3000}
       - DATABASE_URL=postgresql://${POSTGRES_USER:-speechtotext}:${POSTGRES_PASSWORD:-speechtotext123}@postgres:5432/${POSTGRES_DB:-speechtotext}
     volumes:
@@ -56,10 +57,10 @@ services:
     image: node:20-alpine
     working_dir: /app
     ports:
-      - "3001:3001"
+      - "3004:3001"
     environment:
       - NODE_ENV=development
-      - NEXTAUTH_URL=${NEXTAUTH_URL:-http://localhost:3001}
+      - NEXTAUTH_URL=${NEXTAUTH_URL:-http://localhost:3004}
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-dev-secret-change-in-production}
       - DATABASE_URL=postgresql://${POSTGRES_USER:-speechtotext}:${POSTGRES_PASSWORD:-speechtotext123}@postgres:5432/${POSTGRES_DB:-speechtotext}
       - BACKEND_URL=http://backend:3000
