@@ -1,0 +1,32 @@
+# Local testing for frontend-next (Next.js auth)
+# Usage: docker compose -f docker-compose.yml -f docker-compose.local.yml up -d frontend-next
+
+services:
+  frontend-next:
+    build:
+      context: ./frontend-next
+      dockerfile: Dockerfile
+    networks:
+      - internal
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-speechtotext}:${POSTGRES_PASSWORD:-speechtotext123}@postgres:5432/${POSTGRES_DB:-speechtotext}
+      - NEXTAUTH_URL=http://localhost:3001
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - AUTH_TRUST_HOST=true
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - RESEND_API_KEY=${RESEND_API_KEY:-}
+      - EMAIL_FROM=${EMAIL_FROM:-noreply@speech-to-text.me}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:3001 || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
