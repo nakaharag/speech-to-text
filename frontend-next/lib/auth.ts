@@ -77,6 +77,24 @@ export const authConfig: NextAuthConfig = {
     }),
   ],
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === 'apple' && user.email) {
+        // Check if this is a private relay email
+        if (isApplePrivateRelay(user.email)) {
+          try {
+            await prisma.user.update({
+              where: { email: user.email },
+              data: { isPrivateRelayEmail: true },
+            });
+          } catch (error) {
+            // User might not exist yet (first sign in), adapter will create them
+            // We'll flag them in the next sign in, or handle in jwt callback
+            console.log('Could not flag private relay (user may not exist yet):', error);
+          }
+        }
+      }
+      return true;
+    },
     async jwt({ token, user, account, profile }) {
       if (user) {
         token.id = user.id;

@@ -20,6 +20,9 @@ model User {
   appleId              String?   @unique
   twitterId            String?   @unique
 
+  // Flag for Apple private relay emails
+  isPrivateRelayEmail  Boolean   @default(false)
+
   // Subscription
   tier                 String    @default("free")
   stripeCustomerId     String?   @unique
