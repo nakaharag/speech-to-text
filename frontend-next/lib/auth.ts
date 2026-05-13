@@ -91,10 +91,15 @@ export const authConfig: NextAuthConfig = {
             .filter(Boolean)
             .join(' ');
           if (fullName && token.id) {
-            await prisma.user.update({
-              where: { id: token.id as string },
-              data: { name: fullName },
-            });
+            try {
+              await prisma.user.update({
+                where: { id: token.id as string },
+                data: { name: fullName },
+              });
+            } catch (error) {
+              console.error('Failed to store Apple user name:', error);
+              // Don't fail the login for this
+            }
           }
         }
       }
