@@ -16,6 +16,10 @@ import { LanguageService } from './services/language.service';
 import { AnalyticsService } from './services/analytics.service';
 import { PdfService } from './services/pdf.service';
 import { TtsService } from './services/tts.service';
+import {
+  NextAuthGuard,
+  OptionalNextAuthGuard,
+} from './guards/nextauth.guard';
 
 @Module({
   imports: [],
@@ -39,6 +43,8 @@ import { TtsService } from './services/tts.service';
     AnalyticsService,
     PdfService,
     TtsService,
+    NextAuthGuard,
+    OptionalNextAuthGuard,
   ],
   exports: [PrismaService],
 })
