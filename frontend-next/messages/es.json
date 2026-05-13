@@ -448,7 +448,18 @@
       "shareOnX": "Compartir en X",
       "shareOnFacebook": "Compartir en Facebook",
       "shareOnWhatsApp": "Compartir en WhatsApp",
-      "expires": "El enlace expira en 7 días"
+      "expires": "El enlace expira en 7 dias",
+      "advancedOptions": "Opciones avanzadas",
+      "expirationLabel": "Expiracion del enlace",
+      "expiration24h": "24 horas",
+      "expiration7d": "7 dias",
+      "expiration30d": "30 dias",
+      "expirationNever": "Nunca",
+      "proOnlyNeverExpires": "Actualiza a Pro para enlaces que nunca expiren",
+      "passwordLabel": "Proteccion con contrasena",
+      "passwordPlaceholder": "Contrasena opcional",
+      "passwordHint": "Deja vacio para acceso publico",
+      "passwordProtected": "Protegido con contrasena"
     },
     "results": {
       "title": "Resultados",

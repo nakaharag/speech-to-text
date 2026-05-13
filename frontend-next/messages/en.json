@@ -448,7 +448,18 @@
       "shareOnX": "Share on X",
       "shareOnFacebook": "Share on Facebook",
       "shareOnWhatsApp": "Share on WhatsApp",
-      "expires": "Link expires in 7 days"
+      "expires": "Link expires in 7 days",
+      "advancedOptions": "Advanced options",
+      "expirationLabel": "Link expiration",
+      "expiration24h": "24 hours",
+      "expiration7d": "7 days",
+      "expiration30d": "30 days",
+      "expirationNever": "Never",
+      "proOnlyNeverExpires": "Upgrade to Pro for links that never expire",
+      "passwordLabel": "Password protection",
+      "passwordPlaceholder": "Optional password",
+      "passwordHint": "Leave empty for public access",
+      "passwordProtected": "Password protected"
     },
     "results": {
       "title": "Results",

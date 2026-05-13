@@ -32,12 +32,15 @@ model User {
 // Share model - replaces JSON file storage
 model Share {
   id            String          @id @default(cuid())
-  shortId       String          @unique @db.VarChar(10)
+  shortId       String          @unique @db.VarChar(20) // 16+ char nanoid
   transcript    String          @db.Text
   corrected     String?         @db.Text
   summary       String?         @db.Text
   language      String?         @db.VarChar(10)
-  expiresAt     DateTime
+  passwordHash  String?         @db.VarChar(255) // bcrypt hash for password protection
+  ownerTier     String?         @db.VarChar(20) // Owner's tier at share creation (for ads logic)
+  audioKey      String?         @db.VarChar(512) // R2 storage key for audio file
+  expiresAt     DateTime?       // null = never expires (Pro only)
   createdAt     DateTime        @default(now())
   userId        String?
   user          User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
