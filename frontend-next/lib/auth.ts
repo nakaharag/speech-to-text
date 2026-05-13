@@ -1,9 +1,11 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
+import Apple from 'next-auth/providers/apple';
 import Credentials from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from './prisma';
 import { verifyPassword } from './password';
+import { isApplePrivateRelay } from './apple-auth';
 import type { NextAuthConfig } from 'next-auth';
 
 export const authConfig: NextAuthConfig = {
@@ -23,6 +25,16 @@ export const authConfig: NextAuthConfig = {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       allowDangerousEmailAccountLinking: true,
+    }),
+    Apple({
+      clientId: process.env.APPLE_ID!,
+      clientSecret: process.env.APPLE_PRIVATE_KEY!, // NextAuth generates the secret
+      authorization: {
+        params: {
+          scope: 'name email',
+        },
+      },
+      // Note: Apple only sends user's name on first authorization
     }),
     Credentials({
       name: 'credentials',
@@ -65,10 +77,28 @@ export const authConfig: NextAuthConfig = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, account, profile }) {
       if (user) {
         token.id = user.id;
       }
+
+      // Handle Apple-specific data
+      if (account?.provider === 'apple' && profile) {
+        // Apple only sends name on first auth - store it
+        const appleProfile = profile as { name?: { firstName?: string; lastName?: string } };
+        if (appleProfile.name) {
+          const fullName = [appleProfile.name.firstName, appleProfile.name.lastName]
+            .filter(Boolean)
+            .join(' ');
+          if (fullName && token.id) {
+            await prisma.user.update({
+              where: { id: token.id as string },
+              data: { name: fullName },
+            });
+          }
+        }
+      }
+
       return token;
     },
     async session({ session, token }) {
