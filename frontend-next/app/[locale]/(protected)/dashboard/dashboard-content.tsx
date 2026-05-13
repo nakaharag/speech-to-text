@@ -91,13 +91,13 @@ export function DashboardContent({ userName, tier }: DashboardContentProps) {
 
       {/* Usage Stats */}
       <section>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('stats.title')}</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-4">{t('stats.title')}</h2>
         <UsageStatsCards stats={stats} isLoading={isLoadingStats} error={statsError} />
       </section>
 
       {/* Quick Actions */}
       <section>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('quickActions.title')}</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-4">{t('quickActions.title')}</h2>
         <QuickActions />
       </section>
 

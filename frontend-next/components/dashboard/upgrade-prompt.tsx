@@ -28,8 +28,8 @@ export function UpgradePrompt({ tier }: UpgradePromptProps) {
               </svg>
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">{t('upgrade.title')}</h3>
-              <p className="text-sm text-gray-600 mt-1">{t('upgrade.description')}</p>
+              <h3 className="font-semibold text-foreground">{t('upgrade.title')}</h3>
+              <p className="text-sm text-foreground-secondary mt-1">{t('upgrade.description')}</p>
             </div>
           </div>
           <Link href="/pricing">
