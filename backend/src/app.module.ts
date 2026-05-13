@@ -9,6 +9,7 @@ import { PdfController } from './controllers/pdf.controller';
 import { ContactController } from './controllers/contact.controller';
 import { StorageController } from './controllers/storage.controller';
 import { StripeWebhookController } from './controllers/stripe-webhook.controller';
+import { UserController } from './controllers/user.controller';
 import { SpeechService } from './services/speech.service';
 import { ClaudeService } from './services/claude.service';
 import { ShareService } from './services/share.service';
@@ -39,6 +40,7 @@ import {
     ContactController,
     StorageController,
     StripeWebhookController,
+    UserController,
   ],
   providers: [
     PrismaService,
