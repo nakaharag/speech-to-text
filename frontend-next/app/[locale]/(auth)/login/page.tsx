@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { LoginForm } from '@/components/auth/login-form';
 import { SocialButtons } from '@/components/auth/social-buttons';
@@ -14,12 +16,26 @@ function LoginFormFallback() {
   );
 }
 
-export default function LoginPage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function LoginPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  return <LoginPageContent />;
+}
+
+function LoginPageContent() {
+  const t = useTranslations('auth.login');
+  const tSocial = useTranslations('auth.social');
+
   return (
     <Card>
       <CardHeader className="text-center">
-        <CardTitle>Welcome back</CardTitle>
-        <CardDescription>Sign in to your account</CardDescription>
+        <CardTitle>{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <SocialButtons />
@@ -29,7 +45,7 @@ export default function LoginPage() {
             <span className="w-full border-t" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-gray-500">Or continue with</span>
+            <span className="bg-white px-2 text-gray-500">{tSocial('continueWith')}</span>
           </div>
         </div>
 
@@ -38,9 +54,9 @@ export default function LoginPage() {
         </Suspense>
 
         <p className="text-center text-sm text-gray-600">
-          Don&apos;t have an account?{' '}
+          {t('noAccount')}{' '}
           <Link href="/signup" className="font-medium text-blue-600 hover:underline">
-            Sign up
+            {t('signUp')}
           </Link>
         </p>
       </CardContent>

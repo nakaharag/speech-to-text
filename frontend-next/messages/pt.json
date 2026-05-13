@@ -1,0 +1,141 @@
+{
+  "app": {
+    "title": "speech-to-text.me",
+    "description": "Transcrição de voz e resumo com IA"
+  },
+  "nav": {
+    "home": "Início",
+    "transcribe": "Transcrever",
+    "dashboard": "Painel",
+    "settings": "Configurações",
+    "signOut": "Sair"
+  },
+  "auth": {
+    "login": {
+      "title": "Bem-vindo de volta",
+      "description": "Entre na sua conta",
+      "email": "Email",
+      "emailPlaceholder": "nome@exemplo.com",
+      "password": "Senha",
+      "passwordPlaceholder": "Digite sua senha",
+      "submit": "Entrar",
+      "submitting": "Entrando...",
+      "forgotPassword": "Esqueceu a senha?",
+      "noAccount": "Não tem uma conta?",
+      "signUp": "Criar conta"
+    },
+    "signup": {
+      "title": "Criar uma conta",
+      "description": "Digite seus dados para começar",
+      "name": "Nome",
+      "namePlaceholder": "João Silva",
+      "email": "Email",
+      "emailPlaceholder": "nome@exemplo.com",
+      "password": "Senha",
+      "passwordPlaceholder": "Crie uma senha",
+      "confirmPassword": "Confirmar Senha",
+      "confirmPasswordPlaceholder": "Confirme sua senha",
+      "submit": "Criar conta",
+      "submitting": "Criando conta...",
+      "hasAccount": "Já tem uma conta?",
+      "signIn": "Entrar",
+      "terms": "Ao criar uma conta, você concorda com nossos",
+      "termsLink": "Termos de Serviço",
+      "and": "e",
+      "privacyLink": "Política de Privacidade"
+    },
+    "verify": {
+      "title": "Verifique seu email",
+      "description": "Enviamos um link de verificação para seu email",
+      "checkInbox": "Por favor, verifique sua caixa de entrada e clique no link para verificar sua conta.",
+      "resend": "Reenviar email de verificação",
+      "resending": "Reenviando...",
+      "resent": "Email de verificação enviado!",
+      "backToLogin": "Voltar ao login"
+    },
+    "forgotPassword": {
+      "title": "Esqueceu sua senha?",
+      "description": "Digite seu email e enviaremos um link de redefinição",
+      "email": "Email",
+      "emailPlaceholder": "nome@exemplo.com",
+      "submit": "Enviar link de redefinição",
+      "submitting": "Enviando...",
+      "sent": "Link de redefinição enviado!",
+      "sentDescription": "Verifique seu email para o link de redefinição de senha.",
+      "backToLogin": "Voltar ao login"
+    },
+    "resetPassword": {
+      "title": "Redefinir sua senha",
+      "description": "Digite uma nova senha para sua conta",
+      "password": "Nova Senha",
+      "passwordPlaceholder": "Digite sua nova senha",
+      "confirmPassword": "Confirmar Senha",
+      "confirmPasswordPlaceholder": "Confirme sua nova senha",
+      "submit": "Redefinir senha",
+      "submitting": "Redefinindo...",
+      "success": "Senha redefinida com sucesso!",
+      "successDescription": "Você já pode entrar com sua nova senha.",
+      "signIn": "Entrar"
+    },
+    "social": {
+      "continueWith": "Ou continue com",
+      "google": "Continuar com Google",
+      "github": "Continuar com GitHub"
+    },
+    "errors": {
+      "invalidCredentials": "Email ou senha inválidos",
+      "emailExists": "Uma conta com este email já existe",
+      "emailNotVerified": "Por favor, verifique seu email antes de entrar",
+      "invalidEmail": "Por favor, digite um email válido",
+      "passwordTooShort": "A senha deve ter pelo menos 8 caracteres",
+      "passwordMismatch": "As senhas não coincidem",
+      "generic": "Algo deu errado. Por favor, tente novamente.",
+      "networkError": "Erro de rede. Por favor, verifique sua conexão.",
+      "sessionExpired": "Sua sessão expirou. Por favor, entre novamente.",
+      "unauthorized": "Você não está autorizado a acessar este recurso."
+    }
+  },
+  "dashboard": {
+    "title": "Painel",
+    "welcome": "Bem-vindo, {name}!",
+    "recentTranscriptions": "Transcrições Recentes",
+    "noTranscriptions": "Nenhuma transcrição ainda",
+    "startTranscribing": "Começar a transcrever"
+  },
+  "settings": {
+    "title": "Configurações",
+    "profile": "Perfil",
+    "account": "Conta",
+    "language": "Idioma",
+    "theme": "Tema",
+    "notifications": "Notificações",
+    "save": "Salvar alterações",
+    "saving": "Salvando..."
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro",
+    "retry": "Tentar novamente",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "close": "Fechar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "submit": "Enviar",
+    "learnMore": "Saiba mais"
+  },
+  "footer": {
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço",
+    "about": "Sobre",
+    "contact": "Contato"
+  },
+  "siteLang": {
+    "en": "Inglês",
+    "pt": "Português",
+    "es": "Espanhol"
+  }
+}

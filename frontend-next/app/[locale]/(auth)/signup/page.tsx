@@ -1,14 +1,30 @@
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { SignupForm } from '@/components/auth/signup-form';
 import { SocialButtons } from '@/components/auth/social-buttons';
 
-export default function SignupPage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function SignupPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  return <SignupPageContent />;
+}
+
+function SignupPageContent() {
+  const t = useTranslations('auth.signup');
+  const tSocial = useTranslations('auth.social');
+
   return (
     <Card>
       <CardHeader className="text-center">
-        <CardTitle>Create an account</CardTitle>
-        <CardDescription>Get started with speech-to-text.me</CardDescription>
+        <CardTitle>{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <SocialButtons />
@@ -18,16 +34,16 @@ export default function SignupPage() {
             <span className="w-full border-t" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-gray-500">Or continue with</span>
+            <span className="bg-white px-2 text-gray-500">{tSocial('continueWith')}</span>
           </div>
         </div>
 
         <SignupForm />
 
         <p className="text-center text-sm text-gray-600">
-          Already have an account?{' '}
+          {t('hasAccount')}{' '}
           <Link href="/login" className="font-medium text-blue-600 hover:underline">
-            Sign in
+            {t('signIn')}
           </Link>
         </p>
       </CardContent>

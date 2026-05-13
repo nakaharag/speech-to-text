@@ -2,14 +2,17 @@
 
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 
 export function SocialButtons() {
+  const t = useTranslations('auth.social');
+  const locale = useLocale();
   const [isLoading, setIsLoading] = useState<string | null>(null);
 
   const handleSocialLogin = async (provider: string) => {
     setIsLoading(provider);
     try {
-      await signIn(provider, { callbackUrl: '/dashboard' });
+      await signIn(provider, { callbackUrl: `/${locale}/dashboard` });
     } catch (error) {
       console.error('Social login error:', error);
     } finally {
@@ -30,7 +33,7 @@ export function SocialButtons() {
         ) : (
           <GoogleIcon />
         )}
-        Continue with Google
+        {t('google')}
       </button>
 
       {/* Apple Button */}

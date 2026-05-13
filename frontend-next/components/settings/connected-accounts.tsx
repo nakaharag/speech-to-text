@@ -9,14 +9,13 @@ export async function ConnectedAccounts({ userId }: ConnectedAccountsProps) {
     where: { userId },
     select: {
       provider: true,
-      createdAt: true,
     },
   });
 
   const providers = {
-    google: { name: 'Google', icon: '🔵' },
-    apple: { name: 'Apple', icon: '🍎' },
-    credentials: { name: 'Email/Password', icon: '📧' },
+    google: { name: 'Google', icon: 'G' },
+    apple: { name: 'Apple', icon: 'A' },
+    credentials: { name: 'Email/Password', icon: '@' },
   };
 
   return (
@@ -33,7 +32,7 @@ export async function ConnectedAccounts({ userId }: ConnectedAccountsProps) {
           accounts.map((account) => {
             const provider = providers[account.provider as keyof typeof providers] || {
               name: account.provider,
-              icon: '🔗',
+              icon: '#',
             };
             return (
               <div
@@ -41,12 +40,11 @@ export async function ConnectedAccounts({ userId }: ConnectedAccountsProps) {
                 className="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-xl">{provider.icon}</span>
+                  <span className="w-8 h-8 flex items-center justify-center bg-slate-200 rounded-full text-sm font-bold text-slate-700">
+                    {provider.icon}
+                  </span>
                   <div>
                     <p className="font-medium text-slate-900">{provider.name}</p>
-                    <p className="text-xs text-slate-500">
-                      Connected {account.createdAt.toLocaleDateString()}
-                    </p>
                   </div>
                 </div>
                 <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">

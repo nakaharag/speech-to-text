@@ -1,9 +1,30 @@
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
+import { LanguageSwitcher } from '@/components/language-switcher';
 
-export default function HomePage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function HomePage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  return <HomePageContent />;
+}
+
+function HomePageContent() {
+  const t = useTranslations();
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#F8FAFC]">
+      {/* Language Switcher */}
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher showFlag />
+      </div>
+
       <div className="text-center space-y-8 px-4 max-w-2xl">
         {/* Logo */}
         <div className="flex items-center justify-center space-x-3">
@@ -11,27 +32,25 @@ export default function HomePage() {
             <path d="M8 24h4M16 16v16M24 8v32M32 16v16M40 24h4" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
           </svg>
           <h1 className="text-4xl md:text-5xl font-bold text-slate-900">
-            speech-to-text<span className="text-[#3B82F6]">.me</span>
+            {t('app.title').split('.')[0]}<span className="text-[#3B82F6]">.me</span>
           </h1>
         </div>
 
         {/* Tagline */}
         <p className="text-xl text-slate-600 leading-relaxed">
-          Voice transcription & AI summarization.
-          <br />
-          <span className="text-slate-500">Record or upload audio and get accurate transcriptions instantly.</span>
+          {t('app.description')}
         </p>
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
           <Link href="/signup">
             <Button size="lg" className="w-full sm:w-auto px-8">
-              Get Started Free
+              {t('nav.getStarted', { defaultMessage: 'Get Started Free' })}
             </Button>
           </Link>
           <Link href="/login">
             <Button variant="outline" size="lg" className="w-full sm:w-auto px-8">
-              Sign In
+              {t('auth.login.submit')}
             </Button>
           </Link>
         </div>

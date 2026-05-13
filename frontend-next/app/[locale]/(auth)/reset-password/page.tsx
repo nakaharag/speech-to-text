@@ -1,19 +1,30 @@
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ResetPasswordForm } from '@/components/auth/reset-password-form';
 
-export default async function ResetPasswordPage({
-  searchParams,
-}: {
+type Props = {
+  params: Promise<{ locale: string }>;
   searchParams: Promise<{ token?: string }>;
-}) {
+};
+
+export default async function ResetPasswordPage({ params, searchParams }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const { token } = await searchParams;
+
+  return <ResetPasswordPageContent token={token} />;
+}
+
+function ResetPasswordPageContent({ token }: { token?: string }) {
+  const t = useTranslations('auth.resetPassword');
 
   if (!token) {
     return (
       <Card>
         <CardHeader className="text-center">
-          <CardTitle>Invalid Reset Link</CardTitle>
+          <CardTitle>{t('title')}</CardTitle>
           <CardDescription>
             This password reset link is invalid or has expired.
           </CardDescription>
@@ -30,9 +41,9 @@ export default async function ResetPasswordPage({
   return (
     <Card>
       <CardHeader className="text-center">
-        <CardTitle>Set new password</CardTitle>
+        <CardTitle>{t('title')}</CardTitle>
         <CardDescription>
-          Enter your new password below
+          {t('description')}
         </CardDescription>
       </CardHeader>
       <CardContent>

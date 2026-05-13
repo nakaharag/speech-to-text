@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans } from 'next/font/google';
-import { Providers } from '@/components/providers';
 import './globals.css';
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -13,16 +12,17 @@ export const metadata: Metadata = {
   description: 'Voice transcription & AI summarization',
 };
 
+/**
+ * Root layout - minimal wrapper for the entire app
+ * The locale-specific layout handles i18n setup
+ */
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body className={`${plusJakarta.variable} font-sans antialiased bg-[#F8FAFC]`}>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
-  );
+  return children;
 }
+
+// Required for next-intl to work properly
+export const dynamic = 'force-dynamic';

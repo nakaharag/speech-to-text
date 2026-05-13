@@ -2,14 +2,17 @@
 
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { useRouter, Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const t = useTranslations('auth.login');
+  const tErrors = useTranslations('auth.errors');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -32,14 +35,14 @@ export function LoginForm() {
 
       if (result?.error) {
         setError(result.error === 'CredentialsSignin'
-          ? 'Invalid email or password'
+          ? tErrors('invalidCredentials')
           : result.error
         );
       } else {
         router.push('/dashboard');
       }
     } catch (err) {
-      setError('An unexpected error occurred');
+      setError(tErrors('generic'));
     } finally {
       setIsLoading(false);
     }
@@ -61,7 +64,7 @@ export function LoginForm() {
 
       {errorParam === 'expired_token' && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-          Verification link expired. Please sign up again.
+          {tErrors('sessionExpired')}
         </div>
       )}
 
@@ -73,12 +76,12 @@ export function LoginForm() {
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-          Email
+          {t('email')}
         </label>
         <Input
           id="email"
           type="email"
-          placeholder="you@example.com"
+          placeholder={t('emailPlaceholder')}
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           required
@@ -87,12 +90,12 @@ export function LoginForm() {
 
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-          Password
+          {t('password')}
         </label>
         <Input
           id="password"
           type="password"
-          placeholder="********"
+          placeholder={t('passwordPlaceholder')}
           value={formData.password}
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
           required
@@ -104,12 +107,12 @@ export function LoginForm() {
           href="/forgot-password"
           className="text-sm text-[#3B82F6] hover:underline"
         >
-          Forgot password?
+          {t('forgotPassword')}
         </Link>
       </div>
 
       <Button type="submit" className="w-full" isLoading={isLoading}>
-        Sign in
+        {isLoading ? t('submitting') : t('submit')}
       </Button>
     </form>
   );

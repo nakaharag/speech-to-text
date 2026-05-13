@@ -1,17 +1,32 @@
 import { auth } from '@/lib/auth';
+import { useTranslations } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-export default async function DashboardPage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function DashboardPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   const session = await auth();
+
+  return <DashboardPageContent userName={session?.user?.name} tier={session?.user?.tier} />;
+}
+
+function DashboardPageContent({ userName, tier }: { userName?: string | null; tier?: string }) {
+  const t = useTranslations('dashboard');
 
   return (
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold text-gray-900">
-          Welcome back, {session?.user?.name || 'User'}!
+          {t('welcome', { name: userName || 'User' })}
         </h2>
         <p className="text-gray-600">
-          Your current plan: <span className="font-medium capitalize">{session?.user?.tier || 'Free'}</span>
+          Your current plan: <span className="font-medium capitalize">{tier || 'Free'}</span>
         </p>
       </div>
 
@@ -52,10 +67,10 @@ export default async function DashboardPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Recent History</CardTitle>
+          <CardTitle>{t('recentTranscriptions')}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-500">No transcriptions yet. Start transcribing to see your history here.</p>
+          <p className="text-gray-500">{t('noTranscriptions')}</p>
         </CardContent>
       </Card>
     </div>

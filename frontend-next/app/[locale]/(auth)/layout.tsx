@@ -1,8 +1,14 @@
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
+import { LanguageSwitcher } from '@/components/language-switcher';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#F8FAFC] py-12 px-4 sm:px-6 lg:px-8">
+      {/* Language Switcher */}
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher showFlag />
+      </div>
+
       {/* Logo */}
       <Link href="/" className="flex items-center space-x-2 mb-8">
         <svg className="w-10 h-10 text-[#3B82F6]" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
