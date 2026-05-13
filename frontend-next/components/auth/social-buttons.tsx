@@ -47,7 +47,7 @@ export function SocialButtons() {
         ) : (
           <AppleIcon />
         )}
-        Continue with Apple
+        {t('apple')}
       </button>
     </div>
   );

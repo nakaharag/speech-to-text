@@ -55,7 +55,7 @@ export function MarketingFooter() {
           {/* Product Links */}
           <div>
             <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
-              Product
+              {t('product')}
             </h3>
             <ul className="space-y-3">
               {footerLinks.product.map((link) => (
@@ -74,7 +74,7 @@ export function MarketingFooter() {
           {/* Legal Links */}
           <div>
             <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
-              Legal
+              {t('legal')}
             </h3>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (

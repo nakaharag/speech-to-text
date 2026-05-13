@@ -86,7 +86,8 @@
     "social": {
       "continueWith": "O continúa con",
       "google": "Continuar con Google",
-      "github": "Continuar con GitHub"
+      "github": "Continuar con GitHub",
+      "apple": "Continuar con Apple"
     },
     "errors": {
       "invalidCredentials": "Email o contraseña inválidos",
@@ -155,13 +156,26 @@
   },
   "settings": {
     "title": "Configuración",
+    "description": "Administra la configuración de tu cuenta",
     "profile": "Perfil",
     "account": "Cuenta",
     "language": "Idioma",
     "theme": "Tema",
     "notifications": "Notificaciones",
     "save": "Guardar cambios",
-    "saving": "Guardando..."
+    "saving": "Guardando...",
+    "emailLabel": "Email",
+    "nameLabel": "Nombre",
+    "notSet": "No definido",
+    "billing": "Facturación y Suscripción",
+    "billingDescription": "Administra tu plan de suscripción y métodos de pago.",
+    "connectedAccounts": {
+      "title": "Cuentas Conectadas",
+      "description": "Estas cuentas están vinculadas a tu perfil.",
+      "noAccounts": "No hay cuentas conectadas",
+      "connected": "Conectado",
+      "comingSoon": "La vinculación y desvinculación de cuentas estará disponible en una actualización futura."
+    }
   },
   "common": {
     "loading": "Cargando...",
@@ -185,7 +199,9 @@
     "contact": "Contacto",
     "pricing": "Precios",
     "copyright": "Todos los derechos reservados.",
-    "tagline": "Transcripción de voz y resumen con IA"
+    "tagline": "Transcripción de voz y resumen con IA",
+    "product": "Producto",
+    "legal": "Legal"
   },
   "siteLang": {
     "en": "Inglés",

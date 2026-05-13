@@ -32,14 +32,17 @@ export default async function ProtectedLayout({ children, params }: Props) {
             </svg>
             <span className="text-xl font-bold text-slate-900">speech-to-text.me</span>
           </div>
-          <div className="flex items-center space-x-4">
+          <nav className="flex items-center space-x-6">
+            <Link href="/dashboard" className="text-sm font-medium text-slate-600 hover:text-slate-900">
+              {t('dashboard')}
+            </Link>
             <Link href="/settings" className="text-sm text-slate-600 hover:text-slate-900">
               {t('settings')}
             </Link>
             <LanguageSwitcher />
             <span className="text-sm text-slate-600">{session?.user?.email}</span>
             <SignOutButton />
-          </div>
+          </nav>
         </div>
       </header>
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

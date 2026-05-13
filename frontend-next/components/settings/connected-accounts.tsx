@@ -1,10 +1,13 @@
 import { prisma } from '@/lib/prisma';
+import { getTranslations } from 'next-intl/server';
 
 interface ConnectedAccountsProps {
   userId: string;
 }
 
 export async function ConnectedAccounts({ userId }: ConnectedAccountsProps) {
+  const t = await getTranslations('settings.connectedAccounts');
+
   const accounts = await prisma.account.findMany({
     where: { userId },
     select: {
@@ -20,14 +23,14 @@ export async function ConnectedAccounts({ userId }: ConnectedAccountsProps) {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-slate-900">Connected Accounts</h3>
+      <h3 className="text-lg font-semibold text-slate-900">{t('title')}</h3>
       <p className="text-sm text-slate-600">
-        These accounts are linked to your profile.
+        {t('description')}
       </p>
 
       <div className="space-y-2">
         {accounts.length === 0 ? (
-          <p className="text-slate-500 text-sm">No connected accounts</p>
+          <p className="text-slate-500 text-sm">{t('noAccounts')}</p>
         ) : (
           accounts.map((account) => {
             const provider = providers[account.provider as keyof typeof providers] || {
@@ -48,7 +51,7 @@ export async function ConnectedAccounts({ userId }: ConnectedAccountsProps) {
                   </div>
                 </div>
                 <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">
-                  Connected
+                  {t('connected')}
                 </span>
               </div>
             );
@@ -57,7 +60,7 @@ export async function ConnectedAccounts({ userId }: ConnectedAccountsProps) {
       </div>
 
       <p className="text-xs text-slate-500 mt-4">
-        Account linking and unlinking will be available in a future update.
+        {t('comingSoon')}
       </p>
     </div>
   );

@@ -86,7 +86,8 @@
     "social": {
       "continueWith": "Or continue with",
       "google": "Continue with Google",
-      "github": "Continue with GitHub"
+      "github": "Continue with GitHub",
+      "apple": "Continue with Apple"
     },
     "errors": {
       "invalidCredentials": "Invalid email or password",
@@ -155,13 +156,26 @@
   },
   "settings": {
     "title": "Settings",
+    "description": "Manage your account settings",
     "profile": "Profile",
     "account": "Account",
     "language": "Language",
     "theme": "Theme",
     "notifications": "Notifications",
     "save": "Save changes",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "emailLabel": "Email",
+    "nameLabel": "Name",
+    "notSet": "Not set",
+    "billing": "Billing & Subscription",
+    "billingDescription": "Manage your subscription plan and payment methods.",
+    "connectedAccounts": {
+      "title": "Connected Accounts",
+      "description": "These accounts are linked to your profile.",
+      "noAccounts": "No connected accounts",
+      "connected": "Connected",
+      "comingSoon": "Account linking and unlinking will be available in a future update."
+    }
   },
   "common": {
     "loading": "Loading...",
@@ -185,7 +199,9 @@
     "contact": "Contact",
     "pricing": "Pricing",
     "copyright": "All rights reserved.",
-    "tagline": "Voice transcription & AI summarization"
+    "tagline": "Voice transcription & AI summarization",
+    "product": "Product",
+    "legal": "Legal"
   },
   "siteLang": {
     "en": "English",
