@@ -536,5 +536,45 @@
       "title": "Términos de Servicio - speech-to-text.me",
       "description": "Lee nuestros términos de servicio para usar el servicio de transcripción de voz speech-to-text.me."
     }
+  },
+  "billing": {
+    "title": "Facturación y Suscripción",
+    "subtitle": "Administra tu suscripción y detalles de facturación",
+    "currentPlan": "Plan Actual",
+    "currentPlanDescription": "Tu plan de suscripción activo",
+    "active": "Activo",
+    "pastDue": "Pago Pendiente",
+    "endsAt": "Termina el {date}",
+    "renewsAt": "Se renueva el {date}",
+    "manageSubscription": "Gestionar Suscripción",
+    "redirecting": "Redirigiendo...",
+    "upgradePlans": "Mejora Tu Plan",
+    "month": "mes",
+    "year": "año",
+    "or": "o",
+    "save": "ahorra",
+    "upgradeMonthly": "Suscribirse Mensual",
+    "upgradeYearly": "Suscribirse Anual",
+    "recommended": "Recomendado",
+    "viewAllFeatures": "Ver todas las características y comparar planes",
+    "successMessage": "¡Tu suscripción se ha actualizado correctamente!",
+    "canceledMessage": "El pago fue cancelado. No se realizaron cargos.",
+    "portalError": "Error al abrir el portal de facturación. Inténtalo de nuevo.",
+    "checkoutError": "Error al iniciar el pago. Inténtalo de nuevo.",
+    "basic": {
+      "name": "Básico",
+      "description": "Para usuarios regulares que necesitan más",
+      "feature1": "15 transcripciones por día",
+      "feature2": "Acceso completo al historial",
+      "feature3": "Soporte prioritario"
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "Para usuarios avanzados y profesionales",
+      "feature1": "Transcripciones ilimitadas",
+      "feature2": "Procesamiento prioritario",
+      "feature3": "Sin anuncios",
+      "feature4": "Acceso completo al historial"
+    }
   }
 }

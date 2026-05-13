@@ -1,37 +1,48 @@
+'use client';
+
+import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
-import type { Metadata } from 'next';
-import { routing } from '@/i18n/routing';
 
-type Props = {
-  params: Promise<{ locale: string }>;
-};
-
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'metadata.pricing' });
-
-  return {
-    title: t('title'),
-    description: t('description'),
-  };
-}
-
-export default async function PricingPage({ params }: Props) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-
-  return <PricingPageContent />;
-}
-
-function PricingPageContent() {
+export default function PricingPage() {
   const t = useTranslations('pricing');
+  const { data: session } = useSession();
+  const [isYearly, setIsYearly] = useState(false);
+  const [loadingTier, setLoadingTier] = useState<string | null>(null);
+
+  const handleSubscribe = async (tier: 'basic' | 'pro') => {
+    if (!session) {
+      // Redirect to signup if not logged in
+      window.location.href = '/signup';
+      return;
+    }
+
+    setLoadingTier(tier);
+    try {
+      const response = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          tier,
+          interval: isYearly ? 'yearly' : 'monthly',
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create checkout session');
+      }
+
+      const { url } = await response.json();
+      window.location.href = url;
+    } catch (error) {
+      console.error('Checkout error:', error);
+      setLoadingTier(null);
+    }
+  };
 
   const CheckIcon = () => (
     <svg
@@ -49,6 +60,20 @@ function PricingPageContent() {
     </svg>
   );
 
+  // Pricing based on interval
+  const prices = {
+    basic: {
+      monthly: '$7',
+      yearly: '$59',
+      yearlySavings: '30%',
+    },
+    pro: {
+      monthly: '$15',
+      yearly: '$129',
+      yearlySavings: '28%',
+    },
+  };
+
   return (
     <div className="py-20 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,6 +83,38 @@ function PricingPageContent() {
             {t('title')}
           </h1>
           <p className="mt-4 text-lg text-slate-600">{t('subtitle')}</p>
+
+          {/* Billing Toggle */}
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <span
+              className={`text-sm font-medium ${!isYearly ? 'text-slate-900' : 'text-slate-500'}`}
+            >
+              {t('monthly')}
+            </span>
+            <button
+              type="button"
+              onClick={() => setIsYearly(!isYearly)}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                isYearly ? 'bg-blue-600' : 'bg-slate-200'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  isYearly ? 'translate-x-6' : 'translate-x-1'
+                }`}
+              />
+            </button>
+            <span
+              className={`text-sm font-medium ${isYearly ? 'text-slate-900' : 'text-slate-500'}`}
+            >
+              {t('yearly')}
+            </span>
+            {isYearly && (
+              <span className="ml-2 rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
+                {t('savePercent', { percent: '30' })}
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Pricing Cards */}
@@ -71,20 +128,40 @@ function PricingPageContent() {
               {t('free.description')}
             </p>
             <div className="mt-6">
-              <span className="text-4xl font-bold text-slate-900">
-                {t('free.price')}
-              </span>
+              <span className="text-4xl font-bold text-slate-900">$0</span>
               <span className="text-slate-500 ml-2">{t('free.period')}</span>
             </div>
             <ul className="mt-8 space-y-4">
-              {[1, 2, 3, 4, 5].map((num) => (
-                <li key={num} className="flex items-start gap-3">
-                  <CheckIcon />
-                  <span className="text-slate-600 text-sm">
-                    {t(`free.feature${num}`)}
-                  </span>
-                </li>
-              ))}
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  5 transcriptions per day
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  Last 5 items in history
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  Real-time recording
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  File upload up to 25MB
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  Basic export formats
+                </span>
+              </li>
             </ul>
             <div className="mt-8">
               <Link href="/signup">
@@ -92,6 +169,68 @@ function PricingPageContent() {
                   {t('free.cta')}
                 </Button>
               </Link>
+            </div>
+          </div>
+
+          {/* Basic Plan */}
+          <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+            <h3 className="text-xl font-bold text-slate-900">Basic</h3>
+            <p className="mt-2 text-slate-600 text-sm">
+              For regular users who need more
+            </p>
+            <div className="mt-6">
+              <span className="text-4xl font-bold text-slate-900">
+                {isYearly ? prices.basic.yearly : prices.basic.monthly}
+              </span>
+              <span className="text-slate-500 ml-2">
+                /{isYearly ? t('yearly').toLowerCase() : t('monthly').toLowerCase()}
+              </span>
+              {isYearly && (
+                <p className="text-sm text-green-600 mt-1">
+                  Save {prices.basic.yearlySavings}
+                </p>
+              )}
+            </div>
+            <ul className="mt-8 space-y-4">
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  15 transcriptions per day
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  Full history access
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  All export formats
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  AI summarization
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  Priority support
+                </span>
+              </li>
+            </ul>
+            <div className="mt-8">
+              <Button
+                className="w-full"
+                onClick={() => handleSubscribe('basic')}
+                disabled={loadingTier === 'basic'}
+              >
+                {loadingTier === 'basic' ? 'Loading...' : 'Subscribe to Basic'}
+              </Button>
             </div>
           </div>
 
@@ -104,63 +243,67 @@ function PricingPageContent() {
             </div>
             <h3 className="text-xl font-bold text-slate-900">{t('pro.name')}</h3>
             <p className="mt-2 text-slate-600 text-sm">
-              {t('pro.description')}
+              For power users and professionals
             </p>
             <div className="mt-6">
               <span className="text-4xl font-bold text-slate-900">
-                {t('pro.price')}
-              </span>
-              <span className="text-slate-500 ml-2">{t('pro.period')}</span>
-            </div>
-            <ul className="mt-8 space-y-4">
-              {[1, 2, 3, 4, 5, 6].map((num) => (
-                <li key={num} className="flex items-start gap-3">
-                  <CheckIcon />
-                  <span className="text-slate-600 text-sm">
-                    {t(`pro.feature${num}`)}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-8">
-              <Link href="/signup">
-                <Button className="w-full">{t('pro.cta')}</Button>
-              </Link>
-            </div>
-          </div>
-
-          {/* Enterprise Plan */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-            <h3 className="text-xl font-bold text-slate-900">
-              {t('enterprise.name')}
-            </h3>
-            <p className="mt-2 text-slate-600 text-sm">
-              {t('enterprise.description')}
-            </p>
-            <div className="mt-6">
-              <span className="text-4xl font-bold text-slate-900">
-                {t('enterprise.price')}
+                {isYearly ? prices.pro.yearly : prices.pro.monthly}
               </span>
               <span className="text-slate-500 ml-2">
-                {t('enterprise.period')}
+                /{isYearly ? t('yearly').toLowerCase() : t('monthly').toLowerCase()}
               </span>
+              {isYearly && (
+                <p className="text-sm text-green-600 mt-1">
+                  Save {prices.pro.yearlySavings}
+                </p>
+              )}
             </div>
             <ul className="mt-8 space-y-4">
-              {[1, 2, 3, 4, 5, 6].map((num) => (
-                <li key={num} className="flex items-start gap-3">
-                  <CheckIcon />
-                  <span className="text-slate-600 text-sm">
-                    {t(`enterprise.feature${num}`)}
-                  </span>
-                </li>
-              ))}
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  Unlimited transcriptions
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  Priority processing
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  No advertisements
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  Full history access
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  AI summarization
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckIcon />
+                <span className="text-slate-600 text-sm">
+                  Priority support
+                </span>
+              </li>
             </ul>
             <div className="mt-8">
-              <Link href="/contact">
-                <Button variant="outline" className="w-full">
-                  {t('enterprise.cta')}
-                </Button>
-              </Link>
+              <Button
+                className="w-full"
+                onClick={() => handleSubscribe('pro')}
+                disabled={loadingTier === 'pro'}
+              >
+                {loadingTier === 'pro' ? 'Loading...' : 'Subscribe to Pro'}
+              </Button>
             </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ import { HealthController } from './controllers/health.controller';
 import { PdfController } from './controllers/pdf.controller';
 import { ContactController } from './controllers/contact.controller';
 import { StorageController } from './controllers/storage.controller';
+import { StripeWebhookController } from './controllers/stripe-webhook.controller';
 import { SpeechService } from './services/speech.service';
 import { ClaudeService } from './services/claude.service';
 import { ShareService } from './services/share.service';
@@ -18,6 +19,7 @@ import { AnalyticsService } from './services/analytics.service';
 import { PdfService } from './services/pdf.service';
 import { TtsService } from './services/tts.service';
 import { R2Service } from './services/r2.service';
+import { StripeService } from './services/stripe.service';
 import {
   NextAuthGuard,
   OptionalNextAuthGuard,
@@ -35,6 +37,7 @@ import {
     PdfController,
     ContactController,
     StorageController,
+    StripeWebhookController,
   ],
   providers: [
     PrismaService,
@@ -47,6 +50,7 @@ import {
     PdfService,
     TtsService,
     R2Service,
+    StripeService,
     NextAuthGuard,
     OptionalNextAuthGuard,
   ],

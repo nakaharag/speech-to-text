@@ -536,5 +536,45 @@
       "title": "Terms of Service - speech-to-text.me",
       "description": "Read our terms of service for using speech-to-text.me voice transcription service."
     }
+  },
+  "billing": {
+    "title": "Billing & Subscription",
+    "subtitle": "Manage your subscription and billing details",
+    "currentPlan": "Current Plan",
+    "currentPlanDescription": "Your active subscription plan",
+    "active": "Active",
+    "pastDue": "Past Due",
+    "endsAt": "Ends on {date}",
+    "renewsAt": "Renews on {date}",
+    "manageSubscription": "Manage Subscription",
+    "redirecting": "Redirecting...",
+    "upgradePlans": "Upgrade Your Plan",
+    "month": "month",
+    "year": "year",
+    "or": "or",
+    "save": "save",
+    "upgradeMonthly": "Subscribe Monthly",
+    "upgradeYearly": "Subscribe Yearly",
+    "recommended": "Recommended",
+    "viewAllFeatures": "View all features and compare plans",
+    "successMessage": "Your subscription has been updated successfully!",
+    "canceledMessage": "Checkout was canceled. No charges were made.",
+    "portalError": "Failed to open billing portal. Please try again.",
+    "checkoutError": "Failed to start checkout. Please try again.",
+    "basic": {
+      "name": "Basic",
+      "description": "For regular users who need more",
+      "feature1": "15 transcriptions per day",
+      "feature2": "Full history access",
+      "feature3": "Priority support"
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "For power users and professionals",
+      "feature1": "Unlimited transcriptions",
+      "feature2": "Priority processing",
+      "feature3": "No advertisements",
+      "feature4": "Full history access"
+    }
   }
 }

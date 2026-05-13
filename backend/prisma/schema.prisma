@@ -7,16 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// User model for future Google OAuth
+// User model for authentication and subscriptions
 model User {
-  id            String          @id @default(cuid())
-  email         String?         @unique
-  name          String?
-  googleId      String?         @unique
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  shares        Share[]
-  transcriptions Transcription[]
+  id                   String          @id @default(cuid())
+  email                String?         @unique
+  name                 String?
+  googleId             String?         @unique
+
+  // Subscription
+  tier                 String          @default("free")
+  stripeCustomerId     String?         @unique
+  stripeSubscriptionId String?
+  subscriptionStatus   String?
+  subscriptionEndsAt   DateTime?
+
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+  shares               Share[]
+  transcriptions       Transcription[]
 
   @@map("users")
 }
