@@ -47,13 +47,13 @@ function HomePageContent() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-20 sm:py-32">
+      <section className="relative overflow-hidden bg-gradient-to-b from-background to-surface py-20 sm:py-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-6xl">
+            <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
               {t('heroTitle')}
             </h1>
-            <p className="mt-6 text-lg leading-8 text-slate-600 sm:text-xl">
+            <p className="mt-6 text-lg leading-8 text-foreground-secondary sm:text-xl">
               {t('heroSubtitle')}
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -69,45 +69,45 @@ function HomePageContent() {
                 </Button>
               </Link>
             </div>
-            <p className="mt-4 text-sm text-slate-500">{t('heroNote')}</p>
+            <p className="mt-4 text-sm text-muted">{t('heroNote')}</p>
           </div>
         </div>
       </section>
 
       {/* Trust Badges */}
-      <section className="border-y border-slate-200 bg-white py-12">
+      <section className="border-y border-border bg-surface py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
             <div className="flex flex-col items-center">
               <span className="text-4xl font-bold text-[#3B82F6]">30+</span>
-              <span className="mt-2 text-sm text-slate-600">{t('languagesSupported')}</span>
+              <span className="mt-2 text-sm text-foreground-secondary">{t('languagesSupported')}</span>
             </div>
             <div className="flex flex-col items-center">
               <span className="text-4xl font-bold text-[#3B82F6]">95%+</span>
-              <span className="mt-2 text-sm text-slate-600">{t('accuracy')}</span>
+              <span className="mt-2 text-sm text-foreground-secondary">{t('accuracy')}</span>
             </div>
             <div className="flex flex-col items-center">
               <span className="text-4xl font-bold text-[#3B82F6]">100%</span>
-              <span className="mt-2 text-sm text-slate-600">{t('free')}</span>
+              <span className="mt-2 text-sm text-foreground-secondary">{t('free')}</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 sm:py-32 bg-slate-50">
+      <section className="py-20 sm:py-32 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               {t('featuresTitle')}
             </h2>
-            <p className="mt-4 text-lg text-slate-600">{t('featuresSubtitle')}</p>
+            <p className="mt-4 text-lg text-foreground-secondary">{t('featuresSubtitle')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Feature 1 */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-surface rounded-2xl p-8 shadow-sm border border-border hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-[#3B82F6]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
                   <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
@@ -115,26 +115,26 @@ function HomePageContent() {
                   <line x1="8" y1="23" x2="16" y2="23" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-2">{t('feature1Title')}</h3>
-              <p className="text-slate-600">{t('feature1Desc')}</p>
+              <h3 className="text-xl font-semibold text-foreground mb-2">{t('feature1Title')}</h3>
+              <p className="text-foreground-secondary">{t('feature1Desc')}</p>
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-surface rounded-2xl p-8 shadow-sm border border-border hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-[#3B82F6]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                   <polyline points="17 8 12 3 7 8" />
                   <line x1="12" y1="3" x2="12" y2="15" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-2">{t('feature2Title')}</h3>
-              <p className="text-slate-600">{t('feature2Desc')}</p>
+              <h3 className="text-xl font-semibold text-foreground mb-2">{t('feature2Title')}</h3>
+              <p className="text-foreground-secondary">{t('feature2Desc')}</p>
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-surface rounded-2xl p-8 shadow-sm border border-border hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-[#3B82F6]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="12" cy="12" r="10" />
                   <path d="M8 14s1.5 2 4 2 4-2 4-2" />
@@ -142,24 +142,24 @@ function HomePageContent() {
                   <line x1="15" y1="9" x2="15.01" y2="9" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-2">{t('feature3Title')}</h3>
-              <p className="text-slate-600">{t('feature3Desc')}</p>
+              <h3 className="text-xl font-semibold text-foreground mb-2">{t('feature3Title')}</h3>
+              <p className="text-foreground-secondary">{t('feature3Desc')}</p>
             </div>
 
             {/* Feature 4 */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-surface rounded-2xl p-8 shadow-sm border border-border hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-[#3B82F6]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-2">{t('feature4Title')}</h3>
-              <p className="text-slate-600">{t('feature4Desc')}</p>
+              <h3 className="text-xl font-semibold text-foreground mb-2">{t('feature4Title')}</h3>
+              <p className="text-foreground-secondary">{t('feature4Desc')}</p>
             </div>
 
             {/* Feature 5 */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-surface rounded-2xl p-8 shadow-sm border border-border hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-[#3B82F6]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="18" cy="5" r="3" />
                   <circle cx="6" cy="12" r="3" />
@@ -168,33 +168,33 @@ function HomePageContent() {
                   <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-2">{t('feature5Title')}</h3>
-              <p className="text-slate-600">{t('feature5Desc')}</p>
+              <h3 className="text-xl font-semibold text-foreground mb-2">{t('feature5Title')}</h3>
+              <p className="text-foreground-secondary">{t('feature5Desc')}</p>
             </div>
 
             {/* Feature 6 */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-surface rounded-2xl p-8 shadow-sm border border-border hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-[#3B82F6]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                   <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-2">{t('feature6Title')}</h3>
-              <p className="text-slate-600">{t('feature6Desc')}</p>
+              <h3 className="text-xl font-semibold text-foreground mb-2">{t('feature6Title')}</h3>
+              <p className="text-foreground-secondary">{t('feature6Desc')}</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 sm:py-32 bg-white">
+      <section className="py-20 sm:py-32 bg-surface">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               {t('howItWorksTitle')}
             </h2>
-            <p className="mt-4 text-lg text-slate-600">{t('howItWorksSubtitle')}</p>
+            <p className="mt-4 text-lg text-foreground-secondary">{t('howItWorksSubtitle')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -204,12 +204,12 @@ function HomePageContent() {
                   {step}
                 </div>
                 {step < 4 && (
-                  <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-0.5 bg-slate-200" />
+                  <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-0.5 bg-border" />
                 )}
-                <h3 className="text-xl font-semibold text-slate-900 mb-2">
+                <h3 className="text-xl font-semibold text-foreground mb-2">
                   {t(`step${step}Title`)}
                 </h3>
-                <p className="text-slate-600">{t(`step${step}Desc`)}</p>
+                <p className="text-foreground-secondary">{t(`step${step}Desc`)}</p>
               </div>
             ))}
           </div>
@@ -223,21 +223,21 @@ function HomePageContent() {
       </section>
 
       {/* Use Cases Section */}
-      <section className="py-20 sm:py-32 bg-slate-50">
+      <section className="py-20 sm:py-32 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               {t('useCasesTitle')}
             </h2>
-            <p className="mt-4 text-lg text-slate-600">{t('useCasesSubtitle')}</p>
+            <p className="mt-4 text-lg text-foreground-secondary">{t('useCasesSubtitle')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
-                <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center mb-4">
+              <div key={num} className="bg-surface rounded-xl p-6 shadow-sm border border-border">
+                <div className="w-10 h-10 bg-surface-elevated rounded-lg flex items-center justify-center mb-4">
                   {num === 1 && (
-                    <svg className="w-5 h-5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg className="w-5 h-5 text-foreground-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                       <circle cx="9" cy="7" r="4" />
                       <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
@@ -245,19 +245,19 @@ function HomePageContent() {
                     </svg>
                   )}
                   {num === 2 && (
-                    <svg className="w-5 h-5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg className="w-5 h-5 text-foreground-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
                       <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
                     </svg>
                   )}
                   {num === 3 && (
-                    <svg className="w-5 h-5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg className="w-5 h-5 text-foreground-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <polygon points="23 7 16 12 23 17 23 7" />
                       <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
                     </svg>
                   )}
                   {num === 4 && (
-                    <svg className="w-5 h-5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg className="w-5 h-5 text-foreground-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M12 19l7-7 3 3-7 7-3-3z" />
                       <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
                       <path d="M2 2l7.586 7.586" />
@@ -265,10 +265,10 @@ function HomePageContent() {
                     </svg>
                   )}
                 </div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                <h3 className="text-lg font-semibold text-foreground mb-2">
                   {t(`useCase${num}Title`)}
                 </h3>
-                <p className="text-sm text-slate-600">{t(`useCase${num}Desc`)}</p>
+                <p className="text-sm text-foreground-secondary">{t(`useCase${num}Desc`)}</p>
               </div>
             ))}
           </div>
@@ -276,25 +276,25 @@ function HomePageContent() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 sm:py-32 bg-white">
+      <section className="py-20 sm:py-32 bg-surface">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               {t('faqTitle')}
             </h2>
-            <p className="mt-4 text-lg text-slate-600">{t('faqSubtitle')}</p>
+            <p className="mt-4 text-lg text-foreground-secondary">{t('faqSubtitle')}</p>
           </div>
 
-          <div className="mx-auto max-w-3xl divide-y divide-slate-200">
+          <div className="mx-auto max-w-3xl divide-y divide-border">
             {[1, 2, 3, 4, 5, 6].map((num) => (
               <details key={num} className="group py-6">
                 <summary className="flex cursor-pointer items-center justify-between text-left">
-                  <span className="text-lg font-medium text-slate-900">
+                  <span className="text-lg font-medium text-foreground">
                     {tFaq(`q${num}`)}
                   </span>
                   <span className="ml-6 flex-shrink-0">
                     <svg
-                      className="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"
+                      className="w-5 h-5 text-muted group-open:rotate-180 transition-transform"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -303,7 +303,7 @@ function HomePageContent() {
                     </svg>
                   </span>
                 </summary>
-                <p className="mt-4 text-slate-600">{tFaq(`a${num}`)}</p>
+                <p className="mt-4 text-foreground-secondary">{tFaq(`a${num}`)}</p>
               </details>
             ))}
           </div>

@@ -1,45 +1,576 @@
 @import "tailwindcss";
 
+/* ============================================
+   TAILWIND V4 DARK MODE CONFIGURATION
+   Makes dark: utilities respond to data-theme attribute
+   ============================================ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ============================================
+   DESIGN SYSTEM - CSS CUSTOM PROPERTIES
+   ============================================ */
+
 :root {
-  /* Brand Colors */
+  /* ----------------------------------------
+     BRAND COLORS
+     ---------------------------------------- */
   --primary: #3B82F6;
   --primary-hover: #2563EB;
+  --primary-light: #DBEAFE;
+  --primary-dark: #1D4ED8;
+
   --secondary: #8B5CF6;
-  --emerald: #10B981;
-  --red: #EF4444;
-  --slate: #64748B;
+  --secondary-hover: #7C3AED;
+  --secondary-light: #EDE9FE;
+  --secondary-dark: #6D28D9;
 
-  /* Background & Surface */
+  /* ----------------------------------------
+     SEMANTIC COLORS
+     ---------------------------------------- */
+  --success: #10B981;
+  --success-hover: #059669;
+  --success-light: #D1FAE5;
+  --success-dark: #047857;
+
+  --error: #EF4444;
+  --error-hover: #DC2626;
+  --error-light: #FEE2E2;
+  --error-dark: #B91C1C;
+
+  --warning: #F59E0B;
+  --warning-hover: #D97706;
+  --warning-light: #FEF3C7;
+  --warning-dark: #B45309;
+
+  --info: #3B82F6;
+  --info-hover: #2563EB;
+  --info-light: #DBEAFE;
+  --info-dark: #1D4ED8;
+
+  /* ----------------------------------------
+     NEUTRAL COLORS
+     ---------------------------------------- */
+  --slate-50: #F8FAFC;
+  --slate-100: #F1F5F9;
+  --slate-200: #E2E8F0;
+  --slate-300: #CBD5E1;
+  --slate-400: #94A3B8;
+  --slate-500: #64748B;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1E293B;
+  --slate-900: #0F172A;
+  --slate-950: #020617;
+
+  /* ----------------------------------------
+     BACKGROUND & SURFACE (Light Mode)
+     ---------------------------------------- */
   --background: #F8FAFC;
+  --background-alt: #F1F5F9;
   --surface: #FFFFFF;
-  --surface-dark: #0F172A;
+  --surface-alt: #F8FAFC;
+  --surface-elevated: #FFFFFF;
 
-  /* Text */
+  /* ----------------------------------------
+     TEXT COLORS (Light Mode)
+     ---------------------------------------- */
   --foreground: #0F172A;
+  --foreground-secondary: #334155;
   --text-muted: #64748B;
+  --text-disabled: #94A3B8;
+
+  /* ----------------------------------------
+     BORDER COLORS (Light Mode)
+     ---------------------------------------- */
+  --border: #E2E8F0;
+  --border-hover: #CBD5E1;
+  --border-focus: #3B82F6;
+
+  /* ----------------------------------------
+     SPACING SCALE
+     ---------------------------------------- */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+
+  /* ----------------------------------------
+     BORDER RADIUS (source values for @theme)
+     ---------------------------------------- */
+  --ds-radius-none: 0;
+  --ds-radius-sm: 0.25rem;   /* 4px */
+  --ds-radius-md: 0.375rem;  /* 6px */
+  --ds-radius-lg: 0.5rem;    /* 8px */
+  --ds-radius-xl: 0.75rem;   /* 12px */
+  --ds-radius-2xl: 1rem;     /* 16px */
+  --ds-radius-3xl: 1.5rem;   /* 24px */
+  --ds-radius-full: 9999px;
+
+  /* ----------------------------------------
+     SHADOWS (Light Mode)
+     ---------------------------------------- */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+  /* ----------------------------------------
+     COLORED SHADOWS (for record button effect)
+     ---------------------------------------- */
+  --shadow-primary: 0 0 20px rgba(59, 130, 246, 0.4);
+  --shadow-primary-lg: 0 0 30px rgba(59, 130, 246, 0.5);
+  --shadow-secondary: 0 0 20px rgba(139, 92, 246, 0.4);
+  --shadow-secondary-lg: 0 0 30px rgba(139, 92, 246, 0.5);
+  --shadow-success: 0 0 20px rgba(16, 185, 129, 0.4);
+  --shadow-success-lg: 0 0 30px rgba(16, 185, 129, 0.5);
+  --shadow-error: 0 0 20px rgba(239, 68, 68, 0.4);
+  --shadow-error-lg: 0 0 30px rgba(239, 68, 68, 0.5);
+  --shadow-record-pulse: 0 0 0 0 rgba(239, 68, 68, 0.7);
+
+  /* ----------------------------------------
+     TRANSITIONS
+     ---------------------------------------- */
+  --transition-fast: 150ms;
+  --transition-normal: 200ms;
+  --transition-slow: 300ms;
+  --transition-slower: 500ms;
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ----------------------------------------
+     Z-INDEX SCALE
+     ---------------------------------------- */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-toast: 800;
 }
+
+/* ============================================
+   DARK MODE SUPPORT
+   ============================================ */
+
+[data-theme="dark"],
+.dark {
+  /* Background & Surface */
+  --background: #0F172A;
+  --background-alt: #1E293B;
+  --surface: #1E293B;
+  --surface-alt: #334155;
+  --surface-elevated: #334155;
+
+  /* Text Colors */
+  --foreground: #F8FAFC;
+  --foreground-secondary: #E2E8F0;
+  --text-muted: #94A3B8;
+  --text-disabled: #64748B;
+
+  /* Border Colors */
+  --border: #334155;
+  --border-hover: #475569;
+  --border-focus: #3B82F6;
+
+  /* Shadows (darker for dark mode) */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.2);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.2);
+
+  /* Colored Shadows (brighter in dark mode) */
+  --shadow-primary: 0 0 25px rgba(59, 130, 246, 0.5);
+  --shadow-primary-lg: 0 0 40px rgba(59, 130, 246, 0.6);
+  --shadow-secondary: 0 0 25px rgba(139, 92, 246, 0.5);
+  --shadow-secondary-lg: 0 0 40px rgba(139, 92, 246, 0.6);
+  --shadow-success: 0 0 25px rgba(16, 185, 129, 0.5);
+  --shadow-success-lg: 0 0 40px rgba(16, 185, 129, 0.6);
+  --shadow-error: 0 0 25px rgba(239, 68, 68, 0.5);
+  --shadow-error-lg: 0 0 40px rgba(239, 68, 68, 0.6);
+
+  /* Semantic Colors (slightly adjusted for dark mode contrast) */
+  --primary-light: rgba(59, 130, 246, 0.15);
+  --secondary-light: rgba(139, 92, 246, 0.15);
+  --success-light: rgba(16, 185, 129, 0.15);
+  --error-light: rgba(239, 68, 68, 0.15);
+  --warning-light: rgba(245, 158, 11, 0.15);
+  --info-light: rgba(59, 130, 246, 0.15);
+}
+
+/* ============================================
+   TAILWIND V4 @THEME INLINE BLOCK
+   ============================================ */
 
 @theme inline {
+  /* Brand Colors */
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+
   --color-secondary: var(--secondary);
-  --color-emerald: var(--emerald);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-light: var(--secondary-light);
+  --color-secondary-dark: var(--secondary-dark);
+
+  /* Semantic Colors */
+  --color-success: var(--success);
+  --color-success-hover: var(--success-hover);
+  --color-success-light: var(--success-light);
+  --color-success-dark: var(--success-dark);
+
+  --color-error: var(--error);
+  --color-error-hover: var(--error-hover);
+  --color-error-light: var(--error-light);
+  --color-error-dark: var(--error-dark);
+
+  --color-warning: var(--warning);
+  --color-warning-hover: var(--warning-hover);
+  --color-warning-light: var(--warning-light);
+  --color-warning-dark: var(--warning-dark);
+
+  --color-info: var(--info);
+  --color-info-hover: var(--info-hover);
+  --color-info-light: var(--info-light);
+  --color-info-dark: var(--info-dark);
+
+  /* Neutral Scale */
+  --color-slate-50: var(--slate-50);
+  --color-slate-100: var(--slate-100);
+  --color-slate-200: var(--slate-200);
+  --color-slate-300: var(--slate-300);
+  --color-slate-400: var(--slate-400);
+  --color-slate-500: var(--slate-500);
+  --color-slate-600: var(--slate-600);
+  --color-slate-700: var(--slate-700);
+  --color-slate-800: var(--slate-800);
+  --color-slate-900: var(--slate-900);
+  --color-slate-950: var(--slate-950);
+
+  /* Background & Surface */
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background-alt: var(--background-alt);
   --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-surface-elevated: var(--surface-elevated);
+
+  /* Text Colors */
+  --color-foreground: var(--foreground);
+  --color-foreground-secondary: var(--foreground-secondary);
   --color-muted: var(--text-muted);
-  --font-sans: var(--font-plus-jakarta), system-ui, sans-serif;
+  --color-disabled: var(--text-disabled);
+
+  /* Border Colors */
+  --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
+  --color-border-focus: var(--border-focus);
+
+  /* Typography */
+  --font-sans: var(--font-plus-jakarta), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Border Radius */
+  --radius-sm: var(--ds-radius-sm);
+  --radius-md: var(--ds-radius-md);
+  --radius-lg: var(--ds-radius-lg);
+  --radius-xl: var(--ds-radius-xl);
+  --radius-2xl: var(--ds-radius-2xl);
+  --radius-3xl: var(--ds-radius-3xl);
+  --radius-full: var(--ds-radius-full);
 }
+
+/* ============================================
+   KEYFRAME ANIMATIONS
+   ============================================ */
+
+/* Ripple effect for buttons */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Standard spin animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulse dot animation for recording indicator */
+@keyframes pulse-dot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+}
+
+/* Demo wave animation for audio visualization */
+@keyframes demo-wave {
+  0%, 100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* Blink animation for cursor/typing indicator */
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Fade in animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Fade in up animation */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide in from right */
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scale in animation */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Bounce animation */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Record button pulse */
+@keyframes record-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(239, 68, 68, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+/* ============================================
+   ANIMATION UTILITY CLASSES
+   ============================================ */
+
+.animate-ripple {
+  animation: ripple 600ms linear;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+.animate-demo-wave {
+  animation: demo-wave 1s ease-in-out infinite;
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 200ms ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 300ms ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 300ms ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 200ms ease-out;
+}
+
+.animate-bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.animate-record-pulse {
+  animation: record-pulse 1.5s ease-out infinite;
+}
+
+/* Wave bar animation delays for audio visualization */
+.wave-bar-1 { animation-delay: 0s; }
+.wave-bar-2 { animation-delay: 0.1s; }
+.wave-bar-3 { animation-delay: 0.2s; }
+.wave-bar-4 { animation-delay: 0.3s; }
+.wave-bar-5 { animation-delay: 0.4s; }
+
+/* ============================================
+   BASE BODY STYLES
+   ============================================ */
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-plus-jakarta), system-ui, sans-serif;
+  font-family: var(--font-plus-jakarta), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
 }
 
-/* Smooth transitions */
-* {
-  transition-property: color, background-color, border-color, box-shadow;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+/* ============================================
+   GLOBAL SMOOTH TRANSITIONS
+   ============================================ */
+
+*,
+*::before,
+*::after {
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+  transition-timing-function: var(--ease-default);
+  transition-duration: var(--transition-fast);
+}
+
+/* Disable transitions for reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-alt);
+  border-radius: var(--ds-radius-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--slate-400);
+  border-radius: var(--ds-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--slate-500);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb,
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--slate-600);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover,
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--slate-500);
+}
+
+/* ============================================
+   FOCUS STYLES
+   ============================================ */
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   SELECTION STYLES
+   ============================================ */
+
+::selection {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+[data-theme="dark"] ::selection,
+.dark ::selection {
+  background: rgba(59, 130, 246, 0.3);
+  color: var(--foreground);
 }
