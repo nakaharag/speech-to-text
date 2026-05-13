@@ -1,0 +1,607 @@
+{
+  "app": {
+    "title": "speech-to-text.me",
+    "description": "Transcripción de voz y resumen con IA"
+  },
+  "nav": {
+    "home": "Inicio",
+    "transcribe": "Transcribir",
+    "pdfToAudio": "PDF a Audio",
+    "dashboard": "Panel",
+    "settings": "Configuración",
+    "signOut": "Cerrar sesión",
+    "about": "Acerca de",
+    "pricing": "Precios",
+    "contact": "Contacto",
+    "getStarted": "Comenzar Gratis",
+    "login": "Iniciar Sesión"
+  },
+  "auth": {
+    "login": {
+      "title": "Bienvenido de vuelta",
+      "description": "Inicia sesión en tu cuenta",
+      "email": "Email",
+      "emailPlaceholder": "nombre@ejemplo.com",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Ingresa tu contraseña",
+      "submit": "Iniciar sesión",
+      "submitting": "Iniciando sesión...",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "noAccount": "¿No tienes una cuenta?",
+      "signUp": "Crear cuenta"
+    },
+    "signup": {
+      "title": "Crear una cuenta",
+      "description": "Ingresa tus datos para comenzar",
+      "name": "Nombre",
+      "namePlaceholder": "Juan García",
+      "email": "Email",
+      "emailPlaceholder": "nombre@ejemplo.com",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Crea una contraseña",
+      "confirmPassword": "Confirmar Contraseña",
+      "confirmPasswordPlaceholder": "Confirma tu contraseña",
+      "submit": "Crear cuenta",
+      "submitting": "Creando cuenta...",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "signIn": "Iniciar sesión",
+      "terms": "Al crear una cuenta, aceptas nuestros",
+      "termsLink": "Términos de Servicio",
+      "and": "y",
+      "privacyLink": "Política de Privacidad"
+    },
+    "verify": {
+      "title": "Verifica tu email",
+      "description": "Hemos enviado un enlace de verificación a tu email",
+      "checkInbox": "Por favor, revisa tu bandeja de entrada y haz clic en el enlace para verificar tu cuenta.",
+      "resend": "Reenviar email de verificación",
+      "resending": "Reenviando...",
+      "resent": "¡Email de verificación enviado!",
+      "backToLogin": "Volver al login"
+    },
+    "forgotPassword": {
+      "title": "¿Olvidaste tu contraseña?",
+      "description": "Ingresa tu email y te enviaremos un enlace de restablecimiento",
+      "email": "Email",
+      "emailPlaceholder": "nombre@ejemplo.com",
+      "submit": "Enviar enlace de restablecimiento",
+      "submitting": "Enviando...",
+      "sent": "¡Enlace de restablecimiento enviado!",
+      "sentDescription": "Revisa tu email para el enlace de restablecimiento de contraseña.",
+      "backToLogin": "Volver al login"
+    },
+    "resetPassword": {
+      "title": "Restablecer tu contraseña",
+      "description": "Ingresa una nueva contraseña para tu cuenta",
+      "password": "Nueva Contraseña",
+      "passwordPlaceholder": "Ingresa tu nueva contraseña",
+      "confirmPassword": "Confirmar Contraseña",
+      "confirmPasswordPlaceholder": "Confirma tu nueva contraseña",
+      "submit": "Restablecer contraseña",
+      "submitting": "Restableciendo...",
+      "success": "¡Contraseña restablecida con éxito!",
+      "successDescription": "Ya puedes iniciar sesión con tu nueva contraseña.",
+      "signIn": "Iniciar sesión"
+    },
+    "social": {
+      "continueWith": "O continúa con",
+      "google": "Continuar con Google",
+      "github": "Continuar con GitHub",
+      "apple": "Continuar con Apple"
+    },
+    "errors": {
+      "invalidCredentials": "Email o contraseña inválidos",
+      "emailExists": "Ya existe una cuenta con este email",
+      "emailNotVerified": "Por favor, verifica tu email antes de iniciar sesión",
+      "invalidEmail": "Por favor, ingresa un email válido",
+      "passwordTooShort": "La contraseña debe tener al menos 8 caracteres",
+      "passwordMismatch": "Las contraseñas no coinciden",
+      "generic": "Algo salió mal. Por favor, intenta de nuevo.",
+      "networkError": "Error de red. Por favor, verifica tu conexión.",
+      "sessionExpired": "Tu sesión ha expirado. Por favor, inicia sesión de nuevo.",
+      "unauthorized": "No estás autorizado para acceder a este recurso."
+    }
+  },
+  "dashboard": {
+    "title": "Panel",
+    "welcome": "¡Bienvenido, {name}!",
+    "currentPlan": "Tu plan actual",
+    "recentTranscriptions": "Transcripciones Recientes",
+    "noTranscriptions": "Aún no hay transcripciones",
+    "startTranscribing": "Comenzar a transcribir",
+    "stats": {
+      "title": "Estadísticas de Uso",
+      "transcriptionsToday": "Transcripciones Hoy",
+      "pdfConversions": "Conversiones PDF",
+      "totalHistory": "Total en Historial",
+      "error": "No se pudieron cargar las estadísticas"
+    },
+    "quickActions": {
+      "title": "Acciones Rápidas",
+      "transcribe": "Transcribir Audio",
+      "pdfToAudio": "PDF a Audio"
+    },
+    "history": {
+      "title": "Historial",
+      "pageTitle": "Tu Historial",
+      "pageDescription": "Visualiza y gestiona todas tus transcripciones y conversiones PDF",
+      "viewAll": "Ver todo",
+      "empty": "Aún no hay elementos en el historial",
+      "error": "No se pudo cargar el historial",
+      "delete": "Eliminar",
+      "showMore": "Mostrar más",
+      "showLess": "Mostrar menos",
+      "searchPlaceholder": "Buscar en historial...",
+      "pages": "{count} páginas",
+      "types": {
+        "transcription": "Transcripción",
+        "pdf": "Conversión PDF"
+      },
+      "filter": {
+        "all": "Todos",
+        "transcriptions": "Transcripciones",
+        "pdf": "PDF"
+      },
+      "pagination": {
+        "previous": "Anterior",
+        "next": "Siguiente",
+        "page": "Página {current} de {total}"
+      }
+    },
+    "upgrade": {
+      "title": "Actualizar a Pro",
+      "description": "Obtén transcripciones ilimitadas, procesamiento prioritario y más funciones.",
+      "cta": "Ver Planes"
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "description": "Administra la configuración de tu cuenta",
+    "profile": "Perfil",
+    "account": "Cuenta",
+    "language": "Idioma",
+    "theme": "Tema",
+    "notifications": "Notificaciones",
+    "save": "Guardar cambios",
+    "saving": "Guardando...",
+    "emailLabel": "Email",
+    "nameLabel": "Nombre",
+    "notSet": "No definido",
+    "billing": "Facturación y Suscripción",
+    "billingDescription": "Administra tu plan de suscripción y métodos de pago.",
+    "connectedAccounts": {
+      "title": "Cuentas Conectadas",
+      "description": "Estas cuentas están vinculadas a tu perfil.",
+      "noAccounts": "No hay cuentas conectadas",
+      "connected": "Conectado",
+      "comingSoon": "La vinculación y desvinculación de cuentas estará disponible en una actualización futura."
+    }
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "retry": "Reintentar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "submit": "Enviar",
+    "learnMore": "Más información"
+  },
+  "footer": {
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "pricing": "Precios",
+    "copyright": "Todos los derechos reservados.",
+    "tagline": "Transcripción de voz y resumen con IA",
+    "product": "Producto",
+    "legal": "Legal"
+  },
+  "siteLang": {
+    "en": "Inglés",
+    "pt": "Portugués",
+    "es": "Español"
+  },
+  "landing": {
+    "heroTitle": "Transforma el Habla en Texto en Segundos",
+    "heroSubtitle": "Transcripción potente con IA que convierte tus grabaciones de voz en texto preciso con resumen inteligente.",
+    "startTranscribing": "Comenzar a Transcribir",
+    "heroNote": "Sin registro necesario. Gratis para usar.",
+    "demoText": "Tu voz aparece aquí en tiempo real...",
+    "languagesSupported": "Idiomas Soportados",
+    "accuracy": "Tasa de Precisión",
+    "free": "Gratis para Usar",
+    "featuresTitle": "Características Potentes",
+    "featuresSubtitle": "Todo lo que necesitas para transcribir y entender tu contenido de audio",
+    "feature1Title": "Transcripción en Tiempo Real",
+    "feature1Desc": "Mira tus palabras aparecer mientras hablas con nuestro reconocimiento de voz avanzado.",
+    "feature2Title": "Subir Archivos",
+    "feature2Desc": "Sube archivos de audio y video en cualquier formato para transcripción precisa.",
+    "feature3Title": "Múltiples Idiomas",
+    "feature3Desc": "Soporte para más de 30 idiomas con detección automática.",
+    "feature4Title": "Resumen con IA",
+    "feature4Desc": "Obtén resúmenes inteligentes de tus transcripciones con IA avanzada.",
+    "feature5Title": "Compartir Fácil",
+    "feature5Desc": "Comparte transcripciones o exporta en múltiples formatos.",
+    "feature6Title": "Privacidad Primero",
+    "feature6Desc": "Tu audio se procesa de forma segura y nunca se almacena sin permiso.",
+    "howItWorksTitle": "Cómo Funciona",
+    "howItWorksSubtitle": "Comienza en minutos con nuestro proceso simple",
+    "step1Title": "Grabar o Subir",
+    "step1Desc": "Graba directamente en el navegador o sube un archivo de audio existente.",
+    "step2Title": "Procesamiento con IA",
+    "step2Desc": "Nuestra IA transcribe tu audio con alta precisión en segundos.",
+    "step3Title": "Revisar y Editar",
+    "step3Desc": "Revisa la transcripción y haz las ediciones necesarias.",
+    "step4Title": "Exportar y Compartir",
+    "step4Desc": "Descarga en tu formato preferido o comparte directamente.",
+    "tryItNow": "Pruébalo Ahora",
+    "useCasesTitle": "Perfecto Para",
+    "useCasesSubtitle": "Mira cómo los profesionales usan nuestro servicio de transcripción",
+    "useCase1Title": "Reuniones y Entrevistas",
+    "useCase1Desc": "Captura cada detalle de conversaciones importantes sin tomar notas.",
+    "useCase2Title": "Estudiantes e Investigadores",
+    "useCase2Desc": "Transcribe conferencias y entrevistas para revisión y citación fáciles.",
+    "useCase3Title": "Creadores de Contenido",
+    "useCase3Desc": "Genera subtítulos para videos automáticamente.",
+    "useCase4Title": "Periodistas y Escritores",
+    "useCase4Desc": "Convierte entrevistas y grabaciones en contenido escrito.",
+    "faqTitle": "Preguntas Frecuentes",
+    "faqSubtitle": "Encuentra respuestas a preguntas comunes sobre nuestro servicio",
+    "finalCtaTitle": "¿Listo para Transformar tu Audio?",
+    "finalCtaSubtitle": "Únete a miles de usuarios que confían en nosotros para transcripción precisa.",
+    "startFree": "Comienza Gratis Ahora",
+    "trustBadge1": "Gratis para usar",
+    "trustBadge2": "Sin registro",
+    "trustBadge3": "Con IA"
+  },
+  "faq": {
+    "q1": "¿El servicio es realmente gratuito?",
+    "a1": "¡Sí! Nuestro servicio básico de transcripción es completamente gratuito sin necesidad de registro. Las características premium están disponibles para usuarios avanzados.",
+    "q2": "¿Qué formatos de audio son soportados?",
+    "a2": "Soportamos todos los formatos principales de audio y video incluyendo MP3, WAV, M4A, MP4, WebM y más.",
+    "q3": "¿Qué tan precisa es la transcripción?",
+    "a3": "Nuestra IA logra más del 95% de precisión para audio claro en idiomas soportados. La precisión puede variar según la calidad del audio.",
+    "q4": "¿Mis datos de audio están seguros?",
+    "a4": "Absolutamente. Procesamos el audio de forma segura y no almacenamos tus archivos a menos que los guardes explícitamente en tu cuenta.",
+    "q5": "¿Qué idiomas son soportados?",
+    "a5": "Soportamos más de 30 idiomas incluyendo inglés, español, portugués, francés, alemán, chino, japonés y muchos más.",
+    "q6": "¿Puedo editar la transcripción?",
+    "a6": "¡Sí! Puedes editar la transcripción directamente en la interfaz y exportar la versión corregida."
+  },
+  "aboutPage": {
+    "title": "Acerca de speech-to-text.me",
+    "metaDescription": "Conoce nuestra misión de hacer la transcripción de voz accesible para todos.",
+    "missionTitle": "Nuestra Misión",
+    "missionContent": "Creemos que convertir el habla en texto debe ser simple, preciso y accesible para todos. Nuestra misión es eliminar barreras en la comunicación proporcionando herramientas potentes de transcripción que cualquiera puede usar.",
+    "whatWeDoTitle": "Lo Que Hacemos",
+    "whatWeDoContent": "speech-to-text.me es un servicio gratuito de transcripción de voz basado en web, impulsado por tecnología avanzada de IA. Te ayudamos a:",
+    "feature1": "Transcribir archivos de audio y video con alta precisión",
+    "feature2": "Grabar y transcribir en tiempo real directamente en el navegador",
+    "feature3": "Generar resúmenes inteligentes de tu contenido",
+    "feature4": "Soportar más de 30 idiomas con detección automática",
+    "technologyTitle": "Nuestra Tecnología",
+    "technologyContent": "Utilizamos tecnología de vanguardia en reconocimiento de voz y procesamiento del lenguaje natural para entregar transcripciones rápidas y precisas. Nuestros modelos de IA se entrenan continuamente para mejorar la precisión en diferentes acentos, idiomas y condiciones de audio.",
+    "privacyTitle": "Privacidad y Seguridad",
+    "privacyContent": "Tu privacidad es fundamental. Procesamos todo el audio de forma segura y nunca almacenamos tus archivos sin tu permiso explícito. Lee nuestra Política de Privacidad para detalles completos sobre cómo protegemos tus datos.",
+    "contactTitle": "Contáctanos",
+    "contactContent": "¿Tienes preguntas o comentarios? Nos encantaría saber de ti.",
+    "contactLink": "Contáctanos"
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "metaDescription": "Ponte en contacto con el equipo de speech-to-text.me.",
+    "intro": "¿Tienes preguntas, comentarios o necesitas soporte? Estamos aquí para ayudar. Completa el formulario a continuación y te responderemos lo antes posible.",
+    "nameLabel": "Nombre",
+    "namePlaceholder": "Tu nombre",
+    "emailLabel": "Email",
+    "emailPlaceholder": "tu@email.com",
+    "subjectLabel": "Asunto",
+    "subjectPlaceholder": "¿Cómo podemos ayudarte?",
+    "messageLabel": "Mensaje",
+    "messagePlaceholder": "Cuéntanos más sobre tu consulta...",
+    "submit": "Enviar Mensaje",
+    "sending": "Enviando...",
+    "successTitle": "¡Mensaje Enviado!",
+    "successMessage": "Gracias por contactarnos. Te responderemos en 24-48 horas.",
+    "sendAnother": "Enviar Otro Mensaje",
+    "errorGeneric": "Algo salió mal. Intenta de nuevo o envíanos un email directamente.",
+    "directEmail": "O envíanos un email directamente a:"
+  },
+  "pricing": {
+    "title": "Precios Simples y Transparentes",
+    "metaDescription": "Elige el plan que se adapte a tus necesidades de transcripción.",
+    "subtitle": "Comienza gratis, mejora cuando necesites más",
+    "monthly": "Mensual",
+    "yearly": "Anual",
+    "savePercent": "Ahorra {percent}%",
+    "free": {
+      "name": "Gratis",
+      "price": "$0",
+      "period": "para siempre",
+      "description": "Perfecto para uso ocasional",
+      "feature1": "5 horas de transcripción/mes",
+      "feature2": "Grabación en tiempo real",
+      "feature3": "Subida de archivos hasta 25MB",
+      "feature4": "Formatos básicos de exportación",
+      "feature5": "Soporte de la comunidad",
+      "cta": "Comenzar Gratis"
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "$12",
+      "period": "por mes",
+      "description": "Para profesionales y equipos",
+      "feature1": "Transcripción ilimitada",
+      "feature2": "Procesamiento prioritario",
+      "feature3": "Subida de archivos hasta 500MB",
+      "feature4": "Todos los formatos de exportación",
+      "feature5": "Resumen con IA",
+      "feature6": "Soporte prioritario por email",
+      "cta": "Iniciar Prueba Pro",
+      "popular": "Más Popular"
+    },
+    "enterprise": {
+      "name": "Empresarial",
+      "price": "Personalizado",
+      "period": "por mes",
+      "description": "Para grandes organizaciones",
+      "feature1": "Todo en Pro",
+      "feature2": "Integraciones personalizadas",
+      "feature3": "Acceso a API",
+      "feature4": "Soporte dedicado",
+      "feature5": "Garantía de SLA",
+      "feature6": "Opción on-premise",
+      "cta": "Contactar Ventas"
+    },
+    "faq": {
+      "title": "FAQ de Precios",
+      "q1": "¿Puedo cambiar de plan en cualquier momento?",
+      "a1": "Sí, puedes mejorar o reducir tu plan en cualquier momento. Los cambios tienen efecto inmediato.",
+      "q2": "¿Qué métodos de pago aceptan?",
+      "a2": "Aceptamos todas las tarjetas de crédito principales, PayPal y transferencia bancaria para planes empresariales.",
+      "q3": "¿Hay prueba gratuita para Pro?",
+      "a3": "¡Sí! Los planes Pro incluyen 14 días de prueba gratuita. No se requiere tarjeta de crédito."
+    }
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "metaDescription": "Aprende cómo recopilamos, usamos y protegemos tus datos.",
+    "lastUpdated": "Última actualización",
+    "section1Title": "Introducción",
+    "section1Content": "En speech-to-text.me, tomamos tu privacidad en serio. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y protegemos tu información cuando usas nuestro servicio de transcripción de voz.",
+    "section2Title": "Información que Recopilamos",
+    "section2Content": "Recopilamos información que nos proporcionas directamente:",
+    "section2Item1": "Información de la cuenta (email, nombre) cuando creas una cuenta",
+    "section2Item2": "Archivos de audio que subes para transcripción",
+    "section2Item3": "Datos de uso y análisis para mejorar nuestro servicio",
+    "section3Title": "Cómo Usamos tu Información",
+    "section3Content": "Usamos la información que recopilamos para:",
+    "section3Item1": "Proporcionar y mantener nuestro servicio de transcripción",
+    "section3Item2": "Procesar tus archivos de audio y entregar transcripciones",
+    "section3Item3": "Enviarte actualizaciones importantes sobre nuestro servicio",
+    "section4Title": "Seguridad de Datos",
+    "section4Content": "Implementamos medidas de seguridad apropiadas para proteger tu información personal. Todo el procesamiento de audio se realiza de forma segura, y usamos cifrado para la transmisión y almacenamiento de datos.",
+    "section5Title": "Retención de Datos",
+    "section5Content": "Los archivos de audio subidos sin cuenta se procesan y eliminan inmediatamente. Si tienes una cuenta, tus transcripciones se almacenan hasta que elijas eliminarlas.",
+    "section6Title": "Tus Derechos",
+    "section6Content": "Tienes derecho a acceder, actualizar o eliminar tu información personal en cualquier momento. Contáctanos para ejercer estos derechos.",
+    "section7Title": "Contacto",
+    "section7Content": "Si tienes preguntas sobre esta Política de Privacidad, contáctanos en admin@speech-to-text.me."
+  },
+  "terms": {
+    "title": "Términos de Servicio",
+    "metaDescription": "Lee nuestros términos de servicio para usar speech-to-text.me.",
+    "lastUpdated": "Última actualización",
+    "section1Title": "Aceptación de Términos",
+    "section1Content": "Al acceder o usar speech-to-text.me, aceptas estar vinculado por estos Términos de Servicio. Si no estás de acuerdo con estos términos, por favor no uses nuestro servicio.",
+    "section2Title": "Uso del Servicio",
+    "section2Content": "Aceptas usar nuestro servicio solo para fines lícitos. No debes:",
+    "section2Item1": "Subir contenido que viole cualquier ley o regulación",
+    "section2Item2": "Intentar obtener acceso no autorizado a nuestros sistemas",
+    "section2Item3": "Usar el servicio para dañar, amenazar o acosar a otros",
+    "section2Item4": "Interferir o interrumpir el servicio o los servidores",
+    "section3Title": "Propiedad Intelectual",
+    "section3Content": "Conservas la propiedad de todo el contenido de audio que subes. Al usar nuestro servicio, nos otorgas una licencia limitada para procesar tu contenido con el propósito de proporcionar servicios de transcripción.",
+    "section4Title": "Descargo de Garantías",
+    "section4Content": "Nuestro servicio se proporciona \"tal cual\" sin garantías de ningún tipo. No garantizamos la precisión de las transcripciones ni el acceso ininterrumpido al servicio.",
+    "section5Title": "Limitación de Responsabilidad",
+    "section5Content": "No seremos responsables de ningún daño indirecto, incidental, especial o consecuente derivado del uso de nuestro servicio.",
+    "section6Title": "Cambios en los Términos",
+    "section6Content": "Podemos modificar estos términos en cualquier momento. El uso continuado del servicio después de los cambios constituye la aceptación de los nuevos términos.",
+    "section7Title": "Contacto",
+    "section7Content": "Para preguntas sobre estos Términos de Servicio, contáctanos en admin@speech-to-text.me."
+  },
+  "legal": {
+    "backToHome": "Volver al Inicio"
+  },
+  "transcribe": {
+    "pageTitle": "Transcribir Audio",
+    "pageSubtitle": "Graba o sube audio para obtener transcripciones instantáneas con resumen de IA",
+    "recorder": {
+      "startRecording": "Iniciar grabación",
+      "stopRecording": "Detener grabación",
+      "recording": "Grabando...",
+      "processing": "Procesando...",
+      "idle": "Haz clic para iniciar la grabación",
+      "microphoneError": "No se pudo acceder al micrófono. Verifica los permisos del navegador."
+    },
+    "fileUpload": {
+      "title": "Subir Archivo de Audio",
+      "dropHere": "Suelta el archivo aquí",
+      "dragDrop": "Arrastra y suelta o haz clic para explorar",
+      "maxSize": "Máx 25MB",
+      "unsupportedFormat": "Formato de archivo no soportado. Por favor, sube un archivo de audio.",
+      "fileTooLarge": "El archivo excede el límite de 25MB"
+    },
+    "languageSelector": {
+      "autoDetect": "Detectar idioma automáticamente",
+      "search": "Buscar idiomas...",
+      "noResults": "No se encontraron idiomas"
+    },
+    "transcript": {
+      "title": "Transcripción",
+      "copy": "Copiar al portapapeles",
+      "transcribing": "Transcribiendo..."
+    },
+    "summary": {
+      "title": "Resumen con IA",
+      "generating": "Generando resumen...",
+      "viewCorrected": "Ver transcripción corregida"
+    },
+    "share": {
+      "title": "Compartir",
+      "createLink": "Crear Enlace para Compartir",
+      "creating": "Creando...",
+      "copy": "Copiar",
+      "copied": "¡Copiado!",
+      "shareOnX": "Compartir en X",
+      "shareOnFacebook": "Compartir en Facebook",
+      "shareOnWhatsApp": "Compartir en WhatsApp",
+      "expires": "El enlace expira en 7 dias",
+      "advancedOptions": "Opciones avanzadas",
+      "expirationLabel": "Expiracion del enlace",
+      "expiration24h": "24 horas",
+      "expiration7d": "7 dias",
+      "expiration30d": "30 dias",
+      "expirationNever": "Nunca",
+      "proOnlyNeverExpires": "Actualiza a Pro para enlaces que nunca expiren",
+      "passwordLabel": "Proteccion con contrasena",
+      "passwordPlaceholder": "Contrasena opcional",
+      "passwordHint": "Deja vacio para acceso publico",
+      "passwordProtected": "Protegido con contrasena"
+    },
+    "results": {
+      "title": "Resultados",
+      "newRecording": "Nueva Grabación"
+    },
+    "input": {
+      "uploadFile": "Subir Archivo",
+      "recordInstead": "Grabar en su lugar"
+    },
+    "rateLimit": {
+      "remaining": "{count} transcripciones restantes hoy"
+    },
+    "sharedView": {
+      "notice": "Estás viendo una transcripción compartida"
+    }
+  },
+  "pdfToAudio": {
+    "title": "PDF a Audio",
+    "subtitle": "Convierte tus documentos PDF en archivos de audio",
+    "upload": {
+      "title": "Subir Documento PDF",
+      "dropHere": "Suelta el PDF aquí",
+      "dragDrop": "Arrastra y suelta o haz clic para explorar",
+      "maxSize": "Máx 10MB, 20 páginas",
+      "unsupportedFormat": "Por favor, selecciona un archivo PDF",
+      "fileTooLarge": "El archivo excede el límite de 10MB"
+    },
+    "voiceSelector": {
+      "label": "Voz",
+      "preview": "Previsualizar voz"
+    },
+    "player": {
+      "play": "Reproducir",
+      "pause": "Pausar",
+      "skipBackward": "Retroceder 10 segundos",
+      "skipForward": "Avanzar 10 segundos",
+      "download": "Descargar MP3"
+    },
+    "status": {
+      "starting": "Iniciando conversión...",
+      "extracting": "Extrayendo texto del PDF...",
+      "converting": "Convirtiendo texto a audio...",
+      "ocrNote": "Los PDFs escaneados pueden tardar más en procesar",
+      "pleaseWait": "Esto puede tardar un momento para documentos más largos"
+    },
+    "success": "Conversión Completada",
+    "convertAnother": "Convertir Otro",
+    "stats": {
+      "pages": "Páginas",
+      "characters": "Caracteres",
+      "duration": "Duración",
+      "size": "Tamaño"
+    },
+    "remaining": "{count} conversiones restantes hoy",
+    "features": {
+      "title": "Características",
+      "feature1": "Soporta PDFs basados en texto y escaneados (OCR)",
+      "feature2": "Múltiples opciones de voz",
+      "feature3": "Descarga instantánea de MP3",
+      "feature4": "Hasta 20 páginas por documento"
+    }
+  },
+  "metadata": {
+    "home": {
+      "title": "speech-to-text.me - Transcripción de Voz y Resumen con IA",
+      "description": "Transforma tu voz en texto en segundos con transcripción impulsada por IA. Gratis, preciso y soporta más de 30 idiomas."
+    },
+    "about": {
+      "title": "Acerca de - speech-to-text.me",
+      "description": "Conoce nuestra misión de hacer la transcripción de voz accesible para todos."
+    },
+    "contact": {
+      "title": "Contáctanos - speech-to-text.me",
+      "description": "Ponte en contacto con el equipo de speech-to-text.me para preguntas, comentarios o soporte."
+    },
+    "pricing": {
+      "title": "Precios - speech-to-text.me",
+      "description": "Precios simples y transparentes para transcripción de voz. Comienza gratis, mejora cuando necesites más."
+    },
+    "privacy": {
+      "title": "Política de Privacidad - speech-to-text.me",
+      "description": "Aprende cómo recopilamos, usamos y protegemos tus datos en speech-to-text.me."
+    },
+    "terms": {
+      "title": "Términos de Servicio - speech-to-text.me",
+      "description": "Lee nuestros términos de servicio para usar el servicio de transcripción de voz speech-to-text.me."
+    }
+  },
+  "billing": {
+    "title": "Facturación y Suscripción",
+    "subtitle": "Administra tu suscripción y detalles de facturación",
+    "currentPlan": "Plan Actual",
+    "currentPlanDescription": "Tu plan de suscripción activo",
+    "active": "Activo",
+    "pastDue": "Pago Pendiente",
+    "endsAt": "Termina el {date}",
+    "renewsAt": "Se renueva el {date}",
+    "manageSubscription": "Gestionar Suscripción",
+    "redirecting": "Redirigiendo...",
+    "upgradePlans": "Mejora Tu Plan",
+    "month": "mes",
+    "year": "año",
+    "or": "o",
+    "save": "ahorra",
+    "upgradeMonthly": "Suscribirse Mensual",
+    "upgradeYearly": "Suscribirse Anual",
+    "recommended": "Recomendado",
+    "viewAllFeatures": "Ver todas las características y comparar planes",
+    "successMessage": "¡Tu suscripción se ha actualizado correctamente!",
+    "canceledMessage": "El pago fue cancelado. No se realizaron cargos.",
+    "portalError": "Error al abrir el portal de facturación. Inténtalo de nuevo.",
+    "checkoutError": "Error al iniciar el pago. Inténtalo de nuevo.",
+    "basic": {
+      "name": "Básico",
+      "description": "Para usuarios regulares que necesitan más",
+      "feature1": "15 transcripciones por día",
+      "feature2": "Acceso completo al historial",
+      "feature3": "Soporte prioritario"
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "Para usuarios avanzados y profesionales",
+      "feature1": "Transcripciones ilimitadas",
+      "feature2": "Procesamiento prioritario",
+      "feature3": "Sin anuncios",
+      "feature4": "Acceso completo al historial"
+    }
+  }
+}

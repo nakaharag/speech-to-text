@@ -1,0 +1,233 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   String    @id @default(cuid())
+  email                String    @unique
+  emailVerified        DateTime?
+  passwordHash         String?
+  name                 String?
+  image                String?
+
+  // Social provider IDs
+  googleId             String?   @unique
+  appleId              String?   @unique
+  twitterId            String?   @unique
+
+  // Flag for Apple private relay emails
+  isPrivateRelayEmail  Boolean   @default(false)
+
+  // Subscription
+  tier                 String    @default("free")
+  stripeCustomerId     String?   @unique
+  stripeSubscriptionId String?
+  subscriptionStatus   String?
+  subscriptionEndsAt   DateTime?
+
+  // Relations
+  transcriptions       Transcription[]
+  pdfConversions       PdfConversion[]
+  shares               Share[]
+  usageCounter         UsageCounter?
+  accounts             Account[]
+  sessions             Session[]
+
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model UsageCounter {
+  id                   String   @id @default(cuid())
+  userId               String   @unique
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transcriptionsToday  Int      @default(0)
+  transcriptionsDate   String   @db.VarChar(10)
+  ocrThisMonth         Int      @default(0)
+  ocrMonth             String   @db.VarChar(7)
+
+  @@map("usage_counters")
+}
+
+model Transcription {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transcript    String   @db.Text
+  corrected     String?  @db.Text
+  summary       String?  @db.Text
+  language      String?  @db.VarChar(10)
+
+  audioKey      String?
+  audioSize     Int?
+  audioDuration Float?
+  fileName      String?  @db.VarChar(255)
+
+  createdAt     DateTime @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("transcriptions")
+}
+
+model PdfConversion {
+  id            String    @id @default(cuid())
+  shortId       String    @unique @db.VarChar(10)
+  userId        String?
+  user          User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  status        String    @db.VarChar(20)
+  fileName      String?   @db.VarChar(255)
+  fileSize      Int?
+  extractedText String?   @db.Text
+  textLength    Int?
+  pageCount     Int?
+  language      String?   @db.VarChar(10)
+  voice         String?   @db.VarChar(20)
+  audioFormat   String?   @db.VarChar(10)
+  audioSize     Int?
+  audioDuration Float?
+  audioData     String?   @db.Text
+  mp3Key        String?
+  errorMessage  String?   @db.Text
+  createdAt     DateTime  @default(now())
+  completedAt   DateTime?
+  expiresAt     DateTime
+  ipAddress     String?
+
+  @@index([shortId])
+  @@index([userId])
+  @@index([status])
+  @@index([expiresAt])
+  @@map("pdf_conversions")
+}
+
+model Share {
+  id              String   @id @default(cuid())
+  shortId         String   @unique @db.VarChar(20)
+
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transcriptionId String?
+  pdfConversionId String?
+
+  transcript      String?  @db.Text
+  corrected       String?  @db.Text
+  summary         String?  @db.Text
+  language        String?  @db.VarChar(10)
+
+  passwordHash    String?
+
+  expiresAt       DateTime
+  createdAt       DateTime @default(now())
+
+  @@index([shortId])
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("shares")
+}
+
+model RateLimit {
+  id            String    @id @default(cuid())
+  ipAddress     String
+  date          String    @db.VarChar(10)
+  count         Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([ipAddress, date])
+  @@index([ipAddress])
+  @@index([date])
+  @@map("rate_limits")
+}
+
+model Language {
+  id            String    @id @default(cuid())
+  code          String    @unique @db.VarChar(10)
+  name          String    @db.VarChar(100)
+  nativeName    String    @db.VarChar(100)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+
+  @@map("languages")
+}
+
+model ContactSubmission {
+  id          String    @id @default(cuid())
+  name        String    @db.VarChar(100)
+  email       String    @db.VarChar(255)
+  subject     String    @db.VarChar(255)
+  message     String    @db.Text
+  ipAddress   String?
+  userAgent   String?   @db.Text
+  isRead      Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  @@index([isRead])
+  @@index([createdAt])
+  @@map("contact_submissions")
+}
+
+model ShareAnalytics {
+  id            String    @id @default(cuid())
+  shareId       String
+  eventType     String    @db.VarChar(50)
+  ipAddress     String?
+  userAgent     String?   @db.Text
+  referer       String?   @db.Text
+  createdAt     DateTime  @default(now())
+
+  @@index([shareId])
+  @@index([eventType])
+  @@index([createdAt])
+  @@map("share_analytics")
+}
