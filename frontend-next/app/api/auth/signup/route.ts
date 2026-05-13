@@ -43,15 +43,35 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Normalize email to prevent enumeration via case/whitespace variations
+    const normalizedEmail = email.toLowerCase().trim();
+
+    // Check if user exists
     const existingUser = await prisma.user.findUnique({
-      where: { email },
+      where: { email: normalizedEmail },
     });
 
     if (existingUser) {
-      return NextResponse.json(
-        { error: 'An account with this email already exists' },
-        { status: 400 }
-      );
+      // If user exists but email not verified, resend verification
+      if (!existingUser.emailVerified) {
+        // Delete old tokens
+        await prisma.verificationToken.deleteMany({
+          where: { identifier: normalizedEmail },
+        });
+
+        const token = generateToken();
+        const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+        await prisma.verificationToken.create({
+          data: { identifier: normalizedEmail, token, expires },
+        });
+
+        await sendVerificationEmail(normalizedEmail, token);
+      }
+
+      // Return same response as success to prevent enumeration
+      // User gets email if unverified, nothing if already verified
+      return NextResponse.json({ success: true });
     }
 
     const passwordHash = await hashPassword(password);
@@ -59,7 +79,7 @@ export async function POST(request: NextRequest) {
     await prisma.user.create({
       data: {
         name,
-        email,
+        email: normalizedEmail,
         passwordHash,
       },
     });
@@ -69,13 +89,13 @@ export async function POST(request: NextRequest) {
 
     await prisma.verificationToken.create({
       data: {
-        identifier: email,
+        identifier: normalizedEmail,
         token,
         expires,
       },
     });
 
-    await sendVerificationEmail(email, token);
+    await sendVerificationEmail(normalizedEmail, token);
 
     return NextResponse.json({ success: true });
   } catch (error) {
