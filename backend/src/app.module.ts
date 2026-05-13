@@ -20,6 +20,7 @@ import { PdfService } from './services/pdf.service';
 import { TtsService } from './services/tts.service';
 import { R2Service } from './services/r2.service';
 import { StripeService } from './services/stripe.service';
+import { IpUtilsService } from './services/ip-utils.service';
 import {
   NextAuthGuard,
   OptionalNextAuthGuard,
@@ -51,6 +52,7 @@ import {
     TtsService,
     R2Service,
     StripeService,
+    IpUtilsService,
     NextAuthGuard,
     OptionalNextAuthGuard,
   ],
