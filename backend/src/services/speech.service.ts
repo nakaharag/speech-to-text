@@ -1,26 +1,41 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as ffmpeg from 'fluent-ffmpeg';
 import { Readable } from 'stream';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
+import { R2Service } from './r2.service';
 
 export interface TranscriptionOptions {
   language?: string; // ISO 639-1 language code (e.g., 'en', 'pt', 'es')
+  userId?: string; // User ID for R2 storage
+  transcriptionId?: string; // Transcription ID for R2 storage
+  saveToR2?: boolean; // Whether to save audio to R2
 }
 
 export interface TranscriptionResult {
   text: string;
   language: string | null;
   duration?: number;
+  audioKey?: string; // R2 storage key if audio was saved
 }
 
 @Injectable()
 export class SpeechService {
+  private readonly logger = new Logger(SpeechService.name);
   private openaiApiKey: string;
+  private r2Service: R2Service | null = null;
 
   constructor() {
     this.openaiApiKey = process.env.OPENAI_API_KEY || '';
+  }
+
+  /**
+   * Set the R2 service for audio storage
+   * Called by the controller to inject the R2 service
+   */
+  setR2Service(r2Service: R2Service): void {
+    this.r2Service = r2Service;
   }
 
   async transcribeAudio(audioBuffer: Buffer, options?: TranscriptionOptions): Promise<TranscriptionResult> {
@@ -81,10 +96,30 @@ export class SpeechService {
         throw new Error('Empty transcription. Try speaking louder or closer to the microphone.');
       }
 
-      console.log('Transcription successful:', transcription.substring(0, 100) + '...');
+      this.logger.log('Transcription successful: ' + transcription.substring(0, 100) + '...');
+
+      // Optionally save audio to R2
+      let audioKey: string | undefined;
+      if (options?.saveToR2 && options?.userId && options?.transcriptionId && this.r2Service?.isAvailable()) {
+        try {
+          const uploadResult = await this.r2Service.uploadAudio(
+            options.userId,
+            options.transcriptionId,
+            audioBuffer,
+            'webm',
+          );
+          audioKey = uploadResult.key;
+          this.logger.log(`Saved audio to R2: ${audioKey}`);
+        } catch (r2Error) {
+          // Log but don't fail the transcription if R2 upload fails
+          this.logger.error('Failed to save audio to R2:', (r2Error as Error).message);
+        }
+      }
+
       return {
         text: transcription.trim(),
         language: options?.language || null,
+        audioKey,
       };
 
     } catch (err) {

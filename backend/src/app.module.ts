@@ -7,6 +7,7 @@ import { AnalyticsController } from './controllers/analytics.controller';
 import { HealthController } from './controllers/health.controller';
 import { PdfController } from './controllers/pdf.controller';
 import { ContactController } from './controllers/contact.controller';
+import { StorageController } from './controllers/storage.controller';
 import { SpeechService } from './services/speech.service';
 import { ClaudeService } from './services/claude.service';
 import { ShareService } from './services/share.service';
@@ -16,6 +17,7 @@ import { LanguageService } from './services/language.service';
 import { AnalyticsService } from './services/analytics.service';
 import { PdfService } from './services/pdf.service';
 import { TtsService } from './services/tts.service';
+import { R2Service } from './services/r2.service';
 import {
   NextAuthGuard,
   OptionalNextAuthGuard,
@@ -32,6 +34,7 @@ import {
     AnalyticsController,
     PdfController,
     ContactController,
+    StorageController,
   ],
   providers: [
     PrismaService,
@@ -43,6 +46,7 @@ import {
     AnalyticsService,
     PdfService,
     TtsService,
+    R2Service,
     NextAuthGuard,
     OptionalNextAuthGuard,
   ],
@@ -53,6 +57,7 @@ export class AppModule implements OnModuleInit {
     private shareService: ShareService,
     private rateLimitService: RateLimitService,
     private prisma: PrismaService,
+    private r2Service: R2Service,
   ) {}
 
   async onModuleInit() {
@@ -71,6 +76,40 @@ export class AppModule implements OnModuleInit {
 
   private async cleanupExpiredPdfConversions() {
     try {
+      // First, find expired conversions with R2 keys to delete from R2
+      const expiredWithR2 = await this.prisma.pdfConversion.findMany({
+        where: {
+          expiresAt: {
+            lt: new Date(),
+          },
+          audioKey: {
+            not: null,
+          },
+        },
+        select: {
+          id: true,
+          audioKey: true,
+        },
+      });
+
+      // Delete files from R2 if available
+      if (expiredWithR2.length > 0 && this.r2Service.isAvailable()) {
+        for (const conversion of expiredWithR2) {
+          if (conversion.audioKey) {
+            try {
+              await this.r2Service.deleteFile(conversion.audioKey);
+              console.log(`Deleted R2 file: ${conversion.audioKey}`);
+            } catch (error) {
+              console.error(
+                `Failed to delete R2 file ${conversion.audioKey}:`,
+                error,
+              );
+            }
+          }
+        }
+      }
+
+      // Then delete the database records
       const result = await this.prisma.pdfConversion.deleteMany({
         where: {
           expiresAt: {
