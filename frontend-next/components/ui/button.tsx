@@ -14,8 +14,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const variants = {
       default: 'bg-[#3B82F6] text-white hover:bg-[#2563EB] focus-visible:ring-[#3B82F6]',
       secondary: 'bg-[#8B5CF6] text-white hover:bg-[#7C3AED] focus-visible:ring-[#8B5CF6]',
-      outline: 'border-2 border-[#3B82F6] bg-white text-[#3B82F6] hover:bg-[#EFF6FF] focus-visible:ring-[#3B82F6]',
-      ghost: 'bg-transparent text-[#64748B] hover:bg-slate-100 focus-visible:ring-slate-400 shadow-none',
+      outline: 'border-2 border-[#3B82F6] bg-surface text-[#3B82F6] hover:bg-[#EFF6FF] dark:hover:bg-[#1E3A5F] focus-visible:ring-[#3B82F6]',
+      ghost: 'bg-transparent text-foreground-secondary hover:bg-surface-elevated focus-visible:ring-slate-400 shadow-none',
     };
 
     const sizes = {

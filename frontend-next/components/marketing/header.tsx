@@ -20,7 +20,7 @@ export function MarketingHeader() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur-lg">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-surface/80 backdrop-blur-lg">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
@@ -38,7 +38,7 @@ export function MarketingHeader() {
                 strokeLinecap="round"
               />
             </svg>
-            <span className="text-xl font-bold text-slate-900">
+            <span className="text-xl font-bold text-foreground">
               speech-to-text<span className="text-[#3B82F6]">.me</span>
             </span>
           </Link>
@@ -49,7 +49,7 @@ export function MarketingHeader() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                className="text-sm font-medium text-foreground-secondary hover:text-foreground transition-colors"
               >
                 {link.label}
               </Link>
@@ -73,7 +73,7 @@ export function MarketingHeader() {
           {/* Mobile Menu Button */}
           <button
             type="button"
-            className="md:hidden p-2 text-slate-600 hover:text-slate-900"
+            className="md:hidden p-2 text-foreground-secondary hover:text-foreground"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
             aria-expanded={isMobileMenuOpen}
@@ -92,19 +92,19 @@ export function MarketingHeader() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-slate-200">
+          <div className="md:hidden py-4 border-t border-border">
             <nav className="flex flex-col space-y-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                  className="text-sm font-medium text-foreground-secondary hover:text-foreground transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
                 </Link>
               ))}
-              <div className="pt-4 border-t border-slate-200 space-y-3">
+              <div className="pt-4 border-t border-border space-y-3">
                 <ThemeToggle />
                 <LanguageSwitcher showFlag className="w-full" />
                 <Link href="/login" className="block">
