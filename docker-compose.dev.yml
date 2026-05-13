@@ -20,7 +20,7 @@ services:
       retries: 5
 
   backend:
-    image: node:20-alpine
+    image: node:22-alpine
     working_dir: /app
     ports:
       - "3003:3000"
@@ -37,10 +37,10 @@ services:
     command: >
       sh -c "
         corepack enable &&
-        corepack prepare pnpm@latest --activate &&
+        corepack prepare pnpm@9 --activate &&
         pnpm install &&
         pnpm prisma generate &&
-        pnpm prisma migrate dev --skip-seed &&
+        pnpm prisma migrate deploy &&
         pnpm run start:dev
       "
     depends_on:
@@ -54,7 +54,7 @@ services:
       start_period: 60s
 
   frontend:
-    image: node:20-alpine
+    image: node:22-alpine
     working_dir: /app
     ports:
       - "3004:3001"
@@ -70,17 +70,14 @@ services:
       - APPLE_TEAM_ID=${APPLE_TEAM_ID:-}
       - APPLE_KEY_ID=${APPLE_KEY_ID:-}
       - APPLE_PRIVATE_KEY=${APPLE_PRIVATE_KEY:-}
-      - SMTP_HOST=${SMTP_HOST:-}
-      - SMTP_PORT=${SMTP_PORT:-587}
-      - SMTP_USER=${SMTP_USER:-}
-      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
-      - SMTP_FROM=${SMTP_FROM:-noreply@localhost}
+      - RESEND_API_KEY=${RESEND_API_KEY:-}
+      - EMAIL_FROM=${EMAIL_FROM:-noreply@localhost}
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}
       - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET:-}
-      - STRIPE_BASIC_MONTHLY_PRICE_ID=${STRIPE_BASIC_MONTHLY_PRICE_ID:-}
-      - STRIPE_BASIC_YEARLY_PRICE_ID=${STRIPE_BASIC_YEARLY_PRICE_ID:-}
-      - STRIPE_PRO_MONTHLY_PRICE_ID=${STRIPE_PRO_MONTHLY_PRICE_ID:-}
-      - STRIPE_PRO_YEARLY_PRICE_ID=${STRIPE_PRO_YEARLY_PRICE_ID:-}
+      - STRIPE_PRICE_BASIC_MONTHLY=${STRIPE_PRICE_BASIC_MONTHLY:-}
+      - STRIPE_PRICE_BASIC_YEARLY=${STRIPE_PRICE_BASIC_YEARLY:-}
+      - STRIPE_PRICE_PRO_MONTHLY=${STRIPE_PRICE_PRO_MONTHLY:-}
+      - STRIPE_PRICE_PRO_YEARLY=${STRIPE_PRICE_PRO_YEARLY:-}
       # Enable Next.js hot reload with polling (for Docker)
       - WATCHPACK_POLLING=true
     volumes:
@@ -90,7 +87,7 @@ services:
     command: >
       sh -c "
         corepack enable &&
-        corepack prepare pnpm@latest --activate &&
+        corepack prepare pnpm@9 --activate &&
         pnpm install &&
         pnpm prisma generate &&
         pnpm run dev

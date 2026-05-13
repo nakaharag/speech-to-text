@@ -224,7 +224,6 @@ export class ShareService {
     const result = await this.prisma.share.deleteMany({
       where: {
         expiresAt: {
-          not: null,
           lt: new Date()
         },
       },
