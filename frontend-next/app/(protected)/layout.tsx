@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 import { auth } from '@/lib/auth';
 import { SignOutButton } from '@/components/auth/sign-out-button';
 
@@ -25,6 +26,9 @@ export default async function ProtectedLayout({
             <span className="text-xl font-bold text-slate-900">speech-to-text.me</span>
           </div>
           <div className="flex items-center space-x-4">
+            <Link href="/dashboard/settings" className="text-sm text-slate-600 hover:text-slate-900">
+              Settings
+            </Link>
             <span className="text-sm text-slate-600">{session.user.email}</span>
             <SignOutButton />
           </div>
