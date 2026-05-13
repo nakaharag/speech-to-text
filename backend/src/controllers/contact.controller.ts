@@ -1,5 +1,6 @@
 import { Controller, Post, Body, Req, HttpException, HttpStatus } from '@nestjs/common';
 import { PrismaService } from '../services/prisma.service';
+import { IpUtilsService } from '../services/ip-utils.service';
 import { Request } from 'express';
 
 interface ContactSubmitDto {
@@ -11,7 +12,10 @@ interface ContactSubmitDto {
 
 @Controller('contact')
 export class ContactController {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly ipUtilsService: IpUtilsService,
+  ) {}
 
   @Post('submit')
   async submit(@Body() body: ContactSubmitDto, @Req() req: Request) {
@@ -39,7 +43,8 @@ export class ContactController {
     }
 
     // Simple rate limiting - max 5 submissions per IP per day
-    const ipAddress = req.ip || req.headers['x-forwarded-for']?.toString().split(',')[0] || 'unknown';
+    // SECURITY: Only trust X-Forwarded-For if from a trusted proxy to prevent IP spoofing
+    const ipAddress = this.ipUtilsService.getClientIp(req);
     const today = new Date().toISOString().split('T')[0];
 
     const todaySubmissions = await this.prisma.contactSubmission.count({

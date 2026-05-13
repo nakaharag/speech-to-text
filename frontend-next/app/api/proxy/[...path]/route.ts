@@ -29,6 +29,7 @@ async function proxyRequest(
   });
 
   // Add auth header if user is logged in
+  // Note: Tier is passed for convenience but backend should verify from database for sensitive operations
   if (session?.user?.id) {
     headers.set('X-User-Id', session.user.id);
     headers.set('X-User-Email', session.user.email || '');
