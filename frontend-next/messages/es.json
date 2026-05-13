@@ -104,9 +104,54 @@
   "dashboard": {
     "title": "Panel",
     "welcome": "¡Bienvenido, {name}!",
+    "currentPlan": "Tu plan actual",
     "recentTranscriptions": "Transcripciones Recientes",
     "noTranscriptions": "Aún no hay transcripciones",
-    "startTranscribing": "Comenzar a transcribir"
+    "startTranscribing": "Comenzar a transcribir",
+    "stats": {
+      "title": "Estadísticas de Uso",
+      "transcriptionsToday": "Transcripciones Hoy",
+      "pdfConversions": "Conversiones PDF",
+      "totalHistory": "Total en Historial",
+      "error": "No se pudieron cargar las estadísticas"
+    },
+    "quickActions": {
+      "title": "Acciones Rápidas",
+      "transcribe": "Transcribir Audio",
+      "pdfToAudio": "PDF a Audio"
+    },
+    "history": {
+      "title": "Historial",
+      "pageTitle": "Tu Historial",
+      "pageDescription": "Visualiza y gestiona todas tus transcripciones y conversiones PDF",
+      "viewAll": "Ver todo",
+      "empty": "Aún no hay elementos en el historial",
+      "error": "No se pudo cargar el historial",
+      "delete": "Eliminar",
+      "showMore": "Mostrar más",
+      "showLess": "Mostrar menos",
+      "searchPlaceholder": "Buscar en historial...",
+      "pages": "{count} páginas",
+      "types": {
+        "transcription": "Transcripción",
+        "pdf": "Conversión PDF"
+      },
+      "filter": {
+        "all": "Todos",
+        "transcriptions": "Transcripciones",
+        "pdf": "PDF"
+      },
+      "pagination": {
+        "previous": "Anterior",
+        "next": "Siguiente",
+        "page": "Página {current} de {total}"
+      }
+    },
+    "upgrade": {
+      "title": "Actualizar a Pro",
+      "description": "Obtén transcripciones ilimitadas, procesamiento prioritario y más funciones.",
+      "cta": "Ver Planes"
+    }
   },
   "settings": {
     "title": "Configuración",

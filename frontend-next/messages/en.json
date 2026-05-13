@@ -104,9 +104,54 @@
   "dashboard": {
     "title": "Dashboard",
     "welcome": "Welcome, {name}!",
+    "currentPlan": "Your current plan",
     "recentTranscriptions": "Recent Transcriptions",
     "noTranscriptions": "No transcriptions yet",
-    "startTranscribing": "Start transcribing"
+    "startTranscribing": "Start transcribing",
+    "stats": {
+      "title": "Usage Statistics",
+      "transcriptionsToday": "Transcriptions Today",
+      "pdfConversions": "PDF Conversions",
+      "totalHistory": "Total History",
+      "error": "Unable to load stats"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "transcribe": "Transcribe Audio",
+      "pdfToAudio": "PDF to Audio"
+    },
+    "history": {
+      "title": "History",
+      "pageTitle": "Your History",
+      "pageDescription": "View and manage all your transcriptions and PDF conversions",
+      "viewAll": "View all",
+      "empty": "No history items yet",
+      "error": "Unable to load history",
+      "delete": "Delete",
+      "showMore": "Show more",
+      "showLess": "Show less",
+      "searchPlaceholder": "Search history...",
+      "pages": "{count} pages",
+      "types": {
+        "transcription": "Transcription",
+        "pdf": "PDF Conversion"
+      },
+      "filter": {
+        "all": "All",
+        "transcriptions": "Transcriptions",
+        "pdf": "PDF"
+      },
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "page": "Page {current} of {total}"
+      }
+    },
+    "upgrade": {
+      "title": "Upgrade to Pro",
+      "description": "Get unlimited transcriptions, priority processing, and more features.",
+      "cta": "View Plans"
+    }
   },
   "settings": {
     "title": "Settings",
