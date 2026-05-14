@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import { logger } from '@/lib/logger';
 
 export const PASSWORD_RESET_TOKEN_PREFIX = 'reset:';
 
@@ -17,9 +18,6 @@ export async function sendVerificationEmail(email: string, token: string) {
   const resend = getResendClient();
 
   const fromEmail = process.env.EMAIL_FROM || 'noreply@speech-to-text.me';
-  console.log('[Email] Sending verification email to:', email);
-  console.log('[Email] From:', fromEmail);
-  console.log('[Email] Verify URL:', verifyUrl);
 
   const result = await resend.emails.send({
     from: fromEmail,
@@ -62,10 +60,13 @@ export async function sendVerificationEmail(email: string, token: string) {
     `,
   });
 
-  console.log('[Email] Resend API response:', JSON.stringify(result, null, 2));
-
   if (result.error) {
-    console.error('[Email] Resend API error:', result.error);
+    logger.error('Failed to send verification email via Resend', new Error(result.error.message), {
+      action: 'sendVerificationEmail',
+      emailDomain: email.split('@')[1] ?? 'unknown',
+      fromDomain: fromEmail.split('@')[1] ?? 'unknown',
+      resendErrorName: result.error.name,
+    });
     throw new Error(`Failed to send email: ${result.error.message}`);
   }
 
