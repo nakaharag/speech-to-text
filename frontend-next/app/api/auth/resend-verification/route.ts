@@ -42,6 +42,10 @@ export async function POST(request: NextRequest) {
       where: { email: normalizedEmail },
     });
 
+    console.log('[Resend Verification] Email:', normalizedEmail);
+    console.log('[Resend Verification] User found:', !!user);
+    console.log('[Resend Verification] Email verified:', user?.emailVerified);
+
     // Always return success to prevent email enumeration
     // Only actually send if user exists and is not verified
     if (user && !user.emailVerified) {
@@ -57,7 +61,11 @@ export async function POST(request: NextRequest) {
         data: { identifier: normalizedEmail, token, expires },
       });
 
+      console.log('[Resend Verification] Sending verification email...');
       await sendVerificationEmail(normalizedEmail, token);
+      console.log('[Resend Verification] Email sent successfully');
+    } else {
+      console.log('[Resend Verification] Skipping - user not found or already verified');
     }
 
     // Return success regardless of whether email was sent

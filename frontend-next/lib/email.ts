@@ -16,12 +16,13 @@ export async function sendVerificationEmail(email: string, token: string) {
   const verifyUrl = `${process.env.NEXTAUTH_URL}/api/auth/verify?token=${token}`;
   const resend = getResendClient();
 
-  // Mask email for display: john@example.com -> j***@example.com
-  const [localPart, domain] = email.split('@');
-  const maskedEmail = `${localPart[0]}${'*'.repeat(Math.min(localPart.length - 1, 4))}@${domain}`;
+  const fromEmail = process.env.EMAIL_FROM || 'noreply@speech-to-text.me';
+  console.log('[Email] Sending verification email to:', email);
+  console.log('[Email] From:', fromEmail);
+  console.log('[Email] Verify URL:', verifyUrl);
 
-  await resend.emails.send({
-    from: process.env.EMAIL_FROM || 'noreply@speech-to-text.me',
+  const result = await resend.emails.send({
+    from: fromEmail,
     to: email,
     subject: 'Verify your email - speech-to-text.me',
     html: `
@@ -60,6 +61,15 @@ export async function sendVerificationEmail(email: string, token: string) {
       </div>
     `,
   });
+
+  console.log('[Email] Resend API response:', JSON.stringify(result, null, 2));
+
+  if (result.error) {
+    console.error('[Email] Resend API error:', result.error);
+    throw new Error(`Failed to send email: ${result.error.message}`);
+  }
+
+  return result;
 }
 
 export async function sendPasswordResetEmail(email: string, token: string) {
