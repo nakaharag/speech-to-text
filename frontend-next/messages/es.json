@@ -94,6 +94,28 @@
       "github": "Continuar con GitHub",
       "apple": "Continuar con Apple"
     },
+    "errorPage": {
+      "title": "Error de Autenticación",
+      "tryAgain": "Intentar de nuevo",
+      "goHome": "Ir al inicio",
+      "errors": {
+        "configuration": "Este método de inicio de sesión no está disponible temporalmente.",
+        "accessDenied": "No tienes permiso para iniciar sesión.",
+        "verification": "El enlace de verificación puede haber expirado o ya fue utilizado.",
+        "oauthSignin": "No se pudo iniciar el proceso de inicio de sesión. Inténtalo de nuevo.",
+        "oauthCallback": "No se pudo completar el inicio de sesión. Inténtalo de nuevo.",
+        "oauthCreateAccount": "No se pudo crear una cuenta con este proveedor.",
+        "emailCreateAccount": "No se pudo crear una cuenta con este email.",
+        "callback": "Ocurrió un error durante el inicio de sesión. Inténtalo de nuevo.",
+        "oauthAccountNotLinked": "Este email ya está asociado con otro método de inicio de sesión.",
+        "credentialsSignin": "Email o contraseña inválidos.",
+        "default": "Ocurrió un error inesperado. Inténtalo de nuevo."
+      },
+      "hints": {
+        "oauthAccountNotLinked": "Intenta iniciar sesión con el mismo método que usaste cuando creaste tu cuenta.",
+        "configuration": "Por favor, intenta iniciar sesión con email y contraseña, o inténtalo más tarde."
+      }
+    },
     "errors": {
       "invalidCredentials": "Email o contraseña inválidos",
       "emailExists": "Ya existe una cuenta con este email",

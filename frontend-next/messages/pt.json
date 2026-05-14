@@ -94,6 +94,28 @@
       "github": "Continuar com GitHub",
       "apple": "Continuar com Apple"
     },
+    "errorPage": {
+      "title": "Erro de Autenticação",
+      "tryAgain": "Tentar novamente",
+      "goHome": "Ir para início",
+      "errors": {
+        "configuration": "Este método de login não está disponível temporariamente.",
+        "accessDenied": "Você não tem permissão para entrar.",
+        "verification": "O link de verificação pode ter expirado ou já foi utilizado.",
+        "oauthSignin": "Não foi possível iniciar o processo de login. Tente novamente.",
+        "oauthCallback": "Não foi possível completar o login. Tente novamente.",
+        "oauthCreateAccount": "Não foi possível criar uma conta com este provedor.",
+        "emailCreateAccount": "Não foi possível criar uma conta com este email.",
+        "callback": "Ocorreu um erro durante o login. Tente novamente.",
+        "oauthAccountNotLinked": "Este email já está associado a outro método de login.",
+        "credentialsSignin": "Email ou senha inválidos.",
+        "default": "Ocorreu um erro inesperado. Tente novamente."
+      },
+      "hints": {
+        "oauthAccountNotLinked": "Tente entrar com o mesmo método que você usou quando criou sua conta.",
+        "configuration": "Por favor, tente entrar com email e senha, ou tente novamente mais tarde."
+      }
+    },
     "errors": {
       "invalidCredentials": "Email ou senha inválidos",
       "emailExists": "Uma conta com este email já existe",

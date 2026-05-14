@@ -94,6 +94,28 @@
       "github": "Continue with GitHub",
       "apple": "Continue with Apple"
     },
+    "errorPage": {
+      "title": "Authentication Error",
+      "tryAgain": "Try again",
+      "goHome": "Go home",
+      "errors": {
+        "configuration": "This sign-in method is temporarily unavailable.",
+        "accessDenied": "You do not have permission to sign in.",
+        "verification": "The verification link may have expired or already been used.",
+        "oauthSignin": "Could not start the sign-in process. Please try again.",
+        "oauthCallback": "Could not complete the sign-in. Please try again.",
+        "oauthCreateAccount": "Could not create an account with this provider.",
+        "emailCreateAccount": "Could not create an account with this email.",
+        "callback": "An error occurred during sign-in. Please try again.",
+        "oauthAccountNotLinked": "This email is already associated with another sign-in method.",
+        "credentialsSignin": "Invalid email or password.",
+        "default": "An unexpected error occurred. Please try again."
+      },
+      "hints": {
+        "oauthAccountNotLinked": "Try signing in with the same method you used when you first created your account.",
+        "configuration": "Please try signing in with email and password instead, or try again later."
+      }
+    },
     "errors": {
       "invalidCredentials": "Invalid email or password",
       "emailExists": "An account with this email already exists",
