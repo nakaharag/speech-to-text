@@ -81,6 +81,13 @@ export async function sendVerificationEmail(email: string, token: string) {
     throw new Error(`Failed to send email: ${result.error.message}`);
   }
 
+  logger.info('Verification email sent successfully', {
+    action: 'sendVerificationEmail',
+    emailDomain: getEmailDomain(email),
+    fromDomain: getEmailDomain(fromEmail),
+    messageId: result.data?.id,
+  });
+
   return result;
 }
 
