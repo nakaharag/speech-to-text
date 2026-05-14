@@ -56,9 +56,12 @@
       "title": "Verify your email",
       "description": "We've sent a verification link to your email address",
       "checkInbox": "Please check your inbox and click the link to verify your account.",
-      "resend": "Resend verification email",
-      "resending": "Resending...",
+      "resend": "Didn't receive the email? Resend",
+      "resending": "Sending...",
       "resent": "Verification email sent!",
+      "resendButton": "Send",
+      "emailPlaceholder": "Enter your email",
+      "cancel": "Cancel",
       "backToLogin": "Back to login"
     },
     "forgotPassword": {

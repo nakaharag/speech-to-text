@@ -56,9 +56,12 @@
       "title": "Verifica tu email",
       "description": "Hemos enviado un enlace de verificación a tu email",
       "checkInbox": "Por favor, revisa tu bandeja de entrada y haz clic en el enlace para verificar tu cuenta.",
-      "resend": "Reenviar email de verificación",
-      "resending": "Reenviando...",
+      "resend": "¿No recibiste el email? Reenviar",
+      "resending": "Enviando...",
       "resent": "¡Email de verificación enviado!",
+      "resendButton": "Enviar",
+      "emailPlaceholder": "Ingresa tu email",
+      "cancel": "Cancelar",
       "backToLogin": "Volver al login"
     },
     "forgotPassword": {
