@@ -61,10 +61,13 @@ export async function sendVerificationEmail(email: string, token: string) {
   });
 
   if (result.error) {
+    const emailDomain = email.includes('@') ? email.split('@')[1] : 'unknown';
+    const fromDomain = fromEmail.includes('@') ? fromEmail.split('@')[1] : 'unknown';
+
     logger.error('Failed to send verification email via Resend', new Error(result.error.message), {
       action: 'sendVerificationEmail',
-      emailDomain: email.split('@')[1] ?? 'unknown',
-      fromDomain: fromEmail.split('@')[1] ?? 'unknown',
+      emailDomain,
+      fromDomain,
       resendErrorName: result.error.name,
     });
     throw new Error(`Failed to send email: ${result.error.message}`);
