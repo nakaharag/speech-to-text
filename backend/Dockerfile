@@ -1,7 +1,12 @@
-FROM node:22-alpine
+FROM node:22-slim
 
 # Install FFmpeg for audio conversion, OpenSSL for Prisma, wget for healthcheck
-RUN apk add --no-cache ffmpeg openssl wget
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg \
+    openssl \
+    wget \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 # Enable pnpm
 RUN corepack enable && corepack prepare pnpm@9 --activate

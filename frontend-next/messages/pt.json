@@ -28,7 +28,9 @@
       "submitting": "Entrando...",
       "forgotPassword": "Esqueceu a senha?",
       "noAccount": "Não tem uma conta?",
-      "signUp": "Criar conta"
+      "signUp": "Criar conta",
+      "verified": "Email verificado com sucesso! Você já pode entrar.",
+      "passwordReset": "Senha redefinida com sucesso! Você já pode entrar com sua nova senha."
     },
     "signup": {
       "title": "Criar uma conta",
@@ -54,9 +56,12 @@
       "title": "Verifique seu email",
       "description": "Enviamos um link de verificação para seu email",
       "checkInbox": "Por favor, verifique sua caixa de entrada e clique no link para verificar sua conta.",
-      "resend": "Reenviar email de verificação",
-      "resending": "Reenviando...",
+      "resend": "Não recebeu o email? Reenviar",
+      "resending": "Enviando...",
       "resent": "Email de verificação enviado!",
+      "resendButton": "Enviar",
+      "emailPlaceholder": "Digite seu email",
+      "cancel": "Cancelar",
       "backToLogin": "Voltar ao login"
     },
     "forgotPassword": {
@@ -89,6 +94,28 @@
       "github": "Continuar com GitHub",
       "apple": "Continuar com Apple"
     },
+    "errorPage": {
+      "title": "Erro de Autenticação",
+      "tryAgain": "Tentar novamente",
+      "goHome": "Ir para início",
+      "errors": {
+        "configuration": "Este método de login não está disponível temporariamente.",
+        "accessDenied": "Você não tem permissão para entrar.",
+        "verification": "O link de verificação pode ter expirado ou já foi utilizado.",
+        "oauthSignin": "Não foi possível iniciar o processo de login. Tente novamente.",
+        "oauthCallback": "Não foi possível completar o login. Tente novamente.",
+        "oauthCreateAccount": "Não foi possível criar uma conta com este provedor.",
+        "emailCreateAccount": "Não foi possível criar uma conta com este email.",
+        "callback": "Ocorreu um erro durante o login. Tente novamente.",
+        "oauthAccountNotLinked": "Este email já está associado a outro método de login.",
+        "credentialsSignin": "Email ou senha inválidos.",
+        "default": "Ocorreu um erro inesperado. Tente novamente."
+      },
+      "hints": {
+        "oauthAccountNotLinked": "Tente entrar com o mesmo método que você usou quando criou sua conta.",
+        "configuration": "Por favor, tente entrar com email e senha, ou tente novamente mais tarde."
+      }
+    },
     "errors": {
       "invalidCredentials": "Email ou senha inválidos",
       "emailExists": "Uma conta com este email já existe",
@@ -99,7 +126,10 @@
       "generic": "Algo deu errado. Por favor, tente novamente.",
       "networkError": "Erro de rede. Por favor, verifique sua conexão.",
       "sessionExpired": "Sua sessão expirou. Por favor, entre novamente.",
-      "unauthorized": "Você não está autorizado a acessar este recurso."
+      "unauthorized": "Você não está autorizado a acessar este recurso.",
+      "missingToken": "O link de verificação é inválido.",
+      "invalidToken": "O link de verificação é inválido ou já foi utilizado.",
+      "expiredToken": "O link de verificação expirou. Por favor, solicite um novo."
     }
   },
   "dashboard": {

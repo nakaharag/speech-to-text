@@ -1,12 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3000';
+const BACKEND_URL = process.env.BACKEND_URL;
+
+// Validate BACKEND_URL at startup
+if (!BACKEND_URL) {
+  console.warn(
+    '[Proxy] BACKEND_URL not configured. Set BACKEND_URL in .env.local (e.g., http://localhost:3000)'
+  );
+}
 
 async function proxyRequest(
   request: NextRequest,
   { params }: { params: Promise<{ path: string[] }> }
 ) {
+  if (!BACKEND_URL) {
+    return NextResponse.json(
+      { error: 'Backend service not configured. Set BACKEND_URL in environment.' },
+      { status: 503 }
+    );
+  }
+
   const { path } = await params;
   const pathStr = path.join('/');
   const url = new URL(pathStr, BACKEND_URL);

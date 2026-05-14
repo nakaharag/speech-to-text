@@ -2,11 +2,14 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 export function SignupForm() {
   const router = useRouter();
+  const t = useTranslations('auth.signup');
+  const tErrors = useTranslations('auth.errors');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -22,7 +25,7 @@ export function SignupForm() {
     setError(null);
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError(tErrors('passwordMismatch'));
       setIsLoading(false);
       return;
     }
@@ -41,13 +44,14 @@ export function SignupForm() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || 'Failed to create account');
+        setError(data.error || tErrors('generic'));
         return;
       }
 
-      router.push('/verify?email=' + encodeURIComponent(formData.email));
+      // Don't expose email in URL - just redirect to verify page
+      router.push('/verify');
     } catch (err) {
-      setError('An unexpected error occurred');
+      setError(tErrors('generic'));
     } finally {
       setIsLoading(false);
     }
@@ -63,12 +67,12 @@ export function SignupForm() {
 
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-          Name
+          {t('name')}
         </label>
         <Input
           id="name"
           type="text"
-          placeholder="John Doe"
+          placeholder={t('namePlaceholder')}
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           required
@@ -77,12 +81,12 @@ export function SignupForm() {
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-          Email
+          {t('email')}
         </label>
         <Input
           id="email"
           type="email"
-          placeholder="you@example.com"
+          placeholder={t('emailPlaceholder')}
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           required
@@ -91,12 +95,12 @@ export function SignupForm() {
 
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-          Password
+          {t('password')}
         </label>
         <Input
           id="password"
           type="password"
-          placeholder="Min 8 chars, 1 letter, 1 number"
+          placeholder={t('passwordPlaceholder')}
           value={formData.password}
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
           required
@@ -105,12 +109,12 @@ export function SignupForm() {
 
       <div>
         <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-          Confirm Password
+          {t('confirmPassword')}
         </label>
         <Input
           id="confirmPassword"
           type="password"
-          placeholder="********"
+          placeholder={t('confirmPasswordPlaceholder')}
           value={formData.confirmPassword}
           onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
           required
@@ -118,7 +122,7 @@ export function SignupForm() {
       </div>
 
       <Button type="submit" className="w-full" isLoading={isLoading}>
-        Create account
+        {isLoading ? t('submitting') : t('submit')}
       </Button>
     </form>
   );
