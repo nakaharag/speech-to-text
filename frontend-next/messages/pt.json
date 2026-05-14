@@ -28,7 +28,9 @@
       "submitting": "Entrando...",
       "forgotPassword": "Esqueceu a senha?",
       "noAccount": "Não tem uma conta?",
-      "signUp": "Criar conta"
+      "signUp": "Criar conta",
+      "verified": "Email verificado com sucesso! Você já pode entrar.",
+      "passwordReset": "Senha redefinida com sucesso! Você já pode entrar com sua nova senha."
     },
     "signup": {
       "title": "Criar uma conta",
@@ -99,7 +101,10 @@
       "generic": "Algo deu errado. Por favor, tente novamente.",
       "networkError": "Erro de rede. Por favor, verifique sua conexão.",
       "sessionExpired": "Sua sessão expirou. Por favor, entre novamente.",
-      "unauthorized": "Você não está autorizado a acessar este recurso."
+      "unauthorized": "Você não está autorizado a acessar este recurso.",
+      "missingToken": "O link de verificação é inválido.",
+      "invalidToken": "O link de verificação é inválido ou já foi utilizado.",
+      "expiredToken": "O link de verificação expirou. Por favor, solicite um novo."
     }
   },
   "dashboard": {

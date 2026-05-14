@@ -28,7 +28,9 @@
       "submitting": "Signing in...",
       "forgotPassword": "Forgot password?",
       "noAccount": "Don't have an account?",
-      "signUp": "Sign up"
+      "signUp": "Sign up",
+      "verified": "Email verified successfully! You can now sign in.",
+      "passwordReset": "Password reset successfully! You can now sign in with your new password."
     },
     "signup": {
       "title": "Create an account",
@@ -99,7 +101,10 @@
       "generic": "Something went wrong. Please try again.",
       "networkError": "Network error. Please check your connection.",
       "sessionExpired": "Your session has expired. Please sign in again.",
-      "unauthorized": "You are not authorized to access this resource."
+      "unauthorized": "You are not authorized to access this resource.",
+      "missingToken": "Verification link is invalid.",
+      "invalidToken": "Verification link is invalid or has already been used.",
+      "expiredToken": "Verification link has expired. Please request a new one."
     }
   },
   "dashboard": {

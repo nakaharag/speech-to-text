@@ -34,10 +34,13 @@ export function LoginForm() {
       });
 
       if (result?.error) {
-        setError(result.error === 'CredentialsSignin'
-          ? tErrors('invalidCredentials')
-          : result.error
-        );
+        if (result.error === 'CredentialsSignin') {
+          setError(tErrors('invalidCredentials'));
+        } else if (result.error === 'EmailNotVerified') {
+          setError(tErrors('emailNotVerified'));
+        } else {
+          setError(tErrors('generic'));
+        }
       } else {
         router.push('/dashboard');
       }
@@ -52,19 +55,31 @@ export function LoginForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       {verified && (
         <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
-          Email verified successfully! You can now log in.
+          {t('verified')}
         </div>
       )}
 
       {resetParam === 'success' && (
         <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
-          Password reset successfully! You can now log in with your new password.
+          {t('passwordReset')}
+        </div>
+      )}
+
+      {errorParam === 'missing_token' && (
+        <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+          {tErrors('missingToken')}
+        </div>
+      )}
+
+      {errorParam === 'invalid_token' && (
+        <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+          {tErrors('invalidToken')}
         </div>
       )}
 
       {errorParam === 'expired_token' && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-          {tErrors('sessionExpired')}
+          {tErrors('expiredToken')}
         </div>
       )}
 

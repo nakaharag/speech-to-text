@@ -61,7 +61,7 @@ export const authConfig: NextAuthConfig = {
         }
 
         if (!user.emailVerified) {
-          throw new Error('Please verify your email before logging in');
+          throw new Error('EmailNotVerified');
         }
 
         const isValid = await verifyPassword(password, user.passwordHash);
