@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -11,6 +12,8 @@ interface ResetPasswordFormProps {
 
 export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   const router = useRouter();
+  const t = useTranslations('auth.resetPassword');
+  const tErrors = useTranslations('auth.errors');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -23,7 +26,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
     setError(null);
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError(tErrors('passwordMismatch'));
       return;
     }
 
@@ -42,13 +45,13 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || 'Failed to reset password');
+        setError(data.error || tErrors('generic'));
         return;
       }
 
       router.push('/login?reset=success');
     } catch (err) {
-      setError('An unexpected error occurred');
+      setError(tErrors('generic'));
     } finally {
       setIsLoading(false);
     }
@@ -64,12 +67,12 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
 
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1">
-          New password
+          {t('password')}
         </label>
         <Input
           id="password"
           type="password"
-          placeholder="Min 8 chars, 1 letter, 1 number"
+          placeholder={t('passwordPlaceholder')}
           value={formData.password}
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
           required
@@ -78,12 +81,12 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
 
       <div>
         <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700 mb-1">
-          Confirm new password
+          {t('confirmPassword')}
         </label>
         <Input
           id="confirmPassword"
           type="password"
-          placeholder="Repeat password"
+          placeholder={t('confirmPasswordPlaceholder')}
           value={formData.confirmPassword}
           onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
           required
@@ -91,7 +94,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       </div>
 
       <Button type="submit" className="w-full" isLoading={isLoading}>
-        Reset password
+        {isLoading ? t('submitting') : t('submit')}
       </Button>
     </form>
   );

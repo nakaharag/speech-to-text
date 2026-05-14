@@ -2,6 +2,7 @@ import { auth } from '@/lib/auth';
 import { NextResponse } from 'next/server';
 import createIntlMiddleware from 'next-intl/middleware';
 import { routing } from '@/i18n/routing';
+import type { NextRequest } from 'next/server';
 
 // Create the next-intl middleware
 const intlMiddleware = createIntlMiddleware(routing);
@@ -10,7 +11,8 @@ const intlMiddleware = createIntlMiddleware(routing);
 const authPages = ['/login', '/signup', '/verify', '/forgot-password', '/reset-password', '/error'];
 const protectedPages = ['/dashboard', '/settings'];
 
-export default auth((req) => {
+// Wrap the auth function to match the proxy convention
+const authProxy = auth((req) => {
   const { pathname } = req.nextUrl;
 
   // Skip i18n for API routes, static files, etc.
@@ -52,6 +54,11 @@ export default auth((req) => {
 
   return intlResponse;
 });
+
+// Export as proxy function (Next.js 16 convention)
+export function proxy(request: NextRequest) {
+  return authProxy(request, {} as any);
+}
 
 export const config = {
   // Match all paths except API, static files, and Next.js internals
