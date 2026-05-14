@@ -12,6 +12,14 @@ function getResendClient(): Resend {
   return resendClient;
 }
 
+function getEmailDomain(value: string): string {
+  const atIndex = value.lastIndexOf('@');
+  if (atIndex === -1) return 'unknown';
+
+  const domain = value.slice(atIndex + 1).trim();
+  return domain || 'unknown';
+}
+
 export async function sendVerificationEmail(email: string, token: string) {
   // Point to the API route that processes the token, not the page
   const verifyUrl = `${process.env.NEXTAUTH_URL}/api/auth/verify?token=${token}`;
@@ -61,8 +69,8 @@ export async function sendVerificationEmail(email: string, token: string) {
   });
 
   if (result.error) {
-    const emailDomain = email.includes('@') ? email.split('@')[1] : 'unknown';
-    const fromDomain = fromEmail.includes('@') ? fromEmail.split('@')[1] : 'unknown';
+    const emailDomain = getEmailDomain(email);
+    const fromDomain = getEmailDomain(fromEmail);
 
     logger.error('Failed to send verification email via Resend', new Error(result.error.message), {
       action: 'sendVerificationEmail',
