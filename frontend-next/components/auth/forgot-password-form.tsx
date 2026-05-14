@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 export function ForgotPasswordForm() {
+  const t = useTranslations('auth.forgotPassword');
   const [isLoading, setIsLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [email, setEmail] = useState('');
@@ -36,11 +38,10 @@ export function ForgotPasswordForm() {
           </svg>
         </div>
         <p className="text-sm text-slate-600">
-          If an account exists with <strong>{email}</strong>, we've sent a password reset link.
-          Check your inbox and spam folder.
+          {t('sent')}
         </p>
         <p className="text-sm text-slate-500">
-          The link expires in 1 hour.
+          {t('sentDescription')}
         </p>
       </div>
     );
@@ -50,12 +51,12 @@ export function ForgotPasswordForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
-          Email address
+          {t('email')}
         </label>
         <Input
           id="email"
           type="email"
-          placeholder="you@example.com"
+          placeholder={t('emailPlaceholder')}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -63,7 +64,7 @@ export function ForgotPasswordForm() {
       </div>
 
       <Button type="submit" className="w-full" isLoading={isLoading}>
-        Send reset link
+        {isLoading ? t('submitting') : t('submit')}
       </Button>
     </form>
   );
