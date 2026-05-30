@@ -22,6 +22,11 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Force production for the build regardless of any NODE_ENV injected by the
+# platform (Coolify has NODE_ENV=development set, which makes Next bundle React's
+# dev runtime and crashes prerendering /_global-error with "useContext null").
+ENV NODE_ENV=production
+
 # Build the application
 RUN pnpm build
 
