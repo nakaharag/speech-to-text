@@ -1,0 +1,17 @@
+node_modules
+.next
+.pnpm-store
+.git
+.gitignore
+.dockerignore
+Dockerfile*
+npm-debug.log*
+.env.local
+.env*.local
+test-results
+playwright-report
+coverage
+*.tsbuildinfo
+.DS_Store
+.idea
+.vscode
