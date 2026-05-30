@@ -10,6 +10,10 @@ import type { NextAuthConfig } from 'next-auth';
 
 export const authConfig: NextAuthConfig = {
   adapter: PrismaAdapter(prisma),
+  // Trust the reverse-proxy (Traefik) host header. Auth.js v5 only auto-trusts
+  // the host on Vercel; behind our own proxy it otherwise rejects requests with
+  // UntrustedHost. Safe here because Traefik terminates TLS for our known domain.
+  trustHost: true,
   session: {
     strategy: 'jwt',
     maxAge: 7 * 24 * 60 * 60, // 7 days
