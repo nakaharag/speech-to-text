@@ -168,6 +168,10 @@ services:
     labels:
       # Traefik labels for production
       - "traefik.enable=true"
+      # This container is on multiple networks (internal + coolify); tell Traefik
+      # to route via the shared coolify network. Without this, Traefik can't pick
+      # a network, silently skips the service, and returns "no available server".
+      - "traefik.docker.network=coolify"
       - "traefik.http.routers.speech-frontend.rule=Host(`speech-to-text.me`)"
       - "traefik.http.routers.speech-frontend.entrypoints=http,https"
       - "traefik.http.routers.speech-frontend.tls=true"
