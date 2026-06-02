@@ -178,12 +178,12 @@ services:
       - "traefik.http.routers.speech-frontend.tls.certresolver=letsencrypt"
       - "traefik.http.routers.speech-frontend.middlewares=speech-retry@docker"
       - "traefik.http.services.speech-frontend.loadbalancer.server.port=3001"
-      # Health check - probe a path that returns 200. The root "/" issues a
-      # 307 redirect to /<locale>, which Traefik treats as unhealthy and then
-      # serves "no available server" (503). Use /en, which returns 200.
-      - "traefik.http.services.speech-frontend.loadbalancer.healthcheck.path=/en"
-      - "traefik.http.services.speech-frontend.loadbalancer.healthcheck.interval=5s"
-      - "traefik.http.services.speech-frontend.loadbalancer.healthcheck.timeout=3s"
+      # NOTE: deliberately NO traefik loadbalancer healthcheck here. With this
+      # container on multiple networks, the active healthcheck flapped the only
+      # server to DOWN and Traefik served "no available server" (503) even though
+      # the app answered /en with 200. Docker's own container healthcheck +
+      # Traefik's TCP connectivity check are sufficient. Do NOT re-add
+      # loadbalancer.healthcheck.* labels.
       # Retry middleware - retry on 502/503/504 errors
       - "traefik.http.middlewares.speech-retry.retry.attempts=3"
       - "traefik.http.middlewares.speech-retry.retry.initialinterval=100ms"
