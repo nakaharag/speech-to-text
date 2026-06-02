@@ -150,6 +150,10 @@ services:
       - SMTP_USER=${SMTP_USER:-}
       - SMTP_PASSWORD=${SMTP_PASSWORD:-}
       - SMTP_FROM=${SMTP_FROM:-noreply@speech-to-text.me}
+      # Verification/reset emails are sent via Resend (lib/email.ts). Without
+      # RESEND_API_KEY the signup flow throws "Missing API key" -> 500.
+      - RESEND_API_KEY=${RESEND_API_KEY:-}
+      - EMAIL_FROM=${EMAIL_FROM:-noreply@speech-to-text.me}
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}
       - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET:-}
       - STRIPE_BASIC_MONTHLY_PRICE_ID=${STRIPE_BASIC_MONTHLY_PRICE_ID:-}
