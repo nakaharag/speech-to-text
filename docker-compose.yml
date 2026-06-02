@@ -21,7 +21,13 @@ services:
   postgres:
     image: postgres:16-alpine
     networks:
-      - internal
+      internal:
+        # Unique alias to avoid the bare name "postgres" colliding with other
+        # Coolify projects' postgres containers on the shared coolify network
+        # (frontend-next is on both internal + coolify for Traefik, and the bare
+        # "postgres" was resolving to the wrong DB → "Authentication failed").
+        aliases:
+          - speechtotext-db
     environment:
       - POSTGRES_USER=${POSTGRES_USER:-speechtotext}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-speechtotext123}
@@ -49,7 +55,7 @@ services:
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - CORS_ORIGIN=${CORS_ORIGIN:-https://speech-to-text.me}
       - BASE_URL=${BASE_URL:-https://speech-to-text.me}
-      - DATABASE_URL=postgresql://${POSTGRES_USER:-speechtotext}:${POSTGRES_PASSWORD:-speechtotext123}@postgres:5432/${POSTGRES_DB:-speechtotext}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-speechtotext}:${POSTGRES_PASSWORD:-speechtotext123}@speechtotext-db:5432/${POSTGRES_DB:-speechtotext}
     volumes:
       - backend-data:/app/data
     depends_on:
@@ -131,7 +137,7 @@ services:
       - NODE_ENV=${NODE_ENV:-production}
       - NEXTAUTH_URL=${NEXTAUTH_URL:-https://speech-to-text.me}
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
-      - DATABASE_URL=postgresql://${POSTGRES_USER:-speechtotext}:${POSTGRES_PASSWORD:-speechtotext123}@postgres:5432/${POSTGRES_DB:-speechtotext}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-speechtotext}:${POSTGRES_PASSWORD:-speechtotext123}@speechtotext-db:5432/${POSTGRES_DB:-speechtotext}
       - BACKEND_URL=http://backend:3000
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
