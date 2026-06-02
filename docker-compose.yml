@@ -160,7 +160,11 @@ services:
       - 8.8.8.8
       - 8.8.4.4
     healthcheck:
-      test: ["CMD-SHELL", "wget -q --spider http://localhost:3001 || exit 1"]
+      # Probe /en, not / : the root path 307-redirects to https://speech-to-text.me/en,
+      # which wget --spider can't follow inside the container (exit 8) -> the container
+      # never becomes healthy -> Coolify/Traefik won't route to it -> "no available
+      # server" 503. /en returns 200.
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:3001/en || exit 1"]
       interval: 10s
       timeout: 10s
       retries: 5
